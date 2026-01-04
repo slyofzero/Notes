@@ -248,11 +248,11 @@ Thus the loop would run for $k=\sqrt{n}$  iterations. Thus TC = $O(\sqrt n)$
 The elements that would be added to the recursion stack would be - $n, \frac{n}{2}, \frac{n}{4}, \frac{n}{8}, \dots, \frac{n}{2^{k-1}}, \dots, 1$.
 The total number of elements would be -
 $$
-\begin{alignat}{3}
+\begin{alignat*}{3}
 &&\frac{n}{2^{k-1}} &= 1 \\
 &\Rightarrow \ & n &= 2^{k-1} \\
 &\Rightarrow \ & k-1 &= log_2n \\
 &\Rightarrow \ & k &\approx \boxed{log_2n} \\
-\end{alignat}
+\end{alignat*}
 $$
 Thus the Space Complexity is $O(log\,n)$.

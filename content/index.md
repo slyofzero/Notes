@@ -10,6 +10,14 @@ Rather than being a dump of formulas, these notes focus on:
 - derivations before results
 - mistakes, edge cases, and “why not?”
 
+Currently working on adding more notes for -
+1. Algorithms
+2. Discrete Mathematics
+3. Data Structures
+4. Theory of Computation
+5. Compiler Design
+6. Mathematical foundations of Generative AI
+
 ---
 
 ## 📘 Algorithms

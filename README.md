@@ -1,18 +1,63 @@
-# Quartz v4
+# My Notes
 
-> “[One] who works with the door open gets all kinds of interruptions, but [they] also occasionally gets clues as to what the world is and what might be important.” — Richard Hamming
+Welcome 👋  
+This repository is a **living notebook** where I organize my understanding of core Computer Science and Data Science concepts—built while studying, revising, and questioning _why_ things work the way they do.
 
-Quartz is a set of tools that helps you publish your [digital garden](https://jzhao.xyz/posts/networked-thought) and notes as a website for free.
-Quartz v4 features a from-the-ground rewrite focusing on end-user extensibility and ease-of-use.
+I am still in the process of adding more things to this. These notes are intended for GATE aspirants and anyone currently pursuing the IIT Madras BS in Data Science and Applications Degree. Reach out to me at sly.of.zero@gmail.com if you want to collaborate in this alongside me! Cheers 🍻!
 
-🔗 Read the documentation and get started: https://quartz.jzhao.xyz/
+Rather than being a dump of formulas, these notes focus on:
 
-[Join the Discord Community](https://discord.gg/cRFFHYye7t)
+- intuition before optimization
+- derivations before results
+- mistakes, edge cases, and “why not?”
 
-## Sponsors
+---
 
-<p align="center">
-  <a href="https://github.com/sponsors/jackyzha0">
-    <img src="https://cdn.jsdelivr.net/gh/jackyzha0/jackyzha0/sponsorkit/sponsors.svg" />
-  </a>
-</p>
+## 📘 Algorithms
+
+How problems are solved.
+
+Includes:
+
+- divide & conquer, greedy, dynamic programming
+- time and space complexity analysis
+- recurrence relations and their solutions
+- correctness arguments and trade-offs
+
+📂 Start here → [[Algorithms]]
+
+---
+
+## 🧱 Data Structures
+
+How data is organized.
+
+Includes:
+
+- linear and non-linear structures
+- internal representations and memory layout
+- operation costs and invariants
+- when _not_ to use a structure
+
+📂 Start here → [[Data Structures]]
+
+---
+
+## 🔢 Discrete Mathematics
+
+The language behind algorithms.
+
+Includes:
+
+- logic, sets, relations, and functions
+- combinatorics and counting arguments
+- recurrences, proofs, and asymptotic reasoning
+- graphs, trees, and their properties
+
+📂 Start here → [[Discrete Maths]]
+
+---
+
+> _“An algorithm is not just a procedure — it is a proof that a problem can be solved.”_
+
+These notes are continuously refined as my understanding improves.
