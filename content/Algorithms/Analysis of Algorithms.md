@@ -254,4 +254,5 @@ $$
 &\Rightarrow \ & k-1 &= log_2n \\
 &\Rightarrow \ & k &\approx \boxed{log_2n} \\
 \end{alignat}
-$$Thus the Space Complexity is $O(log\,n)$.
+$$
+Thus the Space Complexity is $O(log\,n)$.

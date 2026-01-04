@@ -1,15 +1,15 @@
 {
-  "name": "@jackyzha0/quartz",
-  "description": "🌱 publish your digital garden and notes as a website",
+  "name": "@slyofzero/Notes",
+  "description": "An effort for helping GATE CS and DA aspirants and fellow BS students.",
   "private": true,
-  "version": "4.5.2",
+  "version": "1.0.0",
   "type": "module",
-  "author": "jackyzha0 <j.zhao2k19@gmail.com>",
+  "author": "slyofzero <slyofzero@gmail.com>",
   "license": "MIT",
-  "homepage": "https://quartz.jzhao.xyz",
+  "homepage": "https://slyofzero.github.io/Notes/",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jackyzha0/quartz.git"
+    "url": "https://github.com/slyofzero/Notes.git"
   },
   "scripts": {
     "quartz": "./quartz/bootstrap-cli.mjs",
@@ -18,7 +18,8 @@
     "format": "npx prettier . --write",
     "test": "tsx --test",
     "profile": "0x -D prof ./quartz/bootstrap-cli.mjs build --concurrency=1",
-    "build": "make clean && make copy_dirs && npx quartz sync"
+    "build": "make clean && make copy_dirs && npx quartz sync",
+    "dev": "make clean && make copy_dirs && npx quartz build --serve"
   },
   "engines": {
     "npm": ">=10.9.2",
