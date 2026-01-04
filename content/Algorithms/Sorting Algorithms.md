@@ -25,10 +25,10 @@
 # Summary
 |                     Algorithm                     |      Best Case TC       | Worst Case TC |                   Special TC                    | In-place | Stable |                SC                |
 | :-----------------------------------------------: | :---------------------: | :-----------: | :---------------------------------------------: | :------: | :----: | :------------------------------: |
-|                 [[#Bubble Sort]]                  |       $\Omega(n)$       |   $O(n^2)$    |                        -                        |    ✅     |   ✅    |              $O(1)$              |
-|                [[#Selection Sort]]                |     $$\Omega(n^2)$$     |  $$O(n^2)$$   | Better worst case no. of swaps than Bubble Sort |  $$✅$$   | $$❌$$  |             $$O(1)$$             |
-|                [[#Insertion Sort]]                |      $$\Omega(n)$$      |  $$O(n^2)$$   |           $O(n+d)$ <br>if pre-sorted            |  $$✅$$   | $$✅$$  |             $$O(1)$$             |
-|                <br>[[#Radix Sort]]                |          <br>-          |     <br>-     |       $\Theta(n*d)$<br>input-independent        |  $$❌$$   | $$✅$$  |             $$O(n)$$             |
+|           [[#Bubble Sort\|Bubble Sort]]           |       $\Omega(n)$       |   $O(n^2)$    |                        -                        |    ✅     |   ✅    |              $O(1)$              |
+|        [[#Selection Sort\|Selection Sort]]        |     $$\Omega(n^2)$$     |  $$O(n^2)$$   | Better worst case no. of swaps than Bubble Sort |  $$✅$$   | $$❌$$  |             $$O(1)$$             |
+|        [[#Insertion Sort\|Insertion Sort]]        |      $$\Omega(n)$$      |  $$O(n^2)$$   |           $O(n+d)$ <br>if pre-sorted            |  $$✅$$   | $$✅$$  |             $$O(1)$$             |
+|          <br>[[#Radix Sort\|Radix Sort]]          |          <br>-          |     <br>-     |       $\Theta(n*d)$<br>input-independent        |  $$❌$$   | $$✅$$  |             $$O(n)$$             |
 | <br>[[Divide And Conquer#Merge Sort\|Merge Sort]] |          <br>-          |     <br>-     |   $\Theta(n\,log_2\,n)$<br>input-independent    |  $$❌$$   | $$✅$$  | $O(n)$<br>Aux mem + Recur. stack |
 |   [[Divide And Conquer#Quick Sort\|Quick Sort]]   | $$\Omega(n\,log_2\,n)$$ |  $$O(n^2)$$   |              Worst case for sorted              |  $$❌$$   | $$❌$$  |             $$O(n)$$             |
 # Sorting Algorithms
