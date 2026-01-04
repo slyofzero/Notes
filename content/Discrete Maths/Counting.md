@@ -24,32 +24,66 @@ So now the problem has shifted to picking 2 slots from 12 total slots to insert 
 ---
 # Binomial Theorem
 In the expansion of $(a+b)^{n}$, each term is of the form $a^xb^y$ where $0 \le x \le n$  and $y = n - x$. For any term $a^xb^y$, $a$ must have been contributed by $x$ number of $(a+b)$ terms while the rest $n-x$ number of terms contributed towards $b$. We can choose $x$ of the $n$ factors from which $a$ is selected in $^nC_x$ ways. Thus the coefficient of any term $a^xb^{n-x}$ is $^nC_x$.
-$$\begin{aligned}
+
+$$
+\begin{aligned}
 (a+b)^{n} &= \sum_{i=0}^n \ \binom{n}{n-i} \cdot a^{n-i}b^i \\
 &= a^n + \binom{n}{n-1}a^{n-1}b + \dots + \binom{n}{1}ab^{n-1} +b^n
-\end{aligned}$$
+\end{aligned}
+$$
 ## Interesting Applications
-1. Euler's constant - $$\lim_{n\rightarrow\infty} \left(1 + \frac{1}{n} \right)^n = \sum_{k=0}^\infty\frac{1}{k!}$$
-2. Derivative of $x^n$ $$\begin{aligned}\frac{d}{dx} x^n &= \lim_{n \rightarrow \infty} \frac{x^{n+h}-x^n}{h} \\&= n \cdot x^{n-1}\end{aligned}$$
-3. We know $(a+b)^{n} = \sum_{i=0}^n \ \binom{n}{n-i} \cdot a^{n-i}b^i$. What if $a = b = 1$? $$\begin{aligned}(1+1)^n &= \sum_{i=0}^n \ \binom{n}{n-i} \cdot 1^{n-i}1^i \\
-	&= \sum_{i=0}^n \ \binom{n}{n-i} \cdot 1 \\
-	&= \binom{n}{0} + \binom{n}{1} + \binom{n}{2} + \dots + \binom{n}{n}\\
-\end{aligned}$$
-	Thus, $$2^n = \binom{n}{0} + \binom{n}{1} + \binom{n}{2} + \dots + \binom{n}{n}$$
+1. Euler's constant - 
+   $$
+   \lim_{n\rightarrow\infty} \left(1 + \frac{1}{n} \right)^n = \sum_{k=0}^\infty\frac{1}{k!}
+   $$
+2. Derivative of $x^n$ 
+   $$
+   \begin{aligned}\frac{d}{dx} x^n &= \lim_{n \rightarrow \infty} \frac{x^{n+h}-x^n}{h} \\&= n \cdot x^{n-1}\end{aligned}
+   $$
+3. We know $(a+b)^{n} = \sum_{i=0}^n \ \binom{n}{n-i} \cdot a^{n-i}b^i$. What if $a = b = 1$?    
+$$
+\begin{aligned}
+(1+1)^n &= \sum_{i=0}^n \ \binom{n}{n-i} \cdot 1^{n-i}1^i \\
+&= \sum_{i=0}^n \ \binom{n}{n-i} \cdot 1 \\
+&= \binom{n}{0} + \binom{n}{1} + \binom{n}{2} + \dots + \binom{n}{n}\\
+\\
+\text{Thus,} \\
+\\
+2^n &= \binom{n}{0} + \binom{n}{1} + \binom{n}{2} + \dots + \binom{n}{n}
+\end{aligned}
+$$
+
 ## $r^{th}$ term of the Binomial Expansion
 The $r^{th}$ term of the Binomial Expansion is always -
 $$\binom{n}{r-1!}a^{n-r+1}b^{r-1}$$
 # Multinomial Theorem
 What would the coefficients of each term look like in the expansion of $(a+b+c+\dots)^n$? 
 
-We can consider $(a+b+c+\dots)^n = (a+R_1)^n$ where $R_1 =(b+c+\dots)$. Upon expansion by applying the binomial theorem, any $(n_1+1)^{th}$ term (for simpler calculations without loss of generalization) would be of the form - $$\binom{n}{n_1}a^{n_1}R_1^{n-n_1}$$$R_1^{n-n_1}=(b+R_2)^{n-n_1}$ where $R_2 = (c+\dots)$. The coefficient of some $(n_2+1)^{th}$ term of this expansion would be - $$\binom{n-n_1}{n_2}$$We can continue doing this expansion until $R_k$ becomes a binomial. By that point, the coefficient of the $(n_1+1)^{th}$ of the original multinomial would be - $$\binom{n}{n_1} \cdot \binom{n-n_1}{n_2} \cdot \binom{n-n_1-n_2}{n_3} \dots \binom{n-n_1-n_2 \dots - n_{k-1}}{n_k}$$
-$$\begin{aligned}
+We can consider $(a+b+c+\dots)^n = (a+R_1)^n$ where $R_1 =(b+c+\dots)$. Upon expansion by applying the binomial theorem, any $(n_1+1)^{th}$ term (for simpler calculations without loss of generalization) would be of the form - 
+$$
+\binom{n}{n_1}a^{n_1}R_1^{n-n_1}
+$$
+
+$R_1^{n-n_1}=(b+R_2)^{n-n_1}$ where $R_2 = (c+\dots)$. The coefficient of some $(n_2+1)^{th}$ term of this expansion would be - 
+
+$$
+\binom{n-n_1}{n_2}
+$$
+We can continue doing this expansion until $R_k$ becomes a binomial. By that point, the coefficient of the $(n_1+1)^{th}$ of the original multinomial would be - 
+
+$$
+\binom{n}{n_1} \cdot \binom{n-n_1}{n_2} \cdot \binom{n-n_1-n_2}{n_3} \dots \binom{n-n_1-n_2 \dots - n_{k-1}}{n_k}
+$$
+
+$$
+\begin{aligned}
 &= \frac{n!}{n_1! \cdot (n-n_1)!} \cdot \frac{(n-n_1)!}{n_2! \cdot (n-n_1-n_2)!} \dots \frac{(n-n_1-n_2 \dots - n_{k-1})!}{n_k! \cdot (n-n_1-n_2 \dots - n_{k})!}
 
 \\ &= \frac{n!}{n_1! \cdot \cancel{(n-n_1)!}} \cdot \frac{\cancel{(n-n_1)!}}{n_2! \cdot \cancel{(n-n_1-n_2)!}} \dots \frac{\cancel{(n-n_1-n_2 \dots - n_{k-1})!}}{n_k! \cdot (n-n_1-n_2 \dots - n_{k})!}
 
 \\&= \frac{n!}{n_1! \cdot n_2! \dots n_k!}
-\end{aligned}$$
+\end{aligned}
+$$
 # Pascal's Triangle
 ![[Pasted image 20251226164039.png | 500]]
 

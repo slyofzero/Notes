@@ -5,10 +5,7 @@ This repository is a **living notebook** where I organize my understanding of co
 
 I am still in the process of adding more things to this. These notes are intended for GATE aspirants and anyone currently pursuing the IIT Madras BS in Data Science and Applications Degree. Reach out to me at sly.of.zero@gmail.com if you want to collaborate in this alongside me! Cheers 🍻!
 
-Rather than being a dump of formulas, these notes focus on:
-- intuition before optimization
-- derivations before results
-- mistakes, edge cases, and “why not?”
+The notes may have same LaTeX rendering issues due to importing Obsidian files into Quartz. I apologize if you encounter any, please reach out to me or raise an issue in the repo and I'd try to fix it at the earliest.
 
 Currently working on adding more notes for -
 1. Algorithms
