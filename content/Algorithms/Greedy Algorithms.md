@@ -1,18 +1,18 @@
 >[!SUMMARY] Table of Contents
 >- [[Greedy Algorithms#Types of Problems|Types of Problems]]
 >- [[Greedy Algorithms#Knapsack Problem|Knapsack Problem]]
->		- [[Greedy Algorithms#Problem Statement|Problem Statement]]
->		- [[Greedy Algorithms#Objective|Objective]]
->		- [[Greedy Algorithms#Types of Knapsack -|Types of Knapsack -]]
->		- [[Greedy Algorithms#How to solve -|How to solve -]]
+>	- [[Greedy Algorithms#Problem Statement|Problem Statement]]
+>	- [[Greedy Algorithms#Objective|Objective]]
+>	- [[Greedy Algorithms#Types of Knapsack -|Types of Knapsack ]]
+>	- [[Greedy Algorithms#How to solve -|How to solve ]]
 >- [[Greedy Algorithms#Job Scheduling with Deadline (JSD)|Job Scheduling with Deadline (JSD)]]
->		- [[Greedy Algorithms#Problem Statement|Problem Statement]]
->		- [[Greedy Algorithms#Objective|Objective]]
->		- [[Greedy Algorithms#How to solve -|How to solve -]]
+>	- [[Greedy Algorithms#Problem Statement|Problem Statement]]
+>	- [[Greedy Algorithms#Objective|Objective]]
+>	- [[Greedy Algorithms#How to solve -|How to solve ]]
 >- [[Greedy Algorithms#Optimal Merge Patterns|Optimal Merge Patterns]]
->		- [[Greedy Algorithms#Problem Statement|Problem Statement]]
->		- [[Greedy Algorithms#Objective|Objective]]
->		- [[Greedy Algorithms#How to solve -|How to solve -]]
+>	- [[Greedy Algorithms#Problem Statement|Problem Statement]]
+>	- [[Greedy Algorithms#Objective|Objective]]
+>	- [[Greedy Algorithms#How to solve -|How to solve ]]
 >- [[Greedy Algorithms#Encoding & Huffman Encoding|Encoding & Huffman Encoding]]
 >	- [[Greedy Algorithms#Huffman Encoding|Huffman Encoding]]
 >- [[Greedy Algorithms#Minimum Cost Spanning Tree|Minimum Cost Spanning Tree]]
@@ -24,16 +24,17 @@
 **Definition -** Greedy algorithms focus on finding the local optima. They pick the option that best satisfy the criteria of problem. Example - Best First Search.
 # Types of Problems
 
-1. Optimization Problems -
-	   1. Requires a deterministic min/max value for a given criteria.
-	   2. Requires an **objective** function.
-	   3. Has **optimal** solutions.
-	   4. Example - Knapsack, Shortest Path.
-2. Planning/Decision Problems -
-	   1. Result is always either **True/False**.
-	   2. Doesn't need an objective function.
-	   3. Doesn't have optimal solutions, has **feasible** solutions.
-	   4. Example - Searching, Sorting, N-Queens.
+1. **Optimization Problems**
+    1. Requires a deterministic min/max value for a given criteria.
+    2. Requires an **objective** function.
+    3. Has **optimal** solutions.
+    4. Example – Knapsack, Shortest Path.
+
+2. **Planning / Decision Problems**
+    1. Result is always either **True / False**.
+    2. Doesn't need an objective function.
+    3. Doesn't have optimal solutions, has **feasible** solutions.
+    4. Example – Searching, Sorting, N-Queens.
 # Knapsack Problem
 ### Problem Statement
 You are given a set of **$n$ objects**, where each object iii has:
@@ -46,7 +47,10 @@ Select a subset of the objects such that:
 - each object is either **included or excluded** (for 0/1 knapsack) or partially selected (for fractional knapsack),
 - the **total profit** of the selected objects is **maximized**.
 
-==Maximize $\sum x_i*p_i$ while $\sum x_i*w_i \le m$.==, where $x_i \in \{0,1\}\,\text{or}\,[0,1]$
+**Objective:**
+$$
+\max \sum x_i p_i \,  \text{subject to} \, \sum x_i w_i \le m \, \text{where}\,x_i \in \{0,1\}\,\text{or}\,[0,1]
+$$
 ### Types of Knapsack -
 1. Fractional Knapsack - Partial objects are allowed, $0 \le x_i \le 1$
    Solved using Greedy methods.
@@ -82,8 +86,11 @@ Suppose we have -
 |  J3  |        2         |       50       |
 |  J4  |        1         |       80       |
 <h4 class="special">Brute Force - </h4>
+
 Choose all subsets of the above $n$ jobs and calculate the total profit. The subset which provides the maximum profit is the answer. $TC = O(2^n)$ 
+
 <h4 class="special">Greedy Algorithm - </h4>
+
 1. Assign priority to jobs based upon the descending order of Profit.
 2. Identify the max deadline $max(D)$ and store it.
 3. Pick jobs in order of this priority and place each at its respective deadline $D_i$. If the deadline is not available, then try to place it at $D_i -1$.
@@ -116,7 +123,9 @@ In which sequence should the files be merged such that:
 Given $2$ sorted files $A$ and $B$ having $n$ and $m$ records respectively. To merge them into a single sorted file, we'd require $(m+n)$ record movements. 
 
 This is different from the merging in merge sort as it has **element comparisons**, while here we have **record movements**.
+
 <h4 class="special">Example - </h4>
+
 Suppose $A$, $B$, and $C$ have $10$, $15$, and $5$ records respectively. If we were to merge these files in the order $A \rightarrow B \rightarrow C$, what would be the total number of record movements?
 
 Here we first merge $A$ and $B$ into one file, and then merge this resultant file with $C$. So -
@@ -127,9 +136,13 @@ Here we first merge $A$ and $B$ into one file, and then merge this resultant fil
 5. Using $I$ and $II$, total number of record movements $= \boxed{25 + 30 = 55}$.
 
 However, if we were to merge in the sequence $B \rightarrow C \rightarrow A$, the total number of record movements will be $50$.
+
 <h4 class="special">Brute Force</h4>
+
 Try all permutations of the $n$ files and calculate the total number of record movements. The permutation which provides the minimum record movements is the answer. $TC = O(n!)$ 
+
 <h4 class="special">Greedy Algorithm</h4>
+
 1. Assign priority to files in an ascending order of record count.
 2. Pick two files with the highest priorities. Merge them and add the resulting file again into the list and recalculate priorities.
 3. Keep merging until all files are merged and only one file remains in the queue.
@@ -197,7 +210,7 @@ To get the average number of bits/character, sum the intermediate nodes of the m
 # Minimum Cost Spanning Tree
 Types of graphs -
 1. In a directed complete graph there are $n-1$ edges for all $n$ vertices. Thus the total number of edges is - $n(n-1) = O(n^2)$.
-2. In an undirected complete graph the first vertex has $n-1$ edges, second vertex has $n-2$ vertex, and so on. Thus the total number of edges if $\frac{n(n-1)}{2}  = O(n^2)$.
+2. In an undirected complete graph the first vertex has $n-1$ edges, second vertex has $n-2$ vertex, and so on. Thus the total number of edges is $\frac{n(n-1)}{2}  = O(n^2)$.
 
 Types of graph representations -
 1. Adjacency Matrix - $O(n^2)$.
@@ -210,21 +223,24 @@ When to use which representation -
 A subgraph $T(V, E')$ of a given graph $(V,E)$ where $E' \subset E$ is a spanning tree if $T$ is a tree (acyclic).
 - A spanning tree with $n$ vertices will always have $\boxed{n-1}$ edges.
 - Number of edges not used in the spanning tree - $e - (n-1) =\boxed{e-n+1}$
-- Number of null links in the spanning tree - There are $2n$ links the tree out of which $n-1$ are used. Thus $2n - (n-1) = 2n-n+1=\boxed{n+1}$.
+- Number of null links in the spanning tree - There are $2n$ links in the tree out of which $n-1$ are used. Thus $2n - (n-1) = 2n-n+1=\boxed{n+1}$.
 ## Prim's Vs Kruskal's Algorithm
 - Prim's - Pick the minimum cost edges extending from the nodes currently in the tree.
 - Kruskal's - Using a Min Heap + Set, greedily pick $n-1$ smallest cost edges.
 
-1. Prim's Algo - 
-   $\qquad O(n^2)$ (Non-heap mechanism)
-   $\qquad O(n+e)$ (Heap used), if $e \approx n^2$ then $O(n^2\,log\,n)$
-2. Kruskal's Algo - 
-   $\qquad O(e\,log\,e)$ (Uses heap)
-3. Prim's always maintains a Tree Structure while Kruskal's may or may not.
-4. Cost of MCST obtained by both approaches is the same.
-5. The tree structure obtained by both approaches may or may not be the same.
-   a. If all edges have $\underline{\text{unique/distinct costs}}$ then both algorithms give the $\underline{\text{same tree structure}}$.
-   b. If there are $\underline{\text{duplicate edge costs}}$ then they may or $\underline{\text{may not}}$ give the same tree structure.
+1. **Prim’s Algorithm**
+    - Time Complexity:
+        - $O(n^2)$ (without heap)
+        - $O(n + e)$ (with heap)
+        - If $e \approx n^2$, then $O(n^2 \log n)$
+    - Always maintains a **tree structure**
+2. **Kruskal’s Algorithm**
+    - Time Complexity: $O(e \log e)$ (uses heap)
+    - May or may not maintain a tree structure during execution
+3. The **cost of the MCST** obtained by both algorithms is the **same**.
+4. The **tree structure** obtained by both approaches:
+    - If all edges have **unique/distinct weights**, both algorithms produce the **same tree**
+    - If there are **duplicate edge weights**, the tree structure **may or may not be the same**
 ## Djikstra's  MCST Algorithm
 1. Consider all edges of the graph.
 2. If a cycle forms, remove the maximum cost edge in that cycle.
