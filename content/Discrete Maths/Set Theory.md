@@ -21,13 +21,13 @@ Types of sets -
 
 The total number of elements in a power set can be calculated using [[Counting#Binomial Theorem|Binomial Theorem]] -
 $$
-\begin{align*}
-&\,\,\,\,\,\,\,\,\,\,\,^nC_0 + ^nC_1 + \dots + ^nC_n \\
-&\Rightarrow \,^nC_0.1 + ^nC_1.1 + \dots + ^nC_n.1\\
-&\Rightarrow \,^nC_0.(1^n.1^0) + ^nC_1.(1^{n-1}.1^1) + \dots + ^nC_n.(1^0.1^n)  \qquad \because \text{Using Binomial Theorem}\\
-&\Rightarrow \,(1+1)^n\\
-&\Rightarrow \,\boxed{2^n}\\
-\end{align*}
+\begin{aligned}
+&\binom{n}{0} + \binom{n}{1} + \cdots + \binom{n}{n}\\
+&= \binom{n}{0}\cdot 1 + \binom{n}{1}\cdot 1 + \cdots + \binom{n}{n}\cdot 1 \\
+&= \binom{n}{0}(1^n 1^0) + \binom{n}{1}(1^{n-1} 1^1) + \cdots + \binom{n}{n}(1^0 1^n) \qquad \because \text{Using Binomial Theorem}\\
+&= (1 + 1)^n \\
+&= \boxed{2^n}
+\end{aligned}
 $$
 
 # Set Operations
