@@ -29,6 +29,7 @@ $$
 &\Rightarrow \,\boxed{2^n}\\
 \end{align*}
 $$
+
 # Set Operations
 1. Union
 2. Intersection
