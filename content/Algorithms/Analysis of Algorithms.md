@@ -127,11 +127,11 @@ How to calculate -
 1. Identify the variable(s) determining the termination criteria.
 2. Identify the pattern of updation for these variables over each iteration and generalize for some $k^{th}$ iteration.
 3. Calculate the iteration $k$ in terms for $n$ for which the termination criteria doesn't satisfy. Thus the loop would run for these $k$ iterations.
-Check [[##^q4|Question 4]] for example.
+Check [[Analysis of Algorithms#^q4|Question 4]] for example.
 
 ---
 # Space Complexity
-The amount of Auxiliary memory space (excluding the space required by the input) required by the program, expressed as a function of the input size is called the *Space Complexity*. Check [[##^q5|Question 5]] for example.
+The amount of Auxiliary memory space (excluding the space required by the input) required by the program, expressed as a function of the input size is called the *Space Complexity*. Check [[Analysis of Algorithms#^q5|Question 5]] for example.
 # Questions
 ## 1. TC of Recurrence
 <h6 class="question">Q1) Find the time complexity and recurrence value for -</h6>

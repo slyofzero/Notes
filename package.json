@@ -18,7 +18,7 @@
     "format": "npx prettier . --write",
     "test": "tsx --test",
     "profile": "0x -D prof ./quartz/bootstrap-cli.mjs build --concurrency=1",
-    "build": "make clean && make copy_dirs && npx quartz sync",
+    "host": "make clean && make copy_dirs && npx quartz sync",
     "dev": "make clean && make copy_dirs && npx quartz build --serve"
   },
   "engines": {

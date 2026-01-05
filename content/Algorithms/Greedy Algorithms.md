@@ -1,3 +1,26 @@
+>[!SUMMARY] Table of Contents
+>- [[Greedy Algorithms#Types of Problems|Types of Problems]]
+>- [[Greedy Algorithms#Knapsack Problem|Knapsack Problem]]
+>		- [[Greedy Algorithms#Problem Statement|Problem Statement]]
+>		- [[Greedy Algorithms#Objective|Objective]]
+>		- [[Greedy Algorithms#Types of Knapsack -|Types of Knapsack -]]
+>		- [[Greedy Algorithms#How to solve -|How to solve -]]
+>- [[Greedy Algorithms#Job Scheduling with Deadline (JSD)|Job Scheduling with Deadline (JSD)]]
+>		- [[Greedy Algorithms#Problem Statement|Problem Statement]]
+>		- [[Greedy Algorithms#Objective|Objective]]
+>		- [[Greedy Algorithms#How to solve -|How to solve -]]
+>- [[Greedy Algorithms#Optimal Merge Patterns|Optimal Merge Patterns]]
+>		- [[Greedy Algorithms#Problem Statement|Problem Statement]]
+>		- [[Greedy Algorithms#Objective|Objective]]
+>		- [[Greedy Algorithms#How to solve -|How to solve -]]
+>- [[Greedy Algorithms#Encoding & Huffman Encoding|Encoding & Huffman Encoding]]
+>	- [[Greedy Algorithms#Huffman Encoding|Huffman Encoding]]
+>- [[Greedy Algorithms#Minimum Cost Spanning Tree|Minimum Cost Spanning Tree]]
+>	- [[Greedy Algorithms#Spanning Tree|Spanning Tree]]
+>	- [[Greedy Algorithms#Prim's Vs Kruskal's Algorithm|Prim's Vs Kruskal's Algorithm]]
+>	- [[Greedy Algorithms#Djikstra's  MCST Algorithm|Djikstra's  MCST Algorithm]]
+>- [[Greedy Algorithms#Questions|Questions]]
+
 **Definition -** Greedy algorithms focus on finding the local optima. They pick the option that best satisfy the criteria of problem. Example - Best First Search.
 # Types of Problems
 
@@ -169,7 +192,7 @@ So the encodings for the characters are like -
 $$
 A - 10,\,B-1100,\,C-0,\,D-111,\,E-1101
 $$
-To get the average number of bits/character, sum the intermediate nodes of the merge tree similar to how we sum to get [[#^merge-tree|the number of record movements]]. Here the average number of bits/character is $1.95$.
+To get the average number of bits/character, sum the intermediate nodes of the merge tree similar to how we sum to get [[Greedy Algorithms#^merge-tree|the number of record movements]]. Here the average number of bits/character is $1.95$.
 
 # Minimum Cost Spanning Tree
 Types of graphs -
@@ -192,8 +215,11 @@ A subgraph $T(V, E')$ of a given graph $(V,E)$ where $E' \subset E$ is a spannin
 - Prim's - Pick the minimum cost edges extending from the nodes currently in the tree.
 - Kruskal's - Using a Min Heap + Set, greedily pick $n-1$ smallest cost edges.
 
-1. Prim's Algo - $O(n^2)$ (Non-heap mechanism)
-2. Kruskal's Algo - $O(e\,log\,e)$ (Uses heap)
+1. Prim's Algo - 
+   $\qquad O(n^2)$ (Non-heap mechanism)
+   $\qquad O(n+e)$ (Heap used), if $e \approx n^2$ then $O(n^2\,log\,n)$
+2. Kruskal's Algo - 
+   $\qquad O(e\,log\,e)$ (Uses heap)
 3. Prim's always maintains a Tree Structure while Kruskal's may or may not.
 4. Cost of MCST obtained by both approaches is the same.
 5. The tree structure obtained by both approaches may or may not be the same.
@@ -310,10 +336,11 @@ Using this we can find the encoding for each character and then find the total l
 ![[Pasted image 20260104102241.png]]
 
 <strong><u>Sol</u></strong>$^n$ -
-This can be solved using [[#Djikstra's MCST Algorithm]]. Here there are 3 cycles. If some edge was not selected from a cycle for the MCST, then it had the maximum cost among all edges in that cycle.
+This can be solved using [[Greedy Algorithms##Djikstra's MCST Algorithm|Djikstra's MCST Algorithm]]. Here there are 3 cycles. If some edge was not selected from a cycle for the MCST, then it had the maximum cost among all edges in that cycle.
 - In cycle $A \rightarrow B \rightarrow C$, $AB$ was not selected. As $|BC|=2$ and $|AC|=9$, $|AB|>9$, thus $|AB|>10$.
 - In cycle $E \rightarrow D \rightarrow F$, $|ED|>6$, thus $|ED|>7$.
 - In cycle $B \rightarrow  E \rightarrow D \rightarrow C$, $|CD|>15, thus $|CD|>16$.
+
 Thus total cost = $36+10+7+16=\boxed{69}$.
 
 ---
@@ -323,3 +350,15 @@ Thus total cost = $36+10+7+16=\boxed{69}$.
 
 <strong><u>Sol</u></strong>$^n$ -
 The minimum cost edges in such a graph would be between two adjacent nodes $V_i$ and $V_{i-1}$ of cost $2$. As there are a total $n-1$ edges, cost of the MCST would be $\boxed{2n-2}$.
+
+---
+<h6 class="question">Q9)</h6>
+
+![[Pasted image 20260105170517.png]]
+
+$\underline{\text{Sol}^n} -$
+- The graph will be the XY coordinate plane with each $(x,y)$ coordinate being a vertex. 
+- Thus in total the graph will have $n^2$ vertices. 
+- The edges of such a graph will be of cost $1$ or $\sqrt{2}$.
+- As the graph forms a grid (draw one if needed), one can simply follow the gridlines and traverse all vertices. Thus for such a path using edges of cost $1$ will be cheaper.
+- The MCST would have $n^2-1$ edges ($n^2 =$ No. of vertices) and as each edge will be of cost 1, the total cost would be $\boxed{n^2-1}$.

@@ -1,6 +1,20 @@
-# Combinations
-1. $$^nC_r = \frac{^nP_r}{n!}$$
-2. $$\binom{n}{r} = \binom{n-1}{r} + \binom{n-1}{r-1}$$
+# Formulas
+1. Permutations -
+$$
+^nP_r = \frac{n!}{r!}
+$$
+2. Combinations (Repetition not allowed) -
+$$
+^nC_r = \frac{^nP_r}{r!} = \frac{n!}{r!(n-r)!}
+$$
+3. Combinations (Repetition allowed), bars and stars example in [[Counting#^q2|Question 2]] -
+$$
+= \binom{n+r-1}{r} = \frac{(n+r-1)!}{r!(n-1)!}
+$$
+4. Pascal's rule -
+$$
+^nC_r =\binom{n}{r} = \binom{n-1}{r} + \binom{n-1}{r-1}
+$$
 ---
 <h6 class="question">Q1) Find a formula for counting the number of diagonals in an n-gon</h6>
 
@@ -9,6 +23,7 @@
 ![[Pasted image 20251226113413.png]]
 
 ---
+^q2
 <h6 class="question">Q2) A shopkeeper has 3 ice-cream flavors. In how many ways can he sell these flavors to 10 kids</h6>
 
 <u>Sol</u>$^n$ - Consider 12 slots and 2 sticks. These 2 sticks can be used to divide the 12 slots into 3 sections like this -

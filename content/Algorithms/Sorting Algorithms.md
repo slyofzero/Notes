@@ -23,14 +23,14 @@
 
 **Definition -** Arrangement/Ordering of items in a sequence based upon some condition is *Sorting*.
 # Summary
-|                     Algorithm                     |      Best Case TC       | Worst Case TC |                   Special TC                    | In-place | Stable |                SC                |
-| :-----------------------------------------------: | :---------------------: | :-----------: | :---------------------------------------------: | :------: | :----: | :------------------------------: |
-|           [[#Bubble Sort\|Bubble Sort]]           |       $\Omega(n)$       |   $O(n^2)$    |                        -                        |    ✅     |   ✅    |              $O(1)$              |
-|        [[#Selection Sort\|Selection Sort]]        |     $$\Omega(n^2)$$     |  $$O(n^2)$$   | Better worst case no. of swaps than Bubble Sort |  $$✅$$   | $$❌$$  |             $$O(1)$$             |
-|        [[#Insertion Sort\|Insertion Sort]]        |      $$\Omega(n)$$      |  $$O(n^2)$$   |           $O(n+d)$ <br>if pre-sorted            |  $$✅$$   | $$✅$$  |             $$O(1)$$             |
-|          <br>[[#Radix Sort\|Radix Sort]]          |          <br>-          |     <br>-     |       $\Theta(n*d)$<br>input-independent        |  $$❌$$   | $$✅$$  |             $$O(n)$$             |
-| <br>[[Divide And Conquer#Merge Sort\|Merge Sort]] |          <br>-          |     <br>-     |   $\Theta(n\,log_2\,n)$<br>input-independent    |  $$❌$$   | $$✅$$  | $O(n)$<br>Aux mem + Recur. stack |
-|   [[Divide And Conquer#Quick Sort\|Quick Sort]]   | $$\Omega(n\,log_2\,n)$$ |  $$O(n^2)$$   |              Worst case for sorted              |  $$❌$$   | $$❌$$  |             $$O(n)$$             |
+|                       Algorithm                       |      Best Case TC       | Worst Case TC |                   Special TC                    | In-place | Stable |                SC                |
+| :---------------------------------------------------: | :---------------------: | :-----------: | :---------------------------------------------: | :------: | :----: | :------------------------------: |
+|    [[Sorting Algorithms#Bubble Sort\|Bubble Sort]]    |       $\Omega(n)$       |   $O(n^2)$    |                        -                        |    ✅     |   ✅    |              $O(1)$              |
+| [[Sorting Algorithms#Selection Sort\|Selection Sort]] |     $$\Omega(n^2)$$     |  $$O(n^2)$$   | Better worst case no. of swaps than Bubble Sort |  <br>✅   | <br>❌  |             $$O(1)$$             |
+| [[Sorting Algorithms#Insertion Sort\|Insertion Sort]] |      $$\Omega(n)$$      |  $$O(n^2)$$   |           $O(n+d)$ <br>if pre-sorted            |    ✅     |   ✅    |             $$O(1)$$             |
+|   <br>[[Sorting Algorithms#Radix Sort\|Radix Sort]]   |          <br>-          |     <br>-     |       $\Theta(n*d)$<br>input-independent        |  <br>❌   | <br>✅  |             $$O(n)$$             |
+|   <br>[[Divide And Conquer#Merge Sort\|Merge Sort]]   |          <br>-          |     <br>-     |   $\Theta(n\,log_2\,n)$<br>input-independent    |  <br>❌   | <br>✅  | $O(n)$<br>Aux mem + Recur. stack |
+|     [[Divide And Conquer#Quick Sort\|Quick Sort]]     | $$\Omega(n\,log_2\,n)$$ |  $$O(n^2)$$   |              Worst case for sorted              |    ❌     |   ❌    |             $$O(n)$$             |
 # Sorting Algorithms
 1. Bubble Sort
 2. Selection Sort
@@ -206,7 +206,7 @@ InsertionSort(A, n) {
 5. If the input list is already pre-sorted, then it takes time of $O(n+d)$ where -
 	$n$ = no. of elements
 	$d$ = no. of inversions
-	Check [[##^q2|Question 2]] for this.
+	Check [[Sorting Algorithms#^q2|Question 2]] for this.
 # Radix Sort
 Radix means the base of the number system.
 1. Bin the numbers based on their **unit’s digit** using a key-value structure with keys `0–9`, inserting elements for each key in **FIFO order**.    

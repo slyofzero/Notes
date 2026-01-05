@@ -323,7 +323,7 @@ T(n) &= a*T\left(\frac{n}{b}\right) + F(n) \\
 \end{align*}
 $$
 1. **Example -** $T(n) = 4T\left(\frac{n}{2}\right) + n$. Here $a = 4, b=2, F(n) = n$. Thus Master's Method applies.
-2. Even when an equation might not seem to satisfy Master's Method on the first glance, using **Change of Variable** might make it into an equation that would satisfy Master's Method. See  [[#^q3|Question 3]] for an example.
+2. Even when an equation might not seem to satisfy Master's Method on the first glance, using **Change of Variable** might make it into an equation that would satisfy Master's Method. See  [[Divide And Conquer#^q3|Question 3]] for an example.
 ## Case 1
 If $F(n)$ is $O(n^{log_ba-\epsilon})$ for some $\epsilon > 0$, then
 $$
@@ -428,7 +428,7 @@ We use 2-way split or 3-way split and then solve. There exist 3 methods of imple
 2. AK optimization DnC - $T(n) = 8*T(\frac{n}{3})+n = \Theta(n^{log_3\,8}) \approx \Theta(n^{1.89})$
 3. T&C optimization DnC - $T(n) = 5*T(\frac{n}{3})+n = \Theta(n^{log_3\,5}) \approx \Theta(n^{1.46})$
 
-[[#Master's Method]] can be used to find the above TCs.
+[[Divide And Conquer#Master's Method|Master's Method]] can be used to find the above TCs.
 
 Coefficient of $T(\frac{n}{k})$ for some k-way split -
 
