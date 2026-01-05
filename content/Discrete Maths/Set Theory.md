@@ -18,8 +18,8 @@ Types of sets -
 6. **Proper Subset** - $A$ is a proper subset of $B$ if $A$ is a subset of $B$ but not equal to $B$.
 7. **Power Set $(P(A)$ or $2^A)$ -** A set of all subsets of $A$ is a power set of $A$.
    A power set only contains sets, not elements.
-   The total number of elements in a power set can be calculated using [[Counting#Binomial Theorem|Binomial Theorem]] -
 
+The total number of elements in a power set can be calculated using [[Counting#Binomial Theorem|Binomial Theorem]] -
 $$
 \begin{align*}
 &\,\,\,\,\,\,\,\,\,\,\,^nC_0 + ^nC_1 + \dots + ^nC_n \\
