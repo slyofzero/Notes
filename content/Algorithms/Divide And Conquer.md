@@ -267,6 +267,7 @@ Because in Merge **comparisons happen during the merge step**, not during divisi
 3. The Recursion Stack would be of $O(log_2\,n)$ due to the division.
 4. The Auxiliary memory however would be of $O(n)$ as a temporary array would be required for merge + sort results.
 5. Thus total $SC = O(n)$.
+6. Number of function calls during recursion - $2(n-1)$.
 ## 2-way Merge Sort
 
 ![[Pasted image 20251231232551.png]]

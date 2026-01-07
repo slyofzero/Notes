@@ -245,6 +245,8 @@ A subgraph $T(V, E')$ of a given graph $(V,E)$ where $E' \subset E$ is a spannin
 1. Consider all edges of the graph.
 2. If a cycle forms, remove the maximum cost edge in that cycle.
 
+Djikstra's Single Source Shortest Path is also a Greedy Algorithm, but discussed under [[Dynamic Programming]].
+
 ---
 
 # Questions

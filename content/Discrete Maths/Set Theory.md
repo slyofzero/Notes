@@ -1,3 +1,25 @@
+>[!SUMMARY] Table of Contents
+>- [[Set Theory#Set|Set]]
+>- [[Set Theory#Set Operations|Set Operations]]
+>- [[Set Theory#Principle of Inclusion and Exclusion|Principle of Inclusion and Exclusion]]
+>- [[Set Theory#Multiset|Multiset]]
+>- [[Set Theory#Cartesian Product|Cartesian Product]]
+>- [[Set Theory#Relations|Relations]]
+>	- [[Set Theory#Types of Relations|Types of Relations]]
+>		- [[Set Theory#Diagonal Relation (Identity Relation)|Diagonal Relation (Identity Relation)]]
+>		- [[Set Theory#Reflexive Relation |Reflexive Relation ]]
+>		- [[Set Theory#Irreflexive Relation|Irreflexive Relation]]
+>		- [[Set Theory#Symmetric Relation|Symmetric Relation]]
+>		- [[Set Theory#Anti-Symmetric Relation|AntiSymmetric Relation]]
+>		- [[Set Theory#Asymmetric Relation|Asymmetric Relation]]
+>		- [[Set Theory#Transitive Relation|Transitive Relation]]
+>		- [[Set Theory#Equivalence Relation|Equivalence Relation]]
+>- [[Set Theory#Closures|Closures]]
+>- [[Set Theory#Partitions and Equivalence Class|Partitions and Equivalence Class]]
+>	- [[Set Theory#Partitions|Partitions]]
+>	- [[Set Theory#Equivalence Class|Equivalence Class]]
+>	- [[Set Theory#Bell Number|Bell Number]]
+>- [[Set Theory#Questions|Questions]]
 # Set
 A **well-defined** **unordered** collection of **distinct** elements is called a set.
 
@@ -107,6 +129,8 @@ Any set of the form - $\{(a,a)\,|\,a \in A\}$ is a diagonal relation.
 Eg - $R=\{(1,1), (2,2), (1,2)\}$ is not a diagonal relation over $A = \{1,2\}$ due to $(1,2)$.
 
 A **diagonal order pair** is - $(x,y), \,\text{s.t.}\, x=y$.
+
+$\bigstar$ Called diagonal relation because if you arrange all $n^2$ elements of $A \times A$ in an $n \times n$ grid, all pairs $(a,a)$ lie on the diagonal.
 ### Reflexive Relation 
 Any relation whose elements satisfy $a^Ra,\, \forall \,a \in A$ is a reflexive relation. 
 
@@ -136,18 +160,99 @@ If $(x,y) \in R$ then $(y,x) \in R$, $\forall x,y \in A$ then $R$ is said to be 
 
 Eg - $R_1 = \{(1,1),(2,2)\},\, R_2 = \{(1,2)\}$ over $A = \{1,2\}$, $R_1$ is symmetric but $R_2$ isn't.
 
-There are a total of $\frac{n(n-1)}{2}$ non-diagonal symmetric ordered pairs over some set of $n$ elements.
+$\bigstar$ There are a total of $\frac{n(n-1)}{2}$ non-diagonal symmetric ordered pairs over some set of $n$ elements.
 ### Anti-Symmetric Relation
 If $(x,y) \in R$ and $(y,x) \in R$ then $x=y$, $\forall x,y \in A$ then $R$ is said to be a anti-symmetric relation.
 
 $\qquad(OR)$
 
-If $(x,y) \in R$ then $(y,x) \notin R$ or $x=y$, then R is anti-symmetric.
+If the only symmetric ordered pairs in a relation are also diagonal, the relation is said to be anti-symmetric.
 
 Eg - Over $A = \{1,2,3\}$ -
 - $R_1 = \{(1,2),(2,3),(3,1)\}$ is anti-symmetric.
 - $R_2 = \{(1,2),(2,3),(1,1)\}$ is anti-symmetric.
 - $R_3 = \{(1,2),(2,1),(1,1)\}$ is not anti-symmetric.
+
+$\bigstar$ One visual trick of checking if a relation is symmetric is to write the ordered pairs in an $n \times n$ grid and check whether all pairs of the relation lie in the **upper triangle** or **lower triangle** of the grid.
+### Asymmetric Relation
+If $(x,y) \in R$ then $(y,x) \notin R$, $\forall x,y \in A$ even if $x=y$ then $R$ is said to be a asymmetric relation.
+
+$\qquad(OR)$
+
+If there exist no symmetric ordered pairs in a relation, the relation is said to be asymmetric.
+
+$\bigstar$ $\{\}$ is symmetric, anti-symmetric, and asymmetric.
+$\bigstar$ Every asymmetric relation is anti-symmetric.
+
+Eg - Over $A = \{1,2,3\}$ -
+- $R_1 = \{(1,2),(2,3),(3,1)\}$ is asymmetric.
+- $R_2 = \{(1,2),(2,3),(1,1)\}$ is not asymmetric.
+### Transitive Relation
+If $(x,y) \in R$ and $(y,z) \in R$ then $(x,z) \in R$, $\forall x,y,z \in A$ is said to be a transitive relation.
+
+Eg - Over $A = \{1,2,3\}$ -
+- $R_1 = \{(1,2),(2,1),(1,1)\}$ is not transitive as $(2,1) \in A$ and $(1,2) \in A$ but $(2,2) \notin A$.
+### Equivalence Relation
+A relation $R$ on $A$ is an equivalence relation if and only if - 
+1. $R$ is reflexive
+2. $R$ is symmetric
+3. $R$ is transitive 
+# Closures
+Let $R$ be a relation on set $A$. 
+1. **Reflexive Closure -** A reflexive closure of $R$ is the smallest reflexive relation on $A$ containing $R$.
+2. **Symmetric Closure -** A symmetric closure of $R$ is the smallest symmetric relation on $A$ containing $R$.
+3. **Transitive Closure -** A transitive closure of $R$ is the smallest transitive relation on $A$ containing $R$.
+    - Warshall's Algorithm can be used to find the Transitive Closure of a relation.
+# Partitions and Equivalence Class
+## Partitions
+A partition of a set $A$ is the grouping of all elements of $A$ into **non-empty subsets** $A_1, A_2, \dots, A_k$  if and only if -
+1. $A_i \cap A_j = \phi$,  where $i \ne j,\, \forall i,j$ 
+2. $\bigcup_{i=1}^k A_i = A$
+
+$\qquad(OR)$
+
+A partition of a set $A$ is the grouping of all elements of $A$ into **non-empty subsets** such that every element only occurs in one subset.
+
+1. Partition of $A=\phi=\{\}$ is $\phi=\{\}$.
+
+Check [[Set Theory#^q5|Question 5]] to see how to count the number of partitions of a set.
+## Equivalence Class
+An equivalence class of an element $x$ with respect to an equivalence relation $R$ is a set of all $y$ such that $x^Ry$ in that relation.
+
+$$
+[x] = \{y\,|\,(x,y) \in R\}
+$$
+
+Notes -
+1. $[x_1] \equiv [x_2]$ even if $x_1 \ne x_2$.
+2. Set of all distinct equivalence classes of elements of set $A$ define a partition of set $A$ w.r.t the given equivalence relation $R$.
+3. Union of self cross product of each subset in a partition will give back the equivalence relation $R$. Check [[Set Theory#^q6|Question 6]] for an example.
+
+There is a one-to-one correspondence between the partitions of set $A$ and the equivalence relations of set $A$.
+$$
+\text{No. of partitions} = \text{No. of equivalence relations}
+$$
+## Bell Number
+Bell number $B_n$ gives the **number of partitions** (and thus number of equivalence relations) of set $A$, where $|A| =n$. 
+
+Number of partitions are shown by the first column of the **Bell Triangle** - 
+$$
+\begin{aligned}
+B_0 &= \boxed{1} \\
+B_1 &= \boxed{1}\,\,\,2 \\
+B_2 &= \boxed{2}\,\,\,3\,\,\,5 \\
+B_3 &= \boxed{5}\,\,\,7\,\,\,10\,\,\,15 \\
+B_4 &= \boxed{15}\,\,\,20\,\,\,27\,\,\,37\,\,\,52 \\
+B_5 &= \boxed{52}\,\,\,67\,\,\,87\,\,\,114\,\,\,151\,\,\,203 \\
+&\vdots
+\end{aligned}
+$$
+How to form the Bell Triangle -
+1. Start with $B_0 = 1$.
+2. To create some row $B_{i+1}$, check the last number of row $B_i$ and add it as the first number of $B_{i+1}$.
+3. Repeat Step(3) until there's a number in current row $B_{i+1}$ with no number above it in previous row $B_i$. For each number $m$ in $B_{i+1}$ if there is a number above it in $B_i$ say $n$, the next number of $B_{i+1}$ will be $m+n$. 
+
+***Example*** - In $B_3$ we can see that $2$ has $1$ above it, so next number if $2+1=3$.
 
 ---
 # Questions
@@ -218,3 +323,82 @@ $$
 $$
 
 So total number of ways is $1 * 2^{n^2-n} = \boxed{2^{n^2-n}}$ ways.
+
+---
+^q5
+<h6 class="question">Q5) How many partitions are possible for {1,2,3,4,5}?</h6>
+
+$\underline{\text{Sol}^n} -$
+A partition of 5 elements can be created with subsets of following cardinalities - 
+1. 1,1,1,1,1
+2. 1,1,1,2
+3. 1,1,3
+4. 1,4
+5. 5
+6. 2,3
+7. 1,2,2
+
+Count of sets of subsets of the above cardinalities is -
+1. (1,1,1,1,1) - After picking elements in required quantities, we can arrange the subsets in $5!$ ways, such that each set of subsets is equivalent. Subsets of equal size are **indistinguishable**, so we divide by the factorial of their multiplicity Because such partitions are equivalent, they shouldn't be counted multiple times. Thus the total number in which we can pick elements in required quantities needs to be divided by 5!.
+    - $\{\{1\},\{2\},\{3\},\{4\},\{5\}\} \equiv \{\{3\},\{5\},\{1\},\{4\},\{2\}\}$ and so on...
+$$
+\frac{\binom{5}{1} * \binom{4}{1} * \binom{3}{1} * \binom{2}{1} * \binom{1}{1}}{5!} = \boxed{1}
+$$
+
+2. (1,1,1,2) - Subsets of equal size are **indistinguishable**, so we divide by the factorial of their count. There are $3$ subsets of size $1$, so we need to divide by $2!$ here.
+$$
+\frac{\binom{5}{1} * \binom{4}{1} * \binom{3}{1} * \binom{2}{2}}{3!} = \boxed{10}
+$$
+
+3. (1,1,3) - $2$ subsets of size $1$, so we need to divide by $2!$ here.
+$$
+\frac{\binom{5}{1} * \binom{4}{1} * \binom{3}{3}}{2!} = \boxed{10}
+$$
+
+4. (1,4) - Here there are no subsets of equal sizes, thus no need for division.
+$$
+\binom{5}{1} * \binom{4}{4} = \boxed{5}
+$$
+
+5. (5) - No subsets of equal sizes.
+$$
+\binom{5}{5} = \boxed{1}
+$$
+
+6. (2,3) - No subsets of equal sizes.
+$$
+\binom{5}{3}*\binom{2}{2} = \boxed{10}
+$$
+
+7.  (1,2,2) - $2$ subsets of size $2$, so we need to divide by $2!$ here.
+$$
+\frac{\binom{5}{1}*\binom{4}{2}*\binom{2}{2}}{2!} = \boxed{15}
+$$
+
+If there were $2$ subsets of size $1$ and $2$ subsets of size $2$, we would have divided the permutations by $2!*2!$.
+
+Total number of partitions $=1+10+10+5+1+10+15=\boxed{52}$.
+
+---
+^q6
+<h6 class="question">Q6) If the partition set for some set A is S , what is its corresponding equivalence relation?</h6>
+
+$$
+A = \{1,2,3\}, \qquad S=\{\{1,2\},\{3,4\},\{5\}\}
+$$
+
+$\underline{\text{Sol}^n} -$
+There are 3 subsets in $S$ - $\{1,2\},\{3,4\}$ and $\{5\}$. Take a self cross product of each -
+$$
+\begin{aligned}
+\{1,2\} \times \{1,2\} &= \{(1,1),(1,2),(2,1),(2,2)\} \\
+\{3,4\} \times \{3,4\} &= \{(3,3),(3,4),(4,3),(4,4)\} \\
+\{5\} \times \{5\} &= \{(5,5)\}
+\end{aligned}
+$$
+Union of the above cross products would give -
+$$
+\boxed{R =\{(1,1),(1,2),(2,1),(2,2),(3,3),(3,4),(4,3),(4,4),(5,5)\}}
+$$
+
+---
