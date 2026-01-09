@@ -1,3 +1,12 @@
+>[!SUMMARY] Table of Contents
+>- [[Hash Table#Collision Resolution|Collision Resolution]]
+>	- [[Hash Table#1. Open Hashing|1. Open Hashing]]
+>	- [[Hash Table#2. Closed Hashing|2. Closed Hashing]]
+>		- [[Hash Table#a. Linear Probing|a. Linear Probing]]
+>		- [[Hash Table#b. Quadratic Probing|b. Quadratic Probing]]
+>		- [[Hash Table#c. Double Hashing|c. Double Hashing]]
+>- [[Hash Table#Summary|Summary]]
+
 Hash table is a linear data structure which is used to create mapping between the value and the key using a hash function.
 
 Example of a hash function -
@@ -22,7 +31,11 @@ All elements inserted are stored inside the hash table itself, without the use o
 If any index already has a value in it (collision occurs at the index), move to the next index and check if it's free. Keep doing this until an empty index is found.
 
 In linear probing our hash function is usually -
-$$h(k,i) = (h(k) + i) \ mod \ n$$
+
+$$
+h(k,i) = (h(k) + i) \ mod \ n
+$$
+
 * Initially $i = 0$
 * Upon collision $i = i+1$
 ---
@@ -41,14 +54,21 @@ Drawback of Linear Probing -
 	Yet both end up sharing the same probe sequence and be part of a cluster.
 ### b. Quadratic Probing
 To avoid Primary Clustering we can update the hash function to be -
-$$h(k,i) = (h(k) + i^2) \ mod \ n$$
+
+$$
+h(k,i) = (h(k) + i^2) \ mod \ n
+$$
+
 Drawback of Quadratic Probing -
 1. <u>Secondary Clustering</u> - Keys that hash to **same initial indices** end up following the same probe sequence.
 	
 	Clusters formed using this will be smaller than primary clusters.
 ### c. Double Hashing
 In order to tackle Primary and Secondary clustering, we use two hash functions -
-$$h(k,i) = (h_1(k) + i * h_2(k)) \ \ mod \ \ n$$
+
+$$
+h(k,i) = (h_1(k) + i * h_2(k)) \ \ mod \ \ n
+$$
 # Summary
 1. Hash tables are made to decrease the time complexity required in searching for an element.
 2. This is done by using hash functions.

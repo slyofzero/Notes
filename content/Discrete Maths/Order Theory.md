@@ -121,7 +121,7 @@ A POSET in which least upper bound exists for every pair of elements is called a
 ## Meet Semi Lattice
 A POSET in which greatest lower bound exists for every pair of elements is called a **meet semi lattice**.
 ## Lattice
-A POSET in which both least upper bound and greatest lower bound exit for every pair of elements is called a **lattice**. It is denoted using $[L, \vee, \wedge]$.
+A lattice is an [[Group Theory#Algebraic Structure|algebraic structure]] $[L, \vee, \wedge]$ such that a least upper bound and greatest lower bound exit for every pair of elements.
 
 $\qquad(OR)$
 
