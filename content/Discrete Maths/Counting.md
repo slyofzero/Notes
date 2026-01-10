@@ -9,7 +9,7 @@ $$
 $$
 3. Combinations (Repetition allowed), bars and stars example in [[Counting#^q2|Question 2]] -
 $$
-= \binom{n+r-1}{r} = \frac{(n+r-1)!}{r!(n-1)!}
+= \binom{n+r-1}{r-1} = \frac{(n+r-1)!}{n!(r-1)!}
 $$
 4. Pascal's rule -
 $$
