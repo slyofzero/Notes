@@ -1,3 +1,17 @@
+>[!SUMMARY] Table of Contents
+>- [[Group Theory#Algebraic Structure|Algebraic Structure]]
+>- [[Group Theory#Semi-group|Semi-group]]
+>- [[Group Theory#Monoid|Monoid]]
+>- [[Group Theory#Group|Group]]
+>- [[Group Theory#Abelian Group|Abelian Group]]
+>- [[Group Theory#Finite Group|Finite Group]]
+>- [[Group Theory#Addition and multiplication modulo operation|Addition and multiplication modulo operation]]
+>- [[Group Theory#Order of an element|Order of an element]]
+>- [[Group Theory#Subgroup|Subgroup]]
+>- [[Group Theory#Cyclic Group|Cyclic Group]]
+>	- [[Group Theory#Klein-4 Groups|Klein-4 Groups]]
+>	- [[Group Theory#Number of generators of a cyclic group|Number of generators of a cyclic group]]
+>- [[Group Theory#Questions|Questions]]
 # Algebraic Structure
 A non-empty set $S$ w.r.t binary operation $*$ is called an algebraic structure if and only if -
 1. **Closure Property** – $a * b \in S,\,\forall a,b \in S$
