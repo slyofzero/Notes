@@ -19,6 +19,7 @@
 >	- [[Set Theory#Partitions|Partitions]]
 >	- [[Set Theory#Equivalence Class|Equivalence Class]]
 >	- [[Set Theory#Bell Number|Bell Number]]
+>	- [[Set Theory#Refinement|Refinement]]
 >- [[Set Theory#Questions|Questions]]
 # Set
 A **well-defined** **unordered** collection of **distinct** elements is called a set.
@@ -33,7 +34,7 @@ Notations -
 
 Types of sets -
 1. **Equal Sets -** Two sets $A$ and $B$ are said to be equal if all elements of A are in B and vice versa.
-2. **Equivalent Sets -** Two sets $A$ and $B$ are equivalent if their cardinalities are same. In other words there exists a **bijective mapping** between $A$ and $B$.
+2. **Equivalent Sets -** Two sets $A$ and $B$ are equivalent if their cardinalities are same. In other words there exists a [[Functions#Bijective Function|bijective mapping]] between $A$ and $B$.
 3. **Universal Set -** A set containing all elements corresponding to the problem at hand.
 4. **Subset -** $A$ is a subset of $B$ if every element of set $A$ is in $B$.
 5. **Superset -** $B$ is a superset of $A$ if every element of $A$ is in $B$.
@@ -181,8 +182,8 @@ $\qquad(OR)$
 
 If there exist no symmetric ordered pairs in a relation, the relation is said to be asymmetric.
 
-$\bigstar$ $\{\}$ is symmetric, anti-symmetric, and asymmetric.
-$\bigstar$ Every asymmetric relation is anti-symmetric.
+- $\bigstar$ $\{\}$ is symmetric, anti-symmetric, and asymmetric.
+- $\bigstar$ Every asymmetric relation is anti-symmetric.
 
 Eg - Over $A = \{1,2,3\}$ -
 - $R_1 = \{(1,2),(2,3),(3,1)\}$ is asymmetric.
@@ -253,6 +254,12 @@ How to form the Bell Triangle -
 3. Repeat Step(3) until there's a number in current row $B_{i+1}$ with no number above it in previous row $B_i$. For each number $m$ in $B_{i+1}$ if there is a number above it in $B_i$ say $n$, the next number of $B_{i+1}$ will be $m+n$. 
 
 ***Example*** - In $B_3$ we can see that $2$ has $1$ above it, so next number if $2+1=3$.
+## Refinement
+Let $A$ be any finite set and $\Pi_1$ and $\Pi_2$ be any two partitions of $A$. Partition $\Pi_1$ is a refinement of partition $\Pi_2$ if every subset inside $\Pi_1$ is a subset of subsets in $\Pi_2$.
+
+***Example -*** 
+Let $A = \{1,2,3,4\}$ and $\Pi_1 = \{\{a\},\{b\},\{c,d\}\}$ and $\Pi_2 = \{\{a,b\},\{c,d\}\}$. 
+Here we can see that every subset $\{a\},\{b\},\{c,d\}$ in $\Pi_1$ is a subset of subsets $\{a,b\},\{c,d\}$ in $\Pi_2$.
 
 ---
 # Questions

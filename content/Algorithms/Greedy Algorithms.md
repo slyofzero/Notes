@@ -248,7 +248,6 @@ A subgraph $T(V, E')$ of a given graph $(V,E)$ where $E' \subset E$ is a spannin
 Djikstra's Single Source Shortest Path is also a Greedy Algorithm, but discussed under [[Dynamic Programming]].
 
 ---
-
 # Questions
 <h6 class="question">Q1) We have 6 files of the following sizes, how can we merge them to get the minimum number of record movements?</h6>
 

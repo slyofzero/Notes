@@ -40,6 +40,8 @@ Let $R$ be a partial order relation on $A$. $R$ is called a **total order relati
 
 Example - Let $A = \{1,2,3,4\}$ and $(A,\div)$ be a [[Order Theory#Partially Ordered Set (POSET)|POSET]].
 Here as 2 doesn't divide 3 and 3 doesn't divide 2, 2 and 3 are not comparable. Thus $A$ is not a total order relation.
+
+See [[Order Theory#^q4|Question 4]] for a property.
 # Partial and Total Orderings
 ## Partially Ordered Set (POSET)
 A pair $(A,R)$ is a **partially ordered set** (POSET), if and only if $R$ is a partial order relation defined on a set $A$.
@@ -300,6 +302,7 @@ $\underline{\text{Sol}^n} -$
 - **Maximal Elements -** $\boxed{3, 4,\text{and}\,5}$ because there don't exist any other elements greater than these which are divisible by them.
 
 ---
+^q4
 <h6 class="question">Q4) How many Total Order Relations are possible on a set with n element?</h6>
 
 $\underline{\text{Sol}^n} -$
