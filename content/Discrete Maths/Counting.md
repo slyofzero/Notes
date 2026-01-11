@@ -68,6 +68,34 @@ $$
 \end{aligned}
 $$
 
+4. Using a similar logic we can find -
+$$
+\begin{alignedat}{3}
+&&\left(1-1\right)^n &= \binom{n}{1} - \binom{n}{2} + \binom{n}{3} - \binom{n}{4} + \dots \\
+&&\Rightarrow \binom{n}{2} + \binom{n}{4} + \binom{n}{6} + \dots &= \binom{n}{1} + \binom{n}{3} + \binom{n}{5} + \dots  \\
+\end{alignedat}
+$$
+
+5. **Extended binomial coefficient** - For any real number $r$, the binomial coefficient is defined by $\binom{r}{k} = \frac{r(r-1)(r-2)\cdots(r-k+1)}{k!}$. Now let $n \in \mathbb{N}$ and substitute $r = -n$. Then,
+
+$$
+\begin{aligned}
+\binom{-n}{k}
+&= \frac{(-n)(-n-1)(-n-2)\cdots(-n-k+1)}{k!} \\[6pt]
+&= \frac{(-1)^k\, n(n+1)(n+2)\cdots(n+k-1)}{k!} \\[6pt]
+&= (-1)^k \frac{(n+k-1)!}{k!*(n-1)!} \\[6pt]
+&= \boxed{(-1)^k \binom{n+k-1}{k}}
+\end{aligned}
+$$
+
+    - Using this we can find -
+$$
+\begin{aligned}
+\frac{1}{1-x}&=1+x+x^2+x^3+x^4\dots \\
+\frac{1}{1+x}&=1-x+x^2-x^3+x^4\dots
+\end{aligned}
+$$
+
 ## $r^{th}$ term of the Binomial Expansion
 The $r^{th}$ term of the Binomial Expansion is always -
 $$\binom{n}{r-1!}a^{n-r+1}b^{r-1}$$
