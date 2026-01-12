@@ -1,4 +1,6 @@
 # Formulas
+In addition to these, also see the [[Analysis of Algorithms#Mathematical Series|Mathematical Series]] discussed in Analysis of Algorithms.
+
 1. Permutations -
 $$
 ^nP_r = \frac{n!}{r!}
@@ -139,3 +141,31 @@ Each row $i$ of the Pascal's Triangle contains the Binomial Coefficients of the 
 In how many ways can one reach $(5,5)$ from $(0,0)$ in the below  $5 \times 5$ grid?
 
 ![[Pasted image 20251226164729.png | 500]]
+
+# Pigeon Hole Principle
+The principle states that if we have $m$ pigeons and $n$ pigeon holes such that $m>n$. Then there would at least be one pigeon hole such that at least 2 pigeons reside in it.
+
+Usually used in finding the worst case of the number of item pickings such that it satisfied some constraint. 
+
+---
+<h6 class="question">Q4) What is the minimum number of ways people can be seated in a hall such that it always ensures that at least two people share the same first name and last name initials.</h6> 
+
+<u>Sol</u>$^n$ - There are a total of 26 letter in the English Alphabets. So a person's initial can be - A.A., A.B., A.C., $\dots$, Z.Z. Only after all $26^2$ initials have been covered can we say that seating one more person will ensure that at least two people share the same initials. Thus the number of pigeon holes we have is $26^2$ and the number of "pigeons" or minimum number of people needed is $\boxed{26^2+1}$.
+
+---
+# Generating Function
+The idea of a generating function is if you have some question with the answer associated with some positive integer, you can model the problem as a polynomial such that the coefficients of certain terms would correspond to this answer.
+
+Say we want the number of subsets of $\{1,2,3,4\}$ such that the sum of the elements in each subset is equal to 5. We can model this as a polynomial problem of $f(x) = (1+x)(1+x^2)(1+x^3)(1+x^4)$ such that the coefficient corresponding to $x^5$ in the product would be this count. Here $f(x)$ is your generating function.
+
+No idea how someone thought of this (even [3Blue1Brown](https://www.youtube.com/watch?v=bOXCLR3Wric) doesn't) but it can be seen why the above example would work. A generating function is of the form -
+
+$$
+\begin{aligned}
+G(x) &= a_0+a_1x+a_2x^2+a_3x^3+\dots \\
+&= \sum_{i=0}^na_ix^i
+\end{aligned}
+$$
+# Recurrence Relation
+Back Substitution is discussed in [[Analysis of Algorithms#Back Substitution Method|Analysis of Algorithms]], so only method of characteristic roots will be discussed here.
+## Method of characteristic roots
