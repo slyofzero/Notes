@@ -3,7 +3,7 @@ In addition to these, also see the [[Analysis of Algorithms#Mathematical Series|
 
 1. Permutations -
 $$
-^nP_r = \frac{n!}{r!}
+^nP_r = \frac{n!}{(n-r)!}
 $$
 2. Combinations (Repetition not allowed) -
 $$

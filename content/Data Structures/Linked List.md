@@ -1,3 +1,14 @@
+>[!SUMMARY] Table of Contents
+>- [[Linked List#Types of Linked Lists|Types of Linked Lists]]
+>- [[Linked List#Structure of Node|Structure of Node]]
+>	- [[Linked List#1. Singly Linked List|1. Singly Linked List]]
+>	- [[Linked List#2. Doubly Linked List|2. Doubly Linked List]]
+>	- [[Linked List#3. Circular Singly Linked List|3. Circular Singly Linked List]]
+>	- [[Linked List#4. Circular Doubly Linked List|4. Circular Doubly Linked List]]
+>- [[Linked List#Time Complexities|Time Complexities]]
+>	- [[Linked List#1. Non-circular lists|1. Non-circular lists]]
+>	- [[Linked List#2. Circular lists|2. Circular lists]]
+
 Linked list is a linear data structure which contains many elements/nodes and each node is connected to zero or more nodes.
 # Types of Linked Lists
 1. Singly Linked List

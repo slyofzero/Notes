@@ -56,7 +56,7 @@ A double ended queue (deque) is an extension of the queue data structure that al
 - **Full:**    
     `(front == (rear+1) % maxsize)`
 # Priority Queue
-A special type of queue in which deletion of elements is based upon priority of element, not on the basis of arrival time.
+A special type of queue in which deletion of elements is based upon priority of element, not on the basis of arrival time. Implemented using a [[Trees#Binary Heap|Heap]].
 
 Types -
 1. Max Priority Queue (high to low)

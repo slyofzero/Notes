@@ -37,7 +37,7 @@
 3. Insertion Sort
 4. [[Divide And Conquer#Merge Sort|Merge Sort]]
 5. [[Divide And Conquer#Quick Sort|Quick Sort]]
-6. Heap Sort
+6. Heap Sort ^heap-sort
 7. Radix Sort
 ## Types of Sorting Algorithms
 1. Comparison Based - When an element is compared with other elements of the given data to achieve sorting.
