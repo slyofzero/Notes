@@ -1,5 +1,14 @@
 @use "./base.scss";
 
+:root {
+  --heading-1-color: #e06c75;
+  --heading-2-color: #d19a66;
+  --heading-3-color: #98c379;
+  --heading-4-color: #61afef;
+  --heading-5-color: #c678dd;
+  --heading-6-color: #56b6c2;
+}
+
 // put your custom CSS here!
 img {
   display: block;
@@ -8,4 +17,37 @@ img {
 
 table {
   margin: auto !important;
+}
+
+h1 {
+  color: var(--heading-1-color);
+}
+h2 {
+  color: var(--heading-2-color);
+}
+h3 {
+  color: var(--heading-3-color);
+}
+h4 {
+  color: var(--heading-4-color);
+}
+h5 {
+  color: var(--heading-5-color);
+}
+h6 {
+  color: var(--heading-6-color);
+}
+
+h4.special {
+  color: var(--heading-4-color);
+  font-weight: bold;
+  font-style: italic;
+  font-size: larger;
+}
+
+h6.question {
+  color: hsl(225, 85%, 65%);
+  font-weight: bold;
+  font-style: italic;
+  font-size: larger;
 }

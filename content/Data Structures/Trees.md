@@ -1,3 +1,29 @@
+>[!SUMMARY] Table of Contents
+>- [[Trees#Binary Tree|Binary Tree]]
+>- [[Trees#Properties of binary trees|Properties of binary trees]]
+>- [[Trees#Tree Traversal|Tree Traversal]]
+>	- [[Trees#Breadth First Traversal|Breadth First Traversal]]
+>	- [[Trees#Depth First Traversal|Depth First Traversal]]
+>		- [[Trees#Pre-Order Traversal|Pre-Order Traversal]]
+>		- [[Trees#In-Order Traversal|In-Order Traversal]]
+>		- [[Trees#Post-Order Traversal|Post-Order Traversal]]
+>- [[Trees#Binary Search Tree|Binary Search Tree]]
+>	- [[Trees#Deletion of a node in a B.S.T|Deletion of a node in a B.S.T]]
+>		- [[Trees#Deleting a leaf node|Deleting a leaf node]]
+>		- [[Trees#Deleting an internal node with one child|Deleting an internal node with one child]]
+>		- [[Trees#Deleting an internal node with two children|Deleting an internal node with two children]]
+>- [[Trees#Array representation of Binary Tree|Array representation of Binary Tree]]
+>- [[Trees#Binary Heap|Binary Heap]]
+>	- [[Trees#Insertion in a Binary Heap|Insertion in a Binary Heap]]
+>	- [[Trees#Deletion in a Binary Heap|Deletion in a Binary Heap]]
+>	- [[Trees#Number of distinct Binary Heaps possible|Number of distinct Binary Heaps possible]]
+>- [[Trees#AVL Tree|AVL Tree]]
+>	- [[Trees#Balancing a B.S.T|Balancing a B.S.T]]
+>		- [[Trees#LL Rotation|LL Rotation]]
+>		- [[Trees#RR Rotation|RR Rotation]]
+>		- [[Trees#LR Rotation|LR Rotation]]
+>		- [[Trees#RL Rotation|RL Rotation]]
+
 A tree is a non-linear data structure in which elements are stored as nodes and connected in a hierarchical manner.
 
 Some important terminologies for a tree are -
@@ -150,4 +176,63 @@ Reasoning -
 A height balanced [[Trees#Binary Search Tree|B.S.T]] is called an AVL Tree.
 - A tree is said to be height balanced if the balancing factor for each node is in the range of $\{-1,0,1\}$.
 - **Balancing Factor** = [[Trees#^height|Height]] of left sub-tree - Height of right sub-tree. Balancing factor for leaf nodes is 0.
+## Balancing a B.S.T
+To balance a given B.S.T we can perform rotations -
+1. Single Rotation -
+	- LL Rotation
+	- RR Rotation
+2. Double Rotation -
+	- LR Rotation
+	- RL Rotation
 
+**Critical Node -** Any node with a balancing factor that doesn't belong to the allowed range of $\{-1,0,1\}$.
+### LL Rotation
+Done when insertion of a new node happens in the left subtree of the left child of a critical node.
+- Let **A** be the first critical node from the bottom.
+- Let **B** be A’s left child.
+- Perform a **single right rotation**:
+    - B becomes the new root of this subtree.
+    - A becomes the right child of B.
+    - B’s right subtree becomes A’s left subtree.
+
+![[Pasted image 20260114091559.png]]
+### RR Rotation
+Done when insertion of a new node happens in the right subtree of the right child of a critical node.
+- Let **A** be the first critical node from the bottom.
+- Let **B** be A’s right child.
+- Perform a **single left rotation**:
+    - B becomes the new root of this subtree.
+    - A becomes the left child of B.
+    - B’s left subtree becomes A’s right subtree.
+
+![[Pasted image 20260114092422.png]]
+### LR Rotation
+Done when insertion of a new node happens in the right subtree of the left child of a critical node.
+- Let **A** be the first critical node from the bottom.
+- Let **B** be A’s left child.
+- Let **C** be B's right child
+- Perform a **single left rotation** on B:
+    - C becomes parent of B.
+    - B becomes the left child of C.
+    - C’s left subtree becomes B’s right subtree.
+- Perform a **single right rotation** on A:
+    - C becomes the new root of this subtree.
+    - A becomes the right child of C.
+    - C’s right subtree becomes A’s left subtree.
+
+![[Pasted image 20260114093752.png]]
+### RL Rotation
+Done when insertion of a new node happens in the left subtree of the right child of a critical node.
+- Let **A** be the first critical node from the bottom.
+- Let **B** be A’s right child.
+- Let **C** be B's left child.
+- Perform a **single right rotation** on B:
+    - C becomes parent of B.
+    - B becomes the right child of C.
+    - C’s right subtree becomes B’s left subtree.
+- Perform a **single left rotation** on A:
+    - C becomes the new root of this subtree.
+    - A becomes the left child of C.
+    - C’s left subtree becomes A’s right subtree.
+
+![[Pasted image 20260114100536.png]]

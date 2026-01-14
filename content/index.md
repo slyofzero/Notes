@@ -5,7 +5,7 @@ This repository is a **living notebook** where I organize my understanding of co
 
 I am still in the process of adding more things to this. These notes are intended for GATE aspirants and anyone currently pursuing the IIT Madras BS in Data Science and Applications Degree. Reach out to me at sly.of.zero@gmail.com if you want to collaborate in this alongside me! Cheers 🍻!
 
-The notes may have same LaTeX rendering issues due to importing Obsidian files into Quartz. I apologize if you encounter any, please reach out to me or raise an issue in the repo and I'd try to fix it at the earliest.
+The notes may have same LaTeX rendering issues due to importing Obsidian files into Quartz. I apologize if you encounter any, please reach out to me or raise an issue in the [Github repo](https://github.com/slyofzero/Notes) and I'd try to fix it at the earliest.
 
 Currently working on adding more notes for -
 1. Algorithms
@@ -53,6 +53,21 @@ Includes:
 - graphs, trees, and their properties
 
 📂 Start here → [[Discrete Maths]]
+
+---
+
+## 🪟 Mathematical Foundations to Generative AI
+The theory that explains **why** generative models work.
+
+Includes:
+- Generative Adversarial Networks (GANs)
+- Variational Auto Encoders (VAEs)
+- Denoising Diffusion Probabilistic Models (DDPMs)
+- Auto Regressive Models (AR)
+- State Space Models (SSMs)
+- RL-based Alignment for LLMs
+
+📂 Start here → [[Mathematical Foundations of Generative AI]]
 
 ---
 
