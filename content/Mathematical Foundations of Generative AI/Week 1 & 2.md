@@ -268,13 +268,14 @@ $$
 
 ### To Train the Generator
 Optimizing for $\theta$ -
+
 $$
 \begin{aligned}
 \theta^* &= \arg\min_{\theta} J_{GAN}(\theta, w) \\[8pt]
 
 &= \arg\min_{\theta} \Bigg[\underset{P_X}{\mathbb{E}}\, [log\,D_w(x)] + \underset{P_\theta}{\mathbb{E}} \, [log\,(1-D_w(x))]\Bigg] \\[8pt]
 
-&\approx \arg\min_{\theta} \Bigg[\cancelto{\text{Independent of }\theta}{\frac{1}{B_1}\sum_{i=1}^{B_1}log\,D_w(x_i)} + \frac{1}{B_2}\sum_{i=1}^{B_2}log\,(1-D_w(\hat{x}_i)) \Bigg] \\[8pt]
+&\approx \arg\min_{\theta} \Bigg[\cancel{\frac{1}{B_1}\sum_{i=1}^{B_1}log\,D_w(x_i)}^{\text{Independent of }\theta} + \frac{1}{B_2}\sum_{i=1}^{B_2}log\,(1-D_w(\hat{x}_i)) \Bigg] \\[8pt]
 
 &= \arg\min_{\theta} \Bigg[\frac{1}{B_2}\sum_{i=1}^{B_2}log\,(1-D_w(\hat{x}_i) \Bigg] \qquad\because \text{Second term stays as } \hat{x}_i=g_\theta(z_j) \in P_\theta \\[8pt]
 \end{aligned}
