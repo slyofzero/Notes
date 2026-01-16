@@ -15,6 +15,25 @@ Currently working on adding more notes for -
 5. Compiler Design
 6. Mathematical foundations of Generative AI
 
+🛑 **Disclaimer -** DO NOT consider these notes as your single source of truth. I have tried my best in keeping the concepts covered as comprehensive and streamlined as possible. But due to the lack of any secondary proof-reader other than myself, there can be some leaps in logic and use of wrong terminology. I have paid utmost attention in order of avoid such issues but it is very possible that I might have missed some. Always cross-check once from other reliable sources as well.
+
+These notes are continuously refined as my understanding improves.
+
+---
+
+## 🪟 Mathematical Foundations to Generative AI
+The theory that explains **why** generative models work.
+
+Includes:
+- Generative Adversarial Networks (GANs)
+- Variational Auto Encoders (VAEs)
+- Denoising Diffusion Probabilistic Models (DDPMs)
+- Auto Regressive Models (AR)
+- State Space Models (SSMs)
+- RL-based Alignment for LLMs
+
+📂 Start here → [[Mathematical Foundations of Generative AI]]
+
 ---
 
 ## 📘 Algorithms
@@ -56,21 +75,4 @@ Includes:
 
 ---
 
-## 🪟 Mathematical Foundations to Generative AI
-The theory that explains **why** generative models work.
-
-Includes:
-- Generative Adversarial Networks (GANs)
-- Variational Auto Encoders (VAEs)
-- Denoising Diffusion Probabilistic Models (DDPMs)
-- Auto Regressive Models (AR)
-- State Space Models (SSMs)
-- RL-based Alignment for LLMs
-
-📂 Start here → [[Mathematical Foundations of Generative AI]]
-
----
-
 > *“An algorithm is not just a procedure — it is a proof that a problem can be solved.”*
-
-These notes are continuously refined as my understanding improves.

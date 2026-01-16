@@ -166,7 +166,7 @@ The final objective here requires two optimizations -
 1. **Generator Network -** The outer minimization w.r.t parameters of $g_\theta(z)$.
 2. **Critic/Discriminator Network -** The inner maximization w.r.t a class of functions $T(x) \in \mathbb{T}$.
 
-With this the objective becomes -
+With this the objective becomes - ^7f2437
 
 $$
 \theta^*, w^* = \arg\min_\theta \max_{w} \Big[\underset{P_X}{\mathbb{E}}\, [T_w(x)] - \underset{P_\theta}{\mathbb{E}} \, [f^*(T_w(x))\big]\Big]
@@ -206,7 +206,7 @@ For GANs the $f$-divergence that is chosen is as follows -
 
 $$
 \begin{alignedat}{2}
-f(u) &= u\,log\,u-(u+1)\,log\,(u+1) \\[8pt]
+f(u) &= u\,log\,u-(u+1)\,log\,(u+1) \qquad&\text{(Similar to }f \text{ used in JS-divergence)} \\[8pt]
 f^*(t) &= -log\,(1-exp(t)), &\operatorname{dom}f^* = \mathbb{R}^- \\[8pt]
 \sigma_f(v) &= -log(1+e^{-v}) &\text{(log-sigmoid)}
 \end{alignedat}
@@ -217,9 +217,18 @@ The log-sigmoid as $\sigma_f$ ensures that the output of the critic always lies 
 $$
 \begin{aligned}
 J_{GAN}(\theta,w) &= \underset{P_X}{\mathbb{E}}\, [log\,D_w(x)] + \underset{P_\theta}{\mathbb{E}} \, [log\,(1-D_w(x))] \\[8pt]
-\text{where}\,D_w(x) &= \frac{1}{1+e^{-V_w(x)}} \,\text{(the sigmoid function)}
+\text{where}\,D_w(x) &= \frac{1}{1+e^{-V_w(x)}} \,\text{(the sigmoid function}\, \&\,D_w(x) \in \{0,1\}) \\[8pt]
 \end{aligned}
 $$
+
+<h4 class="special">Observations to note -</h4>
+
+- Due to the rearrangement of terms again satisfying the [[Week 1 & 2#^7f2437|lower-bound equation]], we can see that $T_w(X) = log\,D_w(x)$.
+- It can also be seen that this objective function strangely resembles the **cross-entropy loss**.
+- [[Week 1 & 2#^c16f0b|The discriminator would try to maximize]] this “cross-entropy” by maximizing the objective function. Since the cross-entropy is large when real and fake samples are easily distinguishable, maximizing it encourages the discriminator to separate samples from $P_X$​ and $P_\theta$​ as effectively as possible. **Thus it is called the "discriminator."**
+- [[Week 1 & 2#^23984c|The generator would try to minimize]] this "cross-entropy" by only minimizing the second term of the objective function. In general this second term penalizes incorrect predictions made with a high probability. In this case it would be penalizing the fake samples the discriminator confidently distinguishes as fake. By minimizing it, the generator encourages the discriminator to assign higher probabilities to generated samples, which implicitly pushes the generator distribution $P_\theta$​ towards the data distribution $P_X$​.
+- The above two observations are solidifying more in [[Week 1 & 2#Formulation of classifier guided sampler|Formulation of classifier guided sampler]].
+- The discriminator is trying to assign a low probability to the generated samples while the generator pushes the discriminator to assign them a high probability. This causes the adversarial nature of the networks.
 
 The architecture ends up looking like the image below. $log$ doesn't need to be included in the discriminator network as it is not a part of the networks but the error function.
 
@@ -232,7 +241,7 @@ Pre-requisites -
 
 As we are using these batches during Mini-Batch gradient descent, these batches are resampled each time before an update.
 ### To train the Discriminator
-Optimizing for $w$ -
+Optimizing for $w$ - ^c16f0b
 $$
 \begin{aligned}
 w^* &= \arg\max_{w} J_{GAN}(\theta, w) \\[8pt]
@@ -267,7 +276,7 @@ $$
 ![[Pasted image 20260115221930.png]]
 
 ### To Train the Generator
-Optimizing for $\theta$ -
+Optimizing for $\theta$ - ^23984c
 
 $$
 \begin{aligned}
@@ -296,3 +305,57 @@ $$
 $$
 
 We have to solve these optimization problems alternatively. First update the generator parameters while keeping the discriminator parameters are constant, then update the discriminator parameters while keeping the generator parameters are constant.
+## Interpretation of GANs as Classifier guided Generative Samplers
+In GANs the discriminator network $D_w$ acts as a binary classifier which is able to predict whether a given sample belongs to $P_X$ or $P_\theta$. 
+
+*Can this classifier be used to bring $P_X$ and $P_\theta$ closer? 
+- Yes! If $P_X$ and $P_\theta$ were sufficiently close to each other, even an optimal discriminator would fail to distinguish the samples between them. So we can tweak $\theta$ till the classifier fails to distinguish between samples of $P_X$ and $P_\theta$.
+- However, the failure of some weak or arbitrary classifier doesn't imply that $P_X$ and $P_\theta$ are close to each other. So instead of just tweaking $\theta$, we also need to change the binary classifier $D_w$. If all such different variations of the classifiers fail to distinguish the samples then we can confidently say that $P_X$ and $P_\theta$ are close to each other.
+
+![[Pasted image 20260116162004.png]]
+
+**Mode Collapse Problem -**
+- During the updation of the generator and the classifier, it can happen that $\theta$ and the classifier keep alternating between two values and get stuck in an infinite loop. This is called the mode collapse problem.
+### Formulation of classifier guided sampler
+Creating the classifier -
+1. Let $D_w: \mathcal{X} \rightarrow [0,1]$ represent the probability of the sample $x$ coming from $P_X$. 
+2. We'd need to maximize the log-likelihood of $x$ coming from $P_X$ when $x \sim P_X$ (probability of real samples being marked as real) and also maximize the log-likelihood of $\hat{x}$ coming from $P_\theta$ when $\hat{x} \sim P_\theta$ (probability of fake samples being marked as fake). So the combined objective of the classifier becomes maximizing the sum of these two values.
+
+$$
+\begin{aligned}
+\mathbb{E}[log\,D_w(x)] &: \text{log-likelihood that } x \sim P_X \\[8pt]
+\mathbb{E}[log\,(1-D_w(x))] &: \text{log-likelihood that } \hat{x} \sim P_\theta \\[8pt]
+w^* = \arg\max_w \,\,&\Big[\underset{P_X}{\mathbb{E}}[log\,D_w(x)] + \underset{P_\theta}{\mathbb{E}}[log\,(1-D_w(\hat{x}))]\Big] \\[8pt]
+\end{aligned}
+$$
+Similarly for the generator -
+1. The objective for the generator is that the classifier has to "fail" in distinguishing samples from $P_X$ and $P_\theta$. So the goal here is to minimize the discriminator’s confidence that fake samples $\hat{x}$ coming from $P_\theta$ are fake.
+
+$$
+\theta^* = \arg\min_\theta \Big[\underset{P_\theta}{\mathbb{E}}[log\,(1-D_w(\hat{x}))]\Big]
+$$
+
+Thus the overall objective becomes -
+
+$$
+\theta^*, w^* = \arg\min_\theta\max_w \,\,\Big[\underset{P_X}{\mathbb{E}}[log\,D_w(x)] + \underset{P_\theta}{\mathbb{E}}[log\,(1-D_w(\hat{x}))]\Big]
+$$
+# Deep Convolution GAN (DC Gan)
+(intentionally left incomplete for now)
+
+# Conditional GAN (cGAN)
+![[Pasted image 20260116201623.png]]
+
+To make conditional GANs that sample from a conditional distribution, we pass the conditional variable $y$ through both the generator and the discriminator.
+- Instead of just the noise $z \sim p(z)$ we pass $(z,y)$ so the generator learns $P_\theta(x|y)$.
+- Instead of just seeing $x$, the discriminator sees $(x,y) \rightarrow D_w(x,y)$. It now answers "Is $x$ a real sample consistent with condition $y$".
+
+The objective function changes to -
+
+$$
+J(\theta, w) = \underset{(x,y) \sim P_{X|Y}}{\mathbb{E}}[log\,D_w(x)] + \underset{(\hat{x},y) \sim P_{\hat{X}|Y}}{\mathbb{E}}[log\,(1-D_w(\hat{x}))]
+$$
+# Inference with GANs/VDM
+![[Pasted image 20260116210510.png]]
+
+Suppose $g_\theta^*$ is the optimal generator network achieved via training. For any test input $z_{test} \sim \mathcal{N}(0,1)$ and class label $y$, the output would be a $X_{test}$ corresponding to the class-label specified by $y$.
