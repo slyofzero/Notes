@@ -1,3 +1,30 @@
+>[!SUMMARY] Table of Contents
+>- [[VDM and GANs#Deep Generative Models|Deep Generative Models]]
+>- [[VDM and GANs#Variational Divergence Minimization|Variational Divergence Minimization]]
+>	- [[VDM and GANs#f-divergence|f-divergence]]
+>	- [[VDM and GANs#Algorithm for f-divergence minimization|Algorithm for f-divergence minimization]]
+>		- [[VDM and GANs#Conjugate of a convex function|Conjugate of a convex function]]
+>	- [[VDM and GANs#Realization of VDM (Variational Divergence Minimization)|Realization of VDM (Variational Divergence Minimization)]]
+>	- [[VDM and GANs#Implementing VDM for Generative Modelling|Implementing VDM for Generative Modelling]]
+>- [[VDM and GANs#Generative Adversarial Networks|Generative Adversarial Networks]]
+>	- [[VDM and GANs#Implementation of GAN in practice|Implementation of GAN in practice]]
+>		- [[VDM and GANs#To train the Discriminator|To train the Discriminator]]
+>		- [[VDM and GANs#To Train the Generator|To Train the Generator]]
+>	- [[VDM and GANs#Interpretation of GANs as Classifier guided Generative Samplers|Interpretation of GANs as Classifier guided Generative Samplers]]
+>		- [[VDM and GANs#Formulation of classifier guided sampler|Formulation of classifier guided sampler]]
+>- [[VDM and GANs#Deep Convolution GAN (DC Gan)|Deep Convolution GAN (DC Gan)]]
+>- [[VDM and GANs#Conditional GAN (cGAN)|Conditional GAN (cGAN)]]
+>- [[VDM and GANs#Inference with GANs/VDM|Inference with GANs/VDM]]
+>- [[VDM and GANs#Improvisations and Applications of GANs|Improvisations and Applications of GANs]]
+>	- [[VDM and GANs#Wasserstein's GANs (WGANs)|Wasserstein's GANs (WGANs)]]
+>		- [[VDM and GANs#What makes GAN training unstable?|What makes GAN training unstable?]]
+>		- [[VDM and GANs#Wasserstein's Metric (Optimal Transport)|Wasserstein's Metric (Optimal Transport)]]
+>		- [[VDM and GANs#How to minimize Wasserstein's Metric|How to minimize Wasserstein's Metric]]
+>	- [[VDM and GANs#Bi-Directional GAN (Bi-GAN)|Bi-Directional GAN (Bi-GAN)]]
+>		- [[VDM and GANs#Inversion of GANs|Inversion of GANs]]
+>		- [[VDM and GANs#Bi-Directional GAN|Bi-Directional GAN]]
+>	- [[VDM and GANs#Domain Adversarial Networks|Domain Adversarial Networks]]
+>	- [[VDM and GANs#Evaluation of a GAN|Evaluation of a GAN]]
 # Deep Generative Models
 Family of Deep Generative Models (DGMs) to be covered -
 1. Generative Adversarial Networks (GANs)
@@ -359,9 +386,9 @@ $$
 ![[Pasted image 20260116210510.png]]
 
 Suppose $g_\theta^*$ is the optimal generator network achieved via training. For any test input $z_{test} \sim \mathcal{N}(0,1)$ and class label $y$, the output would be a $X_{test}$ corresponding to the class-label specified by $y$.
-# Improvisations of GANs
-
-## Why makes GAN training unstable?
+# Improvisations and Applications of GANs
+## Wasserstein's GANs (WGANs)
+### What makes GAN training unstable?
 **Manifold Hypothesis -** 
 - Images in the real world lie in a lower dimension manifold of the ambient space $\mathbb{R}^d$.
 - Consider all $28\times 28$ images such that a pixel is 1 if a coin toss results in a heads, else 0. The probability of an image generated in such a manner resembling an English Alphabet is very low. So we can say that the images depicting an English Alphabet lie in a low dimensional manifold on the ambient space $\{0,1\}^{784}$.
@@ -374,13 +401,12 @@ When the supports of $P_X$ and $P_\theta$ misalign, it can be shown that a perfe
 Remedies for GAN training saturation -
 - Train the generator and the discriminator at different training ratios, usually training the generator more.
 - Instead of using the $f$-divergence metric $D_f(P_x||P_\theta)$ which becomes independent of the generator parameters $\theta$ when GAN training saturates, use a "softer" metric which does not saturate when the manifolds of the supports of $P_X$ and $P_\theta$ misalign.
-## Wasserstein's GANs
 ### Wasserstein's Metric (Optimal Transport)
 Given two distributions $P_X$ and $P_{\hat{X}}$, 
 
 $$
 \begin{aligned}
-W(P_X || P_{\hat{X}}) &= \min_{\lambda \in \Pi(X,\hat{X})} \Big[\underset{x,\hat{x} \sim \lambda}{\mathbb{E}}||x-\hat{x}||_2\Big] \\[8pt]
+W(P_X || P_{\hat{X}}) &= \min_{\lambda \in \Pi(X,\hat{X})} \Big[\underset{\lambda(x,\hat{x})}{\mathbb{E}}||x-\hat{x}||_2\Big] \\[8pt]
 \lambda &: \text{Joint distribution b/w }P_X,P_{\hat{X}} \\[8pt]
 \Pi(X,\hat{X}) &: \text{All Joint distributions such that -} \\[8pt]
 &\int_X \Pi(X,\hat{X})\,dx = P_{\hat{X}} \\[8pt]
@@ -390,11 +416,14 @@ $$
 
 Here $W(P_X || P_{\hat{X}})$ corresponds to a "transport plan" that requires the least amount of "work done" in redistributing $P_{\hat{X}}$ to be similar to $P_X$.
 
+<h4 class="special">Derivation (Not Rigorous) -</h4>
+
+
 ![[Pasted image 20260117114455.png|450]]
 
-Imagine piles of dirt here to be $P_\hat{X}$ and $P_X$ to be a pile of dirt shaped like a bell curve. The minimum transport plan just tells you the best plan to shovel dirt in between the two piles such that the final pile resembles $P_X$. 
+Imagine piles of dirt here to be $P_{\hat{X}}$ and $P_X$ to be a pile of dirt shaped like a bell curve. The minimum transport plan just tells you the best plan to shovel dirt in between the two piles such that the final pile resembles $P_X$. 
 
-But how does shoveling dirt relates to redistributing distributions? Every joint distribution between the two distributions $P_\hat{X}$ and $P_X$ can be written as a table whose each row and column sum to 1.
+But how does shoveling dirt relates to redistributing distributions? Every joint distribution between the two distributions $P_{\hat{X}}$ and $P_X$ can be written as a table whose each row and column sum to 1.
 
 |             |  $x_1$   |  $x_2$   | $\dots$  |  $x_k$   |
 | :---------: | :------: | :------: | :------: | :------: |
@@ -403,4 +432,162 @@ But how does shoveling dirt relates to redistributing distributions? Every joint
 |  $\vdots$   | $\vdots$ | $\vdots$ | $\vdots$ | $\vdots$ |
 | $\hat{x}_k$ |   0.9    |   0.1    | $\dots$  |    0     |
 
-**This is joint distribution is a transport plan** which dictates how much of which random variable in $P_{\hat{X}}$ is required to recreated 
+This joint distribution between the two marginals $P_X$ and $P_{\hat{X}}$ is a **transport plan** which tells how one of the marginals can be transformed into the other. To quantify the "effort" required in a transport plan, we can use the concept of work done ($W=F \times d$ ) from Physics. In our context -
+
+$$
+\begin{aligned}
+||x-\hat{x}||_2 &: \text{distance moved} \\[8pt]
+\lambda(x,\hat{x}) &: \text{amount of mass moved} \\[8pt]
+\lambda(x,\hat{x})\cdot||x-\hat{x}||_2 &: \text{"work done" in moving the mass} \\[8pt]
+\end{aligned}
+$$
+
+The average work done required in a transport plan is -
+
+$$
+\begin{aligned}
+&\int_{X,\hat{X}} \lambda(x,\hat{x})\cdot||x-\hat{x}||_2\,dx\,d\hat{x} \\[8pt]
+&= \underset{\lambda(x,\hat{x})}{\mathbb{E}}\Big[||x-\hat{x}||_2\Big] \\[8pt]
+\end{aligned}
+$$
+
+Let $\Pi(X,\hat{X})$ be the family of all joint distributions/transport plans between the marginals $P_X$ and $P_{\hat{X}}$  We are interested in finding the transport plan which requires the least amount of work done -
+
+$$
+\min_{\lambda \in \Pi(X,\hat{X})} \Big[\underset{\lambda(x,\hat{x})}{\mathbb{E}}||x-\hat{x}||_2\Big]
+$$
+
+This is the **Wasserstein's Metric**.
+### How to minimize Wasserstein's Metric
+The Wasserstein's Metric is a minimization problem. Every minimization problem has a dual maximization problem. One such result of min-max duality is the **Kantrovic-Rubenstein's Duality** states -
+
+$$
+\begin{aligned}
+W(P_x || P_\theta) &= \max_{||T_w(x)||_L  \lt 1} \Big[\underset{P_X}{\mathbb{E}}\, [T_w(x)] - \underset{P_\theta}{\mathbb{E}} \, [T_w(\hat{x})]\Big] \\[8pt]
+||T_w(x)||_L &\lt 1 : \text{1-Lipschitz}
+\end{aligned}
+$$
+
+Any function $f$ being 1-Lipschitz means that the function cannot change faster than the distance -
+
+$$
+\frac{||f(x_1)-f(x_2)||}{||x_1-x_2||} \lt 1
+$$
+
+The $T_w$ in this case is a neural network and can be made 1-Lipschitz by normalizing the weights of $T_w$ such that $||w||_2=1$ after each gradient step.
+
+$\theta^*$ has to be such that the Wasserstein's distance is to be minimized. The Kantrovic-Rubenstein's Duality enables us to express the Wasserstein's distance in terms of expectations of $P_X$ and $P_\theta$.
+
+$$
+\theta^*, w^*= \arg\min_\theta\max_{||T_w(x)||_L  \lt 1} \Big[\underset{P_X}{\mathbb{E}}\, [T_w(x)] - \underset{P_\theta}{\mathbb{E}} \, [T_w(\hat{x})]\Big]
+$$
+
+The above objective is very similar to GANs. That's why this method of minimizing the Wasserstein's metric is called the **WGAN**. Training a WGAN is more stable than training a Naive-GAN.
+## Bi-Directional GAN (Bi-GAN)
+### Inversion of GANs
+We train a GAN specifically to allow us to sample $x$ from the dataset distribution $P_X$ by picking a random sample $z$ from an arbitrary distribution $Z$ and passing it through the generator $g_\theta$. But how can we get back $z$ if we know $x$?
+
+Inversion is useful for -
+1. **Feature Extraction** - Knowing any sample $x$ and the inversion of our GAN can allow us to obtain GAN-inverted vectors and use them as features for the data.
+2. **Data Manipulation/Editing** - Suppose a GAN is trained on images. If we wish to edit an image using the GAN itself, we need to know the corresponding **latent vector** (input vector $z$) for that image and edit this vector in such a way that the image corresponding to this edited input is our desired output image.
+### Bi-Directional GAN
+In Bi-GAN, in addition to the generator and the discriminator networks there's also the Encoder/Inverter network denoted as $E_\phi: X \rightarrow Z$.
+
+Here the discriminator won't just take $x$ and $g_\theta(z)$ as the inputs to distinguish between but take a pair of values $(x, E_\phi(x))$ and $(g(z),z))$ as the input and attempt to distinguish the joint pairs. If the discriminator fails to do so, we can say that $(x,E_\phi(x)) \sim (g(z),z)$.
+
+The objective function is -
+
+$$
+\begin{aligned}
+L_{BiGAN}(\theta,w,\phi) &= \underset{x\sim P_X}{\mathbb{E}}\Big[\underset{\hat{z}\sim P_\phi}{\mathbb{E}}[log\,D_w(x,E_\phi(x))]\Big] + \underset{z\sim Z}{\mathbb{E}}\Big[\underset{\hat{x}\sim P_\theta}{\mathbb{E}}[log\,\{1 - D_w(x,E_\phi(x))\}]\Big] \\[8pt]
+\theta^*,w^*,\phi^* &= \arg\min_{\theta,\phi}\max_{w} L_{BiGAN}(\theta,w,\phi) \\[8pt]
+\text{where, } &z\sim Z, \,\,\,\,\hat{x} \sim P_\theta, \,\,\,\,\hat{z} \sim P_\phi
+\end{aligned}
+$$
+
+Here $g_\theta$ and $E_\phi$ are trained simultaneously using the discriminator. Once train $g_{\theta^*}$ acts as the generator and $E_{\phi^*}$ is used for inversion. It can be shown that,
+
+$$
+\begin{aligned}
+P_{\hat{Z}X} &= P_{Z\hat{X}} \text{ where,}\\[8pt]
+P_{\hat{Z}X} &= \int_X P_X(x) \int_{\hat{Z}} P_\phi(\hat{z}|x)\,d\hat{z}\,dx \\[8pt]
+P_{Z\hat{X}} &= \int_Z P_Z(x) \int_{\hat{X}} P_\phi(\hat{x}|z)\,d\hat{x}\,dz \\[8pt]
+\end{aligned}
+$$
+## Domain Adversarial Networks
+Suppose we have a source dataset and target dataset such that both belong to a different distribution.
+
+$$
+\begin{alignedat}{2}
+D_s &= \{(x_i,y_i)\}_{i=1}^n &\sim P_s\\[8pt]
+D_t &= \{(\hat{x}_j)\}_{j=1}^m &\sim P_t\\[8pt]
+\end{alignedat}
+$$
+
+Any classifier/regressor trained solely on $D_s$ would fail to predict for the target items in $D_t$. We can use **Domain Adversarial Networks** here to train a classifier that is **domain agnostic** (able to classify independent on which domain element belong to).
+
+In Domain Adversarial Networks we have -
+1. An Encoder $\phi:X \rightarrow F$ to extract features from inputs regardless of which domain the inputs belong to (both $D_s$ and $D_t$).
+2. A Discriminator $T_w:F \rightarrow [0,1]$ to distinguish between elements of $P_s$ and elements of $P_t$ (Features of both source and target data).
+3. A Classifier/Regressor $h_\psi: F_s \rightarrow y_s \sim P_s(y|x)$ which uses the features of the source inputs to make a prediction regarding them.
+
+Here the Discriminator makes the Encoder better at constructing features from the inputs (both source and target) in such a way that the features appear domain agnostic. But just having domain agnostic features isn't all, they need to be useful for predicting the target class. For this we include a Classifier/Regressor as well in the network so that the features learnt are both domain agnostic and useful.
+
+$$
+\begin{aligned}
+\phi^*, w^* &= \arg\min_\phi\max_w \Bigg[\underset{P_{F_s}}{\mathbb{E}}\, [log\,D_w(F_s)] + \underset{P_{F_t}}{\mathbb{E}} \, [log\,(1-D_w(F_t))]\Bigg]& \\[8pt]
+\psi^* &= \arg\min_\psi \operatorname{BCE}(y,h_\psi(F_s)) \qquad(\text{BCE=Binary Cross-Entropy})
+\end{aligned}
+$$
+## Evaluation of a GAN
+Suppose we have some true and generated samples and we wish to evaluate whether the GAN is successful in generating samples from $P_X$. There are various methods for it, but we'd be look at an adversarial method of evaluation called **Frechet Inception Distance**. FID uses Wasserstein's Metric along with Inception Network trained on Imagenet to do this evaluation.
+
+Let -
+
+$$
+\begin{aligned}
+D_{true} &= \{x_i\}_{i=1}^n \stackrel{\text{iid}}{\sim} P_X \\[8pt]
+D_{gen} &= \{\hat{x}_j\}_{j=1}^m \stackrel{\text{iid}}{\sim} P_\theta
+\end{aligned}
+$$
+
+
+1. Take a pretrained Inception Network trained on the Imagenet dataset. Let this be denoted as $I_\psi$.
+2. Pass $D_{true}$ and $D_{gen}$ through $I_\psi$ and extract the features for $D_{true}$ and $D_{gen}$ from some $l^{th}$ layer of $I_\psi$.
+
+$$
+\begin{aligned}
+\hat{D}_{true} &= \{z_{true}^i\}_{i=1}^n \stackrel{\text{iid}}{\sim} P_X \\[8pt]
+\hat{D}_{gen} &= \{\hat{z}_{gen}^i\}_{j=1}^m \stackrel{\text{iid}}{\sim} P_\theta
+\end{aligned}
+$$
+
+3. Compute the mean and covariance for $\hat{D}_{true}$ and $\hat{D}_{gen}$.
+
+$$
+\begin{aligned}
+\mu_{true} &= \frac{1}{n} \sum_{i=i}^n z_{true}^i \\[8pt]
+\Sigma_{true} &= \frac{1}{n} \sum_{i=i}^n (z_{true}^i)\cdot(z_{true}^i)^T \\[8pt]
+\text{Similarly } &\mu_{gen} \text{ and } \Sigma_{gen} \text{ too}
+\end{aligned}
+$$
+
+4. Assume that the features of the true and generated data come from a Gaussian distribution of corresponding mean and variance.
+
+$$
+\begin{aligned}
+Z_{true} &\sim \mathcal{N}(\mu_{true},\Sigma_{true})\\[8pt]
+Z_{gen} &\sim \mathcal{N}(\mu_{gen},\Sigma_{gen})\\[8pt]
+\end{aligned}
+$$
+
+5. Calculate the [[VDM and GANs#Wasserstein's Metric (Optimal Transport)|Wasserstein's Metric]] between $Z_{true}$ and $Z_{gen}$. This is the FID, our evaluation metric of the GAN.
+
+$$
+\begin{aligned}
+\operatorname{FID} &= W(Z_{true}, Z_{gen}) \\[8pt]
+&= ||\mu_{true} - \mu_{gen}||^2_2 + \operatorname{trace}(\Sigma_{true}+\Sigma_{gen}-2(\Sigma_{true} \cdot \Sigma_{gen}))
+\end{aligned}
+$$
+
+$P_X$ and $P_\theta$ would never be equal because of the heavy amount of approximations made for VDM. The GAN trained is better if the FID is lower. Lower FID means lower distance between $P_X$ and $P_\theta$. 
