@@ -95,7 +95,7 @@ $$
 \lim_{n\rightarrow \infty} \frac{1}{n}\sum_{i=1}^nh(x_i) \approx \mathbb{E}[h(x)]
 $$
 
-So one way to solve an integral like the [[Week 1 & 2#f-divergence|f-Divergence]] is by using the above two mentioned laws and equating it to the expected value of function $h(x)=f\left(\frac{P_X(x)}{P_\theta(x)}\right)$. It would be a mathematically valid representation but is not directly computable from the data since the true data distribution $P_X$ is unknown.
+So one way to solve an integral like the [[VDM and GANs#f-divergence|f-Divergence]] is by using the above two mentioned laws and equating it to the expected value of function $h(x)=f\left(\frac{P_X(x)}{P_\theta(x)}\right)$. It would be a mathematically valid representation but is not directly computable from the data since the true data distribution $P_X$ is unknown.
 
 ### Conjugate of a convex function
 The conjugate of a convex function $f(u)$ is written as 
@@ -114,7 +114,7 @@ Using these properties of a conjugate of a convex function, we can write $f(u)$ 
 $$
 f(u) = \sup_{t \in \text{dom(f*)}} \left\{tu - f^*(t)\right\}
 $$
-Substituting this in the [[Week 1 & 2#f-divergence|f-Divergence Integral]] we get -
+Substituting this in the [[VDM and GANs#f-divergence|f-Divergence Integral]] we get -
 
 $$
 \begin{alignedat}{2}
@@ -196,7 +196,7 @@ By construction $T_w: X \rightarrow \operatorname{dom}f^*$ is dependent upon the
 
 ![[Pasted image 20260115180020.png]]
 
-So we can rewrite our [[Week 1 & 2#^3c1491|loss function]] as -
+So we can rewrite our [[VDM and GANs#^3c1491|loss function]] as -
 
 $$
 J(\theta,w) = \underset{P_X}{\mathbb{E}}\, [\sigma_f(V_w(x))] - \underset{P_\theta}{\mathbb{E}} \, [f^*(\sigma_f(V_w(x)))]
@@ -223,11 +223,11 @@ $$
 
 <h4 class="special">Observations to note -</h4>
 
-- Due to the rearrangement of terms again satisfying the [[Week 1 & 2#^7f2437|lower-bound equation]], we can see that $T_w(X) = log\,D_w(x)$.
+- Due to the rearrangement of terms again satisfying the [[VDM and GANs#^7f2437|lower-bound equation]], we can see that $T_w(X) = log\,D_w(x)$.
 - It can also be seen that this objective function strangely resembles the **cross-entropy loss**.
-- [[Week 1 & 2#^c16f0b|The discriminator would try to maximize]] this “cross-entropy” by maximizing the objective function. Since the cross-entropy is large when real and fake samples are easily distinguishable, maximizing it encourages the discriminator to separate samples from $P_X$​ and $P_\theta$​ as effectively as possible. **Thus it is called the "discriminator."**
-- [[Week 1 & 2#^23984c|The generator would try to minimize]] this "cross-entropy" by only minimizing the second term of the objective function. In general this second term penalizes incorrect predictions made with a high probability. In this case it would be penalizing the fake samples the discriminator confidently distinguishes as fake. By minimizing it, the generator encourages the discriminator to assign higher probabilities to generated samples, which implicitly pushes the generator distribution $P_\theta$​ towards the data distribution $P_X$​.
-- The above two observations are solidifying more in [[Week 1 & 2#Formulation of classifier guided sampler|Formulation of classifier guided sampler]].
+- [[VDM and GANs#^c16f0b|The discriminator would try to maximize]] this “cross-entropy” by maximizing the objective function. Since the cross-entropy is large when real and fake samples are easily distinguishable, maximizing it encourages the discriminator to separate samples from $P_X$​ and $P_\theta$​ as effectively as possible. **Thus it is called the "discriminator."**
+- [[VDM and GANs#^23984c|The generator would try to minimize]] this "cross-entropy" by only minimizing the second term of the objective function. In general this second term penalizes incorrect predictions made with a high probability. In this case it would be penalizing the fake samples the discriminator confidently distinguishes as fake. By minimizing it, the generator encourages the discriminator to assign higher probabilities to generated samples, which implicitly pushes the generator distribution $P_\theta$​ towards the data distribution $P_X$​.
+- The above two observations are solidifying more in [[VDM and GANs#Formulation of classifier guided sampler|Formulation of classifier guided sampler]].
 - The discriminator is trying to assign a low probability to the generated samples while the generator pushes the discriminator to assign them a high probability. This causes the adversarial nature of the networks.
 
 The architecture ends up looking like the image below. $log$ doesn't need to be included in the discriminator network as it is not a part of the networks but the error function.
@@ -359,3 +359,48 @@ $$
 ![[Pasted image 20260116210510.png]]
 
 Suppose $g_\theta^*$ is the optimal generator network achieved via training. For any test input $z_{test} \sim \mathcal{N}(0,1)$ and class label $y$, the output would be a $X_{test}$ corresponding to the class-label specified by $y$.
+# Improvisations of GANs
+
+## Why makes GAN training unstable?
+**Manifold Hypothesis -** 
+- Images in the real world lie in a lower dimension manifold of the ambient space $\mathbb{R}^d$.
+- Consider all $28\times 28$ images such that a pixel is 1 if a coin toss results in a heads, else 0. The probability of an image generated in such a manner resembling an English Alphabet is very low. So we can say that the images depicting an English Alphabet lie in a low dimensional manifold on the ambient space $\{0,1\}^{784}$.
+- Similarly an image of any natural object lies in a lower dimension manifold of the image's dimension $\mathbb{R}^d$.
+
+The real distribution $P_X$ and the generated distribution $P_\theta$ are both distributions over $\mathbb{R}^{784}$. Since the real data and the generated data would lie over a lower dimensional manifold of $\mathbb{R}^d$, the supports (set on which the corresponding density function has a non-zero value) of $P_X$ and $P_\theta$ **would misalign with a very high probability**.
+
+When the supports of $P_X$ and $P_\theta$ misalign, it can be shown that a perfect discriminator would always exist. In such a case the gradient of the discriminator becomes 0, due to which the discriminator parameters and the generator parameters can't be updated any further (gradients flow through the discriminator into the generator). Thus **GAN training saturates**.
+
+Remedies for GAN training saturation -
+- Train the generator and the discriminator at different training ratios, usually training the generator more.
+- Instead of using the $f$-divergence metric $D_f(P_x||P_\theta)$ which becomes independent of the generator parameters $\theta$ when GAN training saturates, use a "softer" metric which does not saturate when the manifolds of the supports of $P_X$ and $P_\theta$ misalign.
+## Wasserstein's GANs
+### Wasserstein's Metric (Optimal Transport)
+Given two distributions $P_X$ and $P_{\hat{X}}$, 
+
+$$
+\begin{aligned}
+W(P_X || P_{\hat{X}}) &= \min_{\lambda \in \Pi(X,\hat{X})} \Big[\underset{x,\hat{x} \sim \lambda}{\mathbb{E}}||x-\hat{x}||_2\Big] \\[8pt]
+\lambda &: \text{Joint distribution b/w }P_X,P_{\hat{X}} \\[8pt]
+\Pi(X,\hat{X}) &: \text{All Joint distributions such that -} \\[8pt]
+&\int_X \Pi(X,\hat{X})\,dx = P_{\hat{X}} \\[8pt]
+&\int_{\hat{X}} \Pi(X,\hat{X})\,dx = P_X \\[8pt]
+\end{aligned}
+$$
+
+Here $W(P_X || P_{\hat{X}})$ corresponds to a "transport plan" that requires the least amount of "work done" in redistributing $P_{\hat{X}}$ to be similar to $P_X$.
+
+![[Pasted image 20260117114455.png|450]]
+
+Imagine piles of dirt here to be $P_\hat{X}$ and $P_X$ to be a pile of dirt shaped like a bell curve. The minimum transport plan just tells you the best plan to shovel dirt in between the two piles such that the final pile resembles $P_X$. 
+
+But how does shoveling dirt relates to redistributing distributions? Every joint distribution between the two distributions $P_\hat{X}$ and $P_X$ can be written as a table whose each row and column sum to 1.
+
+|             |  $x_1$   |  $x_2$   | $\dots$  |  $x_k$   |
+| :---------: | :------: | :------: | :------: | :------: |
+| $\hat{x}_1$ |  $0.1$   |  $0.6$   | $\dots$  |  $0.05$  |
+| $\hat{x}_2$ |   0.3    |   0.2    | $\dots$  |   0.3    |
+|  $\vdots$   | $\vdots$ | $\vdots$ | $\vdots$ | $\vdots$ |
+| $\hat{x}_k$ |   0.9    |   0.1    | $\dots$  |    0     |
+
+**This is joint distribution is a transport plan** which dictates how much of which random variable in $P_{\hat{X}}$ is required to recreated 
