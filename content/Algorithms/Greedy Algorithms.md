@@ -44,7 +44,7 @@ You are given a set of **$n$ objects**, where each object iii has:
 ### Objective
 Select a subset of the objects such that:
 - the **total weight** of the selected objects does **not exceed** the knapsack capacity mmm,
-- each object is either **included or excluded** (for 0/1 knapsack) or partially selected (for fractional knapsack),
+- each object is either **included or excluded** (for [[Dynamic Programming#0/1 Knapsack|0/1 knapsack]]) or partially selected (for fractional knapsack),
 - the **total profit** of the selected objects is **maximized**.
 
 **Objective:**
@@ -53,7 +53,7 @@ $$
 $$
 ### Types of Knapsack -
 1. Fractional Knapsack - Partial objects are allowed, $0 \le x_i \le 1$
-   Solved using Greedy methods.
+   Solved using Greedy methods. ^659b76
 2. Binary Knapsack (0/1 Knapsack) - No partial objects are allowed, $x_1 \in \{0,1\}$
    Solved using Dynamic Programming.
 ### How to solve -
@@ -245,7 +245,7 @@ A subgraph $T(V, E')$ of a given graph $(V,E)$ where $E' \subset E$ is a spannin
 1. Consider all edges of the graph.
 2. If a cycle forms, remove the maximum cost edge in that cycle.
 
-Djikstra's Single Source Shortest Path is also a Greedy Algorithm, but discussed under [[Dynamic Programming]].
+Djikstra's Single Source Shortest Path is also a Greedy Algorithm, but discussed under [[Dynamic Programming#Djikstra's Single Source Shortest Path|Dynamic Programming]].
 
 ---
 # Questions

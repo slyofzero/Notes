@@ -540,7 +540,7 @@ $$
 \end{aligned}
 $$
 ## Evaluation of a GAN
-Suppose we have some true and generated samples and we wish to evaluate whether the GAN is successful in generating samples from $P_X$. There are various methods for it, but we'd be look at an adversarial method of evaluation called **Frechet Inception Distance**. FID uses Wasserstein's Metric along with Inception Network trained on Imagenet to do this evaluation.
+Suppose we have some true and generated samples and we wish to evaluate whether the GAN is successful in generating samples from $P_X$. There are various methods for it, but we'd be look at an adversarial method of evaluation called **Frechet Inception Distance**. FID uses [[VDM and GANs#Wasserstein's Metric (Optimal Transport)|Wasserstein's Metric]]  along with Inception Network trained on Imagenet to do this evaluation.
 
 Let -
 
