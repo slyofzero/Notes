@@ -118,3 +118,65 @@ Better than following textual notes regarding this, it's better to follow the pr
 Complexity - 
 1. Time Complexity - $O(n*M)$
 2. Space Complexity - $O(n*M)$
+# Sum of Subsets (SOS)
+For such a problem the recurrence algorithm is -
+
+$$
+\begin{aligned}
+\operatorname{SOS}(n,M) &= \operatorname{SOS}(n-1,M) \text{ or } \operatorname{SOS}(n-1,M-A_n) &,A_n \le M\\[8pt]
+\operatorname{SOS}(n,M) &= \operatorname{SOS}(n-1,M) &,A_n \gt M\\[8pt]
+\text{Base Condition} &- \\[8pt]
+&\operatorname{SOS}(n,M) = \text{False} &,n=0 \,\,\&\,\, M \gt 0\\[8pt]
+&\operatorname{SOS}(n,M) = \text{True} &,M=0 \,\,\&\,\, n \ge 0\\[8pt]
+\end{aligned}
+$$
+# Longest Common Subsequence (LCS)
+**A subsequence** of a string is made by deleting some or none characters from the string, while keeping the order in which the characters occurs.
+
+**A substring** of a string is a subsequence of a string made using contiguous characters.
+
+***Example** - In `abdace` and `babce`, `bace` and `abce` are two substrings of length 4.*
+
+There are $2^n$ subsequences possible for a string of $n$ characters. So a brute force algorithm will take have the time complexity of $O(2^n)$.
+
+**Pseudocode -**
+```c
+LCS(A,B) {
+	// of size mxn
+	mem_table = [[0 for (i=0;i<=len(A);i++)] for (j=0;j<=len(B);j++)]
+
+	for (i=0;i<=len(A);i++) {
+		for (j=0;j<=len(B);j++) {
+			if (A[i] == B[j]) {
+				mem_table[i][j] = 1 + mem_table[i-1][j-1]
+			} else {
+				mem_table[i][j] = max(mem_table[i-1][j], mem_table[i][j-1])
+			}
+		}
+	}
+}
+```
+
+How the tabulation method looks like on paper. To follow this, watch [Mr Abdul Bari](https://youtu.be/sSno9rV8Rhg?t=1139) solve it - 
+![[Pasted image 20260120184000.png|450]]
+
+Here we are attempting to find the LCS for "longest" and "stone".
+
+Complexity - 
+1. Time Complexity - $O(m*n)$
+2. Space Complexity - $O(m*n)$
+# Matrix Chain Multiplication (MCM)
+Let $A$ and $B$ be two matrices of sizes $m \times n$ and $n \times p$. The number of scalar multiplication required in the matrix multiplication $AB$ is $m \times n \times p$.
+
+So say we have multiple matrices like $A,B,C,D$. Their matrix product $ABCD$ can be achieved by multiplying the matrices in any order, either by doing $A(BCD)$ or $(AB)(CD)$ or $(ABC)D$. MCM attempts to find the optimal order in which the matrices should be multiplied to minimize the amount of scalar multiplication required.
+
+The number of ways to parenthesize the multiplication of **$n$ matrices** corresponds to the number of **full [[Trees#Number of Binary Trees Possible|binary trees]] with $n$ leaves** (each leaf representing a matrix).
+
+This number is given by the [[Counting#Catalan's Numbers|Catalan number]] -
+
+$$
+C_{n-1} \;=\; \frac{1}{n}\binom{2n-2}{\,n-1\,}
+$$
+
+Each such binary tree represents a distinct order of matrix multiplication.
+

@@ -1,6 +1,7 @@
 >[!SUMMARY] Table of Contents
 >- [[Trees#Binary Tree|Binary Tree]]
 >- [[Trees#Properties of binary trees|Properties of binary trees]]
+>	- [[Trees#Number of Binary Trees Possible|Number of Binary Trees Possible]]
 >- [[Trees#Tree Traversal|Tree Traversal]]
 >	- [[Trees#Breadth First Traversal|Breadth First Traversal]]
 >	- [[Trees#Depth First Traversal|Depth First Traversal]]
@@ -61,8 +62,9 @@ Types of Binary trees -
 6. Using the above property, we can say that with $n$ nodes we can have -
     1. Minimum height - $log_2(N+1)-1$
     2. Maximum height - $N-1$
-7. The number of unlabeled binary trees that can be formed using $n$ nodes is the [[Counting#Catalan's Numbers|Catalan's Numbers]] formula - $\frac{^{2n}C_n}{n+1}$.
-8. The number of labeled binary trees that can be formed using $n$ nodes is - $n! * \frac{^{2n}C_n}{n+1}$.
+## Number of Binary Trees Possible
+1. The number of unlabeled binary trees that can be formed using $n$ nodes is the [[Counting#Catalan's Numbers|Catalan's Numbers]] formula - $\frac{^{2n}C_n}{n+1}$.
+2. The number of labeled binary trees that can be formed using $n$ nodes is - $n! * \frac{^{2n}C_n}{n+1}$.
 # Tree Traversal
 ## Breadth First Traversal
 Also known as **Level Order Traversal**. Each level of a tree is covered before moving to the next level.
