@@ -158,9 +158,9 @@ A Binary Heap can be constructed from scratch by just following these insertion 
 ## Deletion in a Binary Heap
 Deletion in a Binary Heap is always done on a priority basis, meaning that in a Max Heap the current maximum element is deleted while in a Min Heap the current minimum element is deleted.
 1. Swap the root node with the last leaf node in the heap and delete the leaf node.
-2. As now a leaf node is at the root of the heap, call heapify from the root to satisfy the Ordering Property.
-	1. If the heap is a Max Heap then keep comparing the parent with its children and swap with the larger child until parent nodes are larger than both children.
-	2. If the heap is a Min Heap then keep comparing the parent with its children and swap with the smaller child until parent nodes are smaller than both children.
+2. As now a leaf node is at the root of the heap, call heapify from the root to satisfy the Heap Invariant.
+	1. During this heapify a case can occur where the root fails the Heap Invariant with both its children. In such a case pick the child that has a higher priority than the other and swap it with the root.
+	2. If the root fails the Heap Invariant with only one of the children, swap the root and the child.
 
 Worst case complexity - $O(log\,n)$
 ## Number of distinct Binary Heaps possible

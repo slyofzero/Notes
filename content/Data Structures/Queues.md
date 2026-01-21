@@ -9,8 +9,8 @@
 
 A queue is a linear data structure that follows the FIFO rule of handling elements stored in it. It has a few basic operations such as ENQUEUE, DEQUEUE, and PEEK.
 
-Enqueue means inserting the data in the queue from the **rear end**.
-Dequeue means removing the data in the queue from the **front end**.
+- Enqueue means inserting the data in the queue from the **rear end**.
+- Dequeue means removing the data in the queue from the **front end**.
 
 There are four types of queues -
 1. Simple Queue
@@ -20,7 +20,7 @@ There are four types of queues -
 # Simple Queue
 Allows the basic Enqueue and Dequeue operations using pointers to keep track of "rear" and "front".
 
-- Usually the initial values for "rear" and "front" are `rear=0; front=-1`.
+- Usually the initial values for "rear" and "front" are `rear=0; front=0`.
 - Upon `Enqueue(Q,el)` insert the element at `rear` index and increment `rear`.
 - Upon `Dequeue(Q)` remove the element at `front` index and increment `front`.
 - Queue is considered empty if `front >= rear`.
