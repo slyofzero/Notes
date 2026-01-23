@@ -99,6 +99,9 @@ A tree in which the left subtree nodes $\lt$ parent node $\lt$ right subtree nod
 - For inserting an element to a non-perfect B.S.T of $n$ nodes -
     - Best Case Time Complexity - $O(1)$ (When the tree is **empty** or insertion happens **at the root**)
     - Worst Case Time Complexity - $O(n)$ (When the BST is **completely skewed**)
+## Time Complexities
+1. Time Complexity of merging two BSTs is $\Theta(n+m)$.
+2. Using Build Heap, can be converted into a [[Trees#Binary Heap|Heap]] in $\Theta(n)$.
 ## Deletion of a node in a B.S.T
 There are three cases possible for this
 ### Deleting a leaf node
@@ -147,6 +150,10 @@ In the above image -
 4. 4 is not a heap because it fails the Shape Property of a heap because 4 is not a Complete Binary Tree as 25 is on the right of 20 even though 20 has no left child. In a Complete Binary Tree the nodes need to be entered from a top-down and left-right manner.
 
 [[Sorting Algorithms#^heap-sort|Heap Sort]] is a side effect of the Ordering Property of the heap data-structure.
+## Time Complexities
+1. In worst case, Heap building requires $\Theta(n\,log\,n)$ time.
+2. If given a sorted array of elements, using the **Build Heap** method a new heap can be made in $\Theta(n)$ time.
+3. Time Complexity of merging two heaps is $\Theta(n+m)$.
 ## Insertion in a Binary Heap
 To insert a new item in the Binary Heap, a node node needs to be added to the Heap Tree -
 1. Identify where the new node goes such that the **Shape Property** of the Heap is maintained. Insert the new element as a leaf node to this tree.

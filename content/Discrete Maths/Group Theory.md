@@ -38,7 +38,10 @@ A monoid $(S,*)$ is called a group if and only if -
 # Abelian Group
 A group $(S,*)$ is called a Abelian Group if and only if -
 - **Commutative Property –** $a * b = b * a, \forall a,b \in S$
+
 Commutativity depends upon the operation as well as the type of elements.
+
+An operation being commutative doesn't guarantee associativity.
 # Finite Group
 A group $(G,*)$ is called a finite group if the underlying set $G$ is a finite set.
 
@@ -55,7 +58,7 @@ a \oplus_mb = (a+b)\text{ mod } m
 $$
 The set $\{0,1,\dots,n-1\}$ is a group with respect to addition modulo operation.
 
-2. Multiplication Modul -
+2. Multiplication Modulo -
 $$
 a \otimes_mb = (a\times b)\text{ mod } m
 $$
