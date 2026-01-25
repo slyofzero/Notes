@@ -29,7 +29,16 @@ export function formatDate(d: Date, locale: ValidLocale = "en-US"): string {
 export function Date({ date, locale }: Props) {
   return (
     <span>
-      Edited - <time datetime={date.toISOString()}>{formatDate(date, locale)}</time>
+      <time datetime={date.toISOString()}>{formatDate(date, locale)}</time>
     </span>
   )
 }
+
+let a = 10
+const func = () => 30
+
+// {
+//   const a = 10
+//   const b = 5
+//   return a + b
+// }

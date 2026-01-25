@@ -1,5 +1,7 @@
 >[!SUMMARY] Table of Contents
 >- [[Set Theory#Set|Set]]
+>	- [[Set Theory#Mutually Exclusive Sets|Mutually Exclusive Sets]]
+>	- [[Set Theory#Collectively Exhaustive Sets|Collectively Exhaustive Sets]]
 >- [[Set Theory#Set Operations|Set Operations]]
 >- [[Set Theory#Principle of Inclusion and Exclusion|Principle of Inclusion and Exclusion]]
 >- [[Set Theory#Multiset|Multiset]]
@@ -10,7 +12,7 @@
 >		- [[Set Theory#Reflexive Relation |Reflexive Relation ]]
 >		- [[Set Theory#Irreflexive Relation|Irreflexive Relation]]
 >		- [[Set Theory#Symmetric Relation|Symmetric Relation]]
->		- [[Set Theory#Anti-Symmetric Relation|AntiSymmetric Relation]]
+>		- [[Set Theory#Anti-Symmetric Relation|Anti-Symmetric Relation]]
 >		- [[Set Theory#Asymmetric Relation|Asymmetric Relation]]
 >		- [[Set Theory#Transitive Relation|Transitive Relation]]
 >		- [[Set Theory#Equivalence Relation|Equivalence Relation]]
@@ -52,7 +54,18 @@ $$
 &= \boxed{2^n}
 \end{aligned}
 $$
+## Mutually Exclusive Sets
+A collection of sets $A_1, \dots, A_k$ is called mutually exclusive iff,
 
+$$
+A_i \cap A_j = \phi,\forall i\ne j
+$$
+## Collectively Exhaustive Sets
+A collection of sets $A_1, \dots, A_k$ is called collectively exhaustive iff,
+
+$$
+\bigcup_{i=1}^k A_i = U \qquad(U \text{ is the universal set})
+$$
 # Set Operations
 1. Union
 2. Intersection
@@ -213,6 +226,10 @@ A partition of a set $A$ is the grouping of all elements of $A$ into **non-empty
 $\qquad(OR)$
 
 A partition of a set $A$ is the grouping of all elements of $A$ into **non-empty subsets** such that every element only occurs in one subset.
+
+$\qquad(OR)$
+
+A partition is a collection of subsets of $A$ such that the subsets are both [[Set Theory#Mutually Exclusive Sets|mutually exclusive]] and [[Set Theory#Collectively Exhaustive Sets|collectively exhaustive]].
 
 1. Partition of $A=\phi=\{\}$ is $\phi=\{\}$.
 
