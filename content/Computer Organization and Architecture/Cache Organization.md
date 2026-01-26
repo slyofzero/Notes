@@ -13,6 +13,18 @@
 >	- [[Cache Organization#Write Miss|Write Miss]]
 >		- [[Cache Organization#Write Allocate|Write Allocate]]
 >		- [[Cache Organization#No Write Allocate|No Write Allocate]]
+>- [[Cache Organization#Cache Mapping|Cache Mapping]]
+>	- [[Cache Organization#Direct Mapping|Direct Mapping]]
+>		- [[Cache Organization#Tag|Tag]]
+>		- [[Cache Organization#Index|Index]]
+>		- [[Cache Organization#Memory address layout|Memory address layout]]
+>		- [[Cache Organization#Cache Controller|Cache Controller]]
+>			- [[Cache Organization#Tag bits|Tag bits]]
+>			- [[Cache Organization#Valid/Invalid Bit|Valid/Invalid Bit]]
+>			- [[Cache Organization#Dirty bit|Dirty bit]]
+>	- [[Cache Organization#Set Associative Mapping|Set Associative Mapping]]
+>		- [[Cache Organization#How it's implemented|How it's implemented]]
+>	- [[Cache Organization#Fully Associative Mapping|Fully Associative Mapping]]
 >- [[Cache Organization#Questions|Questions]]
 # Locality of Reference
 Locality of reference is a phenomenon when programs tend to access the same memory location or nearby memory locations within short intervals of time.
@@ -204,8 +216,8 @@ The tag and cache memory block no. make up the main memory block no.
 
 $$
 \begin{aligned}
-\text{m.m. block no.} &= \boxed{\strut \text{Tag}}\boxed{\strut \text{c.m. block no.}} \\[8pt]
-\text{block 92} &= \underbrace{\boxed{\strut \,\,\,9\,\,\\\,}}_{\text{Tag}} \underbrace{\boxed{\strut \,\,\,2\,\,\,}}_\text{c.m.} \\
+\text{m.m. block no.} &= \begin{array}{|c|c|}\hline \text{Tag}&\text{c.m. block no.} \\ \hline\end{array} \\[8pt]
+\text{block 92} &= \begin{array}{|c|c|}\hline 9&2 \\ \hline\end{array} \\[8pt]
 \end{aligned}
 $$
 
@@ -213,8 +225,9 @@ But a memory address is byte/word addressable not block addressable. A block wil
 
 $$
 \begin{aligned}
-\text{memory address} &= \boxed{\strut \text{m.m. block no.}}\boxed{\strut \text{byte offset}} \\[8pt]
-&= \boxed{\strut \text{Tag}}\boxed{\strut \text{c.m. block no.}}\boxed{\strut \text{byte offset}} \\[8pt]
+\text{memory address} &= \begin{array}{|c|c|} \hline \text{m.m. block no.} & \text{byte offset} \\ \hline \end{array} \\[8pt]
+
+&= \begin{array}{|c|c|c|} \hline \text{Tag} & \text{c.m. block no.} & \text{byte offset} \\ \hline \end{array} \\[8pt]
 \end{aligned}
 $$
 
@@ -239,7 +252,7 @@ So we can say,
 
 $$
 \begin{aligned}
-\text{memory address} &= \boxed{\strut \text{Tag}}\boxed{\strut \text{cache line bits}} \\[8pt]
+\text{m.m. block no.} &= \begin{array}{|c|c|}\hline \text{Tag}&\text{cache line bits} \\ \hline\end{array} \\[8pt]
 \text{c.m. address bits} &= \text{c.m. block no. bits} + \text{byte offset}
 \end{aligned}
 $$
@@ -281,8 +294,9 @@ From here, using the no. of indices we can calculate the number of bits required
 
 $$
 \begin{aligned}
-\text{memory address} &= \boxed{\strut \text{m.m. block no.}}\boxed{\strut \text{byte offset}} \\[8pt]
-&= \boxed{\strut \text{Tag}}\boxed{\strut \text{set offset}}\boxed{\strut \text{byte offset}} \\[8pt]
+\text{memory address} &= \begin{array}{|c|c|} \hline \text{m.m. block no.} & \text{byte offset} \\ \hline \end{array} \\[8pt]
+
+&= \begin{array}{|c|c|c|} \hline \text{Tag} & \text{set offset} & \text{byte offset} \\ \hline \end{array} \\[8pt]
 \end{aligned}
 $$
 
@@ -293,9 +307,11 @@ However, the tag bits required for an associative mapping will increase which wi
 By each time increasing the associativity by a factor of 2, we increase the tag bits by 1 and decrease the index bits by 1. Thus if the set associativity is $k$, the index bits are decreased by $\operatorname{log}_2k$. In direct mapping memory address size = Tag Bits + Cache line bits, but in $k$-way set associative mapping, 
 
 $$
-\begin{aligned}
-\text{memory address} &= \boxed{\strut \text{Tag}}\boxed{\strut \operatorname{log}_2(\text{cache size}) - \operatorname{log}_2k} \\[8pt]
-\end{aligned}
+\begin{array}{|c|c|}
+\hline
+\text{Tag} & \operatorname{log}_2(\text{cache size}) - \operatorname{log}_2 k \\
+\hline
+\end{array}
 $$
 
 ### How it's implemented
@@ -312,8 +328,9 @@ In a fully associative cache, the index has zero bits. The memory address layout
 
 $$
 \begin{aligned}
-\text{memory address} &= \boxed{\strut \text{m.m. block no.}}\boxed{\strut \text{byte offset}} \\[8pt]
-&= \boxed{\strut \text{Tag bits}}\boxed{\strut \text{byte offset}} \\[8pt]
+\text{memory address} &= \begin{array}{|c|c|} \hline \text{m.m. block no.} & \text{byte offset} \\ \hline \end{array} \\[8pt]
+
+&= \begin{array}{|c|c|} \hline \text{Tag bits} & \text{byte offset} \\ \hline \end{array} \\[8pt]
 \end{aligned}
 $$
 
@@ -368,5 +385,5 @@ $\underline{\text{Sol}^n} -$ ^cba289
 Thus the layout is -
 
 $$
-\underbrace{\boxed{\strut \,\,\text{4 bits}\,\,}}_{\text{Tag bits}} \underbrace{\boxed{\strut \,\,\text{12 bits}\,\,}}_\text{c.m. block no.} \underbrace{\boxed{\strut \,\,\text{4 bits}\,\,}}_\text{byte no.}
+\underbrace{\boxed{\,\,\text{4 bits}\,\,}}_{\text{Tag bits}} \underbrace{\boxed{\,\,\text{12 bits}\,\,}}_\text{c.m. block no.} \underbrace{\boxed{\,\,\text{4 bits}\,\,}}_\text{byte no.}
 $$
