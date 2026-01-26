@@ -70,7 +70,7 @@ Includes:
 
 
 ---
-## 🧱 Computer Organization and Architecture
+## ⚙️ Computer Organization and Architecture
 How a computer works.
 
 Includes:
