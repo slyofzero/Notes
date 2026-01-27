@@ -6,10 +6,11 @@
 >- [[Cache Organization#Types of Cache Access|Types of Cache Access]]
 >	- [[Cache Organization#Simultaneous Access|Simultaneous Access]]
 >	- [[Cache Organization#Hierarchical Access|Hierarchical Access]]
->	- [[Cache Organization#Memory Access Time when Locality of Reference is used|Memory Access Time when Locality of Reference is used]]
+>	- [[Cache Organization#Memory Access Time when Locality of Reference is used (Cache Miss Penalty)|Memory Access Time when Locality of Reference is used (Cache Miss Penalty)]]
 >- [[Cache Organization#Cache Write or Write Propagation|Cache Write or Write Propagation]]
 >	- [[Cache Organization#Write Through|Write Through]]
 >	- [[Cache Organization#Write Back|Write Back]]
+>		- [[Cache Organization#Dirty Block|Dirty Block]]
 >	- [[Cache Organization#Write Miss|Write Miss]]
 >		- [[Cache Organization#Write Allocate|Write Allocate]]
 >		- [[Cache Organization#No Write Allocate|No Write Allocate]]
@@ -25,6 +26,16 @@
 >	- [[Cache Organization#Set Associative Mapping|Set Associative Mapping]]
 >		- [[Cache Organization#How it's implemented|How it's implemented]]
 >	- [[Cache Organization#Fully Associative Mapping|Fully Associative Mapping]]
+>- [[Cache Organization#Block Replacement Policy|Block Replacement Policy]]
+>- [[Cache Organization#Types of Cache Miss|Types of Cache Miss]]
+>- [[Cache Organization#Hardware Implementation of Cache|Hardware Implementation of Cache]]
+>- [[Cache Organization#Multi-level cache|Multi-level cache]]
+>	- [[Cache Organization#Simultaneous Access|Simultaneous Access]]
+>	- [[Cache Organization#Hierarchical Access|Hierarchical Access]]
+>	- [[Cache Organization#Probability of Access|Probability of Access]]
+>- [[Cache Organization#Dual Cache|Dual Cache]]
+>	- [[Cache Organization#Cache Inclusion Policy|Cache Inclusion Policy]]
+>	- [[Cache Organization#Cache Exclusion Policy|Cache Exclusion Policy]]
 >- [[Cache Organization#Questions|Questions]]
 # Locality of Reference
 Locality of reference is a phenomenon when programs tend to access the same memory location or nearby memory locations within short intervals of time.
@@ -107,10 +118,10 @@ If a question has the words "cache memory access time" and "main memory access t
 Otherwise, if the question just mentions "time for cache hit" and "time for cache miss", use the [[Cache Organization#^a692b1|generic formula]].
 
 See [[Cache Organization#^1007d7|Question 1]] for a simple example.
-## Memory Access Time when Locality of Reference is used
+## Memory Access Time when Locality of Reference is used (Cache Miss Penalty)
 In the previous cases we were just looking at the cases where on a Cache miss we retrieve the data directly from the main memory. But on a cache miss, the block in which the data belongs to needs to be brought in the cache memory for future usage as well.
 
-Let the block transfer time be $T_{bt}$.
+Let the block transfer time be $T_{bt}$. This is also called as **Cache Miss Penalty**.
 
 Then,
 1. Simultaneous Access - $T_{avg} = H*T_{cm} + (1-H)*T_{bt}$
@@ -142,7 +153,7 @@ If the CPU performs a write operation in the cache, the same content in the main
 
 - **Pro -** Time saving compared to Write-Through.
 - **Con -** Inconsistency between the content in cache memory and main memory.
-
+### Dirty Block
 Any block that has been written over is called a **dirty/modified block**. For any block in the cache memory -
 1. If no write was performed on that block - Directly replace the block without any write in main memory.
 2. If write was performed on the block (If it's a dirty block) - Perform write back for the block.
@@ -339,6 +350,105 @@ The formula for the tag directory size stays the same as the one mentioned [[Cac
 $$
 \text{Tag directory size} = (\text{m.m block no. bits + Status bits}) * \text{No. of blocks in c.m.}
 $$
+# Block Replacement Policy
+In set associative mapping and fully associative mapping where each index holds multiple blocks, which block to replacement when a cache miss occurs?
+
+Replacement Policies -
+1. FIFO
+2. Optimal
+3. LRU (Least Recently Used) - Replace the block which hasn't been used for the longest length of time.
+# Types of Cache Miss
+A cache miss can **only be one** of three types -
+1. **Cold or Compulsory Miss** - when a block is accessed for the first time, before it has ever been loaded into the cache.
+2. **Capacity Miss** - When a block is evicted because the cache is too small to hold the working set, and that block is later requested again.
+3. **Conflict Miss** - When the cache is not full but a block is still evicted due to conflict in the set and then requested again later. **Only occurs in** direct mapping and set associative cache.
+
+If a miss is not a cold miss, only then check if it's a capacity miss. If a miss is not a capacity miss either, only then it's a conflict miss.
+
+To decrease cache misses -
+1. Cold Miss - Increase the block size.
+2. Capacity Miss - Increase cache size.
+3. Conflict Miss - Increase associativity.
+# Hardware Implementation of Cache
+🥱🥱🥱🥱🥱🥱🥱🥱🥱🥱🥱🥱😴😴😴😴😴😴😴😴😴😴
+# Multi-level cache
+Goals of using cache memory -
+1. Minimize Access Time - Use smaller sized cache
+2. Maximize Hit Rate - Use larger sized cache
+3. Minimize Miss Penalty
+
+To achieve this, we use a multi-level cache to achieve both the contradictory goals.
+
+![[Pasted image 20260127202816.png]]
+
+How it works -
+1. Check if the request content exists in L1 cache.
+2. If it doesn't then check if it exists in L2 cache.
+3. If it doesn't then access main memory.
+## Simultaneous Access
+Average memory access time would be -
+
+$$
+\begin{aligned}
+\text{Avg. memory access time} &= H_1 * T_1 + (1-H_1)*(H_2*T_2 + (1-H_2)*T_{mm}) \\[8pt]
+&= H_1*T_1 + (1-H_1)*H_2*T_2 + (1-H_1)*(1-H_2)*T_{mm}
+\end{aligned}
+$$
+
+## Hierarchical Access
+Average memory access time would be -
+
+$$
+\begin{aligned}
+\text{Avg. mem. access time} &= H_1 * T_1 + (1-H_1)*\Big[H_2*(T_1+T_2) + (1-H_2)*(T_1+T_2+T_{mm})\Big] \\[8pt]
+&= H_1*T_1 + (1-H_1)*H_2*(T_1+T_2) + (1-H_1)*(1-H_2)*(T_1+T_2+T_{mm}) \\[8pt]
+&= T_1+(1-H_1)*T_2+(1-H_1)*(1-H_2)*T_{mm}
+\end{aligned}
+$$
+## Probability of Access
+Say in a multi-level cache -
+- 80% of the requests require only L1 cache.
+- 18% of the requests require only L2 cache.
+- 2% of the requests require only the main memory.
+
+We can say that -
+- $H_1 = 80\%$
+- $(1-H_1)*H_2 = 18\%$
+- $(1-H_1)*(1-H_2) = 2\%$
+
+Using this information too, we can find the hit ratio for each level of cache and the main memory.
+# Dual Cache
+![[Pasted image 20260127211414.png]]
+
+The level 1 cache is split into two caches, one specifically for instructions and the other specifically for data. Both caches can be accessed simultaneously in parallel by the CPU.
+
+Here if the cache uses simultaneous access,
+
+$$
+\begin{aligned}
+T_{\text{avg inst}^n} &= H_i * T_i + (1-H_i)\Big[H_2*T_2+(1-H_2)*T_{mm}\Big] \\[8pt]
+T_{\text{avg data}} &= H_d * T_d + (1-H_d)\Big[H_2*T_2+(1-H_2)*T_{mm}\Big] \\[8pt]
+T_{avg} &= (\text{\% of inst}^n \text{ fetch}) * T_{\text{avg inst}^n} + (\text{\% of data fetch}) * T_{\text{avg data}}
+\end{aligned}
+$$
+
+The above formula can be adjust for hierarchical access similarly to previous usages.
+## Cache Inclusion Policy
+Blocks in L1 cache should also be present in L2 cache.
+
+Cases -
+1. **L1 hit -** CPU reads content from L1.
+2. **L1 miss but L2 hit -** CPU reads content from L2. A block is copied from L2 to L1, if a block in L1 is evicted it is written back to the main memory if needed. There is no role of L2 in case of block eviction.
+3. **L1 miss and L2 miss -** CPU reads content from main memory. A block is copied from main memory to L2, then from L2 to L1. Any evicted block from L1 or L2 is written back to the main memory if needed.
+## Cache Exclusion Policy
+Blocks in L1 cache should not be present in L2 cache.
+
+Cases -
+1. **L1 hit -** CPU reads content from L1.
+2. **L1 miss but L2 hit -** CPU reads content from L2. A block is moved from L2 to L1 and removed from L2. If a block in L1 is evicted it is moved to L2.
+3. **L1 miss and L2 miss -** CPU reads content from main memory. A block is copied from main memory to L1 directly without moving it to L2. Any evicted block from L1 is moved to L2.
+
+Here L2 holds blocks evicted from L1. Thus it is also called as **victim cache**.
 
 ---
 # Questions
@@ -386,4 +496,34 @@ Thus the layout is -
 
 $$
 \underbrace{\boxed{\,\,\text{4 bits}\,\,}}_{\text{Tag bits}} \underbrace{\boxed{\,\,\text{12 bits}\,\,}}_\text{c.m. block no.} \underbrace{\boxed{\,\,\text{4 bits}\,\,}}_\text{byte no.}
+$$
+
+---
+<h6 class="question">Q4) In a program execution 36% of the instructions require load and store. CPI without memory stalls is 2. The program experiences 2% miss for instruction cache and 4% miss for data cache. The cache miss penalty is 200 cycles. Answer the following -</h6>
+1. CPI with memory stalls
+2. Performance gain if perfect cache is used.
+
+$\underline{\text{Sol}^n} -$
+Here $100\%$ of the instructions would need to be fetched from the cache. Only $2\%$ of these would be a miss and require 200 cycles.
+
+$$
+CPI_{inst^n} = 1 * 0.02 * 200 = 4 \text{ cycles}
+$$
+
+$36\%$ of the instructions would require data fetching from the cache and $4\%$ of these would be a miss.
+
+$$
+CPI_{data} = 0.36 * 0.04 * 200 = 2.88 \text{ cycles}
+$$
+
+Each instruction execution would require 2 cycles at least. On top of those 2 cycles, cycles for instruction and data fetch would also be required. Thus the average cycles required per instruction are -
+
+$$
+CPI_{avg} = 2 + 4 + 2.88 = \boxed{8.88\text{ cycles}} \tag{1}
+$$
+
+In an ideal cache the miss rate for everything would be $0\%$. So $CPI_{ideal}=2+0+0=2$. Thus the performance gain if using an ideal cache would be -
+
+$$
+\frac{8.88}{2}= \boxed{4.44 \text{ times}} \tag{2}
 $$
