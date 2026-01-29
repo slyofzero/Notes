@@ -79,9 +79,9 @@ When,
 - $\alpha_i=\frac{1}{n}, \forall i \in [0,k]$ $v$ is the average of all vectors.
 - $\sum_{i=1}^k \alpha_i = 1$, $v$ is an **affine combination** of vectors.
 ## Affine Combination
-When sum of all coefficients/scalars in a linear combination add up to 1, we call such a linear combination an affine combination.
+When sum of all coefficients/scalars in a linear combination add up to 1, we call such a linear combination an **affine combination**.
 
-If all coefficients are non-negative, we call this combination as a **Convex Combination/Weighted Average**.
+If, in addition, all coefficients are non-negative, we call this combination as a **Convex Combination/Weighted Average**.
 # Linear Dependence
 If some linear combination of vectors results in $\mathbf 0$ such that not all coefficients were 0, we say the vectors are **linearly dependent**.
 - If any set of vectors contains the zero vector, then this set is a linearly dependent set.

@@ -66,7 +66,7 @@ A collection of sets $A_1, \dots, A_k$ is called collectively exhaustive iff,
 $$
 \bigcup_{i=1}^k A_i = U \qquad(U \text{ is the universal set})
 $$
-# Set Operations
+****# Set Operations
 1. Union
 2. Intersection
 3. Complement
