@@ -3,7 +3,7 @@
 >- [[Probability#Axioms of Probability|Axioms of Probability]]
 >	- [[Probability#Important Consequences|Important Consequences]]
 >- [[Probability#Types of events|Types of events]]
->	- [[Probability#Mutually Exclusive|Mutually Exclusive]]
+>	- [[Probability#Mutually Exclusive Events|Mutually Exclusive Events]]
 >	- [[Probability#Independent Events|Independent Events]]
 >	- [[Probability#Dependent Events|Dependent Events]]
 >- [[Probability#Conditional Probability|Conditional Probability]]
@@ -21,6 +21,7 @@ Probability is the study of certainty/uncertainty around any decision or action.
 $\underline{\text{Definition}}-$ A random experiment is an experiment with a known set of outcomes, but the outcome of a trial is unknown before the trial is conducted.
 - The set of all possible outcomes of a random experiment is called the **sample space**.
 - **An event** is a subset of the sample space that is of our interest.
+- A trial is a single repetition of a random experiment.
 
 **Parallels to Set Theory -**
 
@@ -51,7 +52,7 @@ $$
 
  Thus $\phi$ is an **impossible event**. All impossible events are **zero-probability events**, but not all zero-probability events are impossible events. 
  
- Consider the sample space $[0,1]$. Here if we pick a range $[a,b]$ such that it is a subset of $[0,1]$, the probability of picking an element such that it belongs to this range is $b-a$. If $b=a$, this range becomes $[a,a]$. So only $a$ can be picked and no other number. But the probability of an element being picked such that it belongs to $[a,a]$ would be $a-a=0$ despite there existing an element in this range. This happens because the $P(a)$ is -
+ Consider the sample space $[0,1]$. Here if we pick a range $[a,b]$ such that it is a subset of $[0,1]$, the probability of picking an element such that it belongs to this range is $b-a$. If $b=a$, this range becomes $[a,a]$. So only $a$ can be picked and no other number. But the probability of an element being picked such that it belongs to $[a,a]$ would be $a-a=0$ despite there existing an element in this range. This happens because the $P(a)$ is - ^6f2985
 
 $$
 \frac{1}{\text{no. of elements in [0,1]}} = \lim_{n \rightarrow\infty}\frac{1}{n} = 0
@@ -83,7 +84,7 @@ $$
 
 4. If $A \subseteq B$, then $P(A) \le P(B)$.
 # Types of events
-## Mutually Exclusive
+## Mutually Exclusive Events
 $\underline{\text{Definition}}-$ Events are said to be mutually exclusive if they can't occur simultaneously. If an event occurs and based upon this information we can say that certain events won't occur, then this set of events is mutually exclusive.
 
 This means that if $A$ and $B$ are mutually exclusive events, $P(A \cap B)=0$.
@@ -93,6 +94,8 @@ In case of mutually exclusive events, based on the occurrence of an event we hav
 Are there events where occurrence of one gives no new information regarding occurrence of others? YES. Such events are called independent events.
 
 $\underline{\text{Definition}}-$ Independent events are events where occurrence of one event gives no new information regarding occurrence of other events.
+
+If $A$ and $B$ are independent events then, $P(A \cap B) = P(A) \cdot P(B)$. The reason why is shown in [[Probability#Conditional Probability|conditional probability]].
 ## Dependent Events
 $\underline{\text{Definition}}-$ Events are said to be dependent if occurrence of one gives partial or full information about the occurrence of other events.
 
