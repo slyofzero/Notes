@@ -82,7 +82,7 @@ where $n$ is the number of Bernoulli trials and $p$ is the probability of succes
 Repeated Bernoulli trials are repeated multiple time, we would be interested in the probability of achieving exactly some $k$ successes. The probability of $k$ successes in a sequence of $n$ events would be $p^k(1-p)^{n-k}$. There can be $^nC_k$ number of such sequences where $k$ successes occur, each with the same probability of $p^k(1-p)^{n-k}$. Thus the total probability ends up being -
 
 $$
-P(\mathcal X=k) = \,^nC_k \cdot p^k (1-p)^{(n-k)}
+P(\mathcal X=k) = \,{}^nC_k \cdot p^k (1-p)^{(n-k)}
 $$
 
 Requirements -
