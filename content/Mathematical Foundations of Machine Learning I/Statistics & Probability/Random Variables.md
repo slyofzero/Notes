@@ -29,6 +29,8 @@
 >		- [[Random Variables#Joint Moments|Joint Moments]]
 >- [[Random Variables#Covariance|Covariance]]
 >- [[Random Variables#Correlation|Correlation]]
+>- [[Random Variables#Joint Conditional Probability|Joint Conditional Probability]]
+>	- [[Random Variables#Bayes Theorem|Bayes Theorem]]
 
 A random variable is a function which associates every outcome of a random experiment to some real number. This real number is used to denote a "reward" for every outcome.
 
@@ -454,13 +456,16 @@ $$
 The joint moments of $\mathcal X$ and $\mathcal Y$ are defined as -
 
 $$
-E[\mathcal X^m\mathcal Y^n] =  \sum_i\sum_j (x_i-c_1)^m (y_j-c_2)^n P_{\mathcal{XY}}(x_i,y_j)
+\begin{aligned}
+E[\mathcal X^m\mathcal Y^n] &=  \sum_i\sum_j (x_i-c_1)^m (y_j-c_2)^n P_{\mathcal{XY}}(x_i,y_j)  &\qquad(\text{For Discrete})\\[8pt]
+E[\mathcal X^m\mathcal Y^n] &=  \int_{-\infty}^\infty \int_{-\infty}^\infty (x_i-c_1)^m (y_j-c_2)^n f_{\mathcal{XY}}(x_i,y_j) \,dy\,dx &\qquad(\text{For Continuous})\\
+\end{aligned}
 $$
 
 If we take $(c_1,c_2)=(0,0)$ and calculate the moments about the origin,
 1. If we set $m=1,n=0$ we get $E[\mathcal X]$.
 2. Similarly, if we set $m=0,n=1$ we get $E[\mathcal Y]$.
-3. If we set $m=1,n=1$ we get $E[\mathcal {XY}]$.
+3. If we set $m=1,n=1$ we get $E[\mathcal {XY}]$. This can be called the **correlation** iff $\mathcal X$ and $\mathcal Y$ are standardized ($\mu=0$ and $\sigma=1$).
 
 If we take $(c_1,c_2)=(E[\mathcal X],E[\mathcal Y])$ and calculate the central moments,
 1. If $m=1,n=0$ we get 0. This makes sense as we are centering $\mathcal X$ and then trying to find its mean.
@@ -498,3 +503,48 @@ Here $\rho_{\mathcal{XY}}$ denotes the correlation coefficient between $\mathcal
 2. $\rho_{\mathcal{XY}} = -1$ means as $\mathcal X$ increases $\mathcal Y$ decreases, and vice-versa.
 3. $\rho_{\mathcal{XY}} = +1$ means as $\mathcal X$ increases $\mathcal Y$ increases, and vice-versa.
 4. $\rho_{\mathcal{XY}} = 0$ means change in $\mathcal X$ doesn't mean any change in $\mathcal Y$. In such scenario we say $\mathcal X$ and $\mathcal Y$ are orthogonal to each other.
+
+If $\mathcal X$ and $\mathcal Y$ are independent -
+- $\rho_{\mathcal{XY}} = 0$
+- But if $\rho_{\mathcal{XY}} = 0$, that doesn't mean that $\mathcal X$ and $\mathcal Y$ are independent.
+
+But do there exist  a pair of random variables such that if they are uncorrelated, they are independent? YES!
+- Uncorrelated Gaussian Random Variables are necessarily independent.
+# Joint Conditional Probability
+
+$$
+\begin{aligned}
+p_{\mathcal{X,Y}}(x_i,y_j) &= P(\mathcal X=x_i, \mathcal Y=y_j) \\[8pt]
+&= P(\mathcal Y=y_j \,|\, \mathcal X=x_i) \,\, P(\mathcal X=x_i) &\qquad(\text{Law of Total Probability})\\[8pt]
+&= P(\mathcal Y=y_j \,|\, \mathcal X=x_i) \,\, p_{\mathcal X}(x_i) &\qquad(p_{\mathcal X} \text{ is the marginal probability})\\[8pt]
+\end{aligned}
+$$
+
+From this we can say that,
+
+$$
+\begin{aligned}
+p_{\mathcal Y |\mathcal X}(y_j|x_i) &= \frac{p_{\mathcal{X,Y}}(x_i,y_j)}{p_{\mathcal X}(x_i)} \\[8pt]
+\end{aligned}
+$$
+
+The number $p_{\mathcal Y |\mathcal X}(y_j|x_i)$ is a valid probability as it satisfies all the [[Probability#Axioms of Probability|Axioms of Probability]]. Conditional PMF is a family of functions keeping $x_i$ constant.
+
+We can similarly write the conditional joint probability for continuous random variables as,
+
+$$
+\begin{aligned}
+f_{\mathcal Y |\mathcal X}(y_j|x_i) &= \frac{f_{\mathcal{X,Y}}(x_i,y_j)}{f_{\mathcal X}(x_i)} \\[8pt]
+\end{aligned}
+$$
+## Bayes Theorem
+Using this we can rewrite the Bayes Theorem w.r.t joint probability.
+
+$$
+\begin{aligned}
+p_{\mathcal Y |\mathcal X}(y_j|x_i) &= \frac{p_{\mathcal{X|Y}}(x_i|y_j) \cdot p_{\mathcal Y}(y_j)}{\sum_{j}p_{\mathcal{X|Y}}(x_i|y_j) \cdot p_{\mathcal Y}(y_j)} &\qquad(\text{For Discrete}) \\[8pt]
+
+f_{\mathcal Y |\mathcal X}(y_j|x_i) &= \frac{f_{\mathcal{X|Y}}(x_i|y_j) \cdot f_{\mathcal Y}(y_j)}{\int_{-\infty}^\infty f_{\mathcal{X|Y}}(x_i|y_j) \cdot f_{\mathcal Y}(y_j)\,\, dy} &\qquad(\text{For Continuous}) \\[8pt]
+\end{aligned}
+$$
+

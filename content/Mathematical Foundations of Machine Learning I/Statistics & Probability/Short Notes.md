@@ -1,27 +1,27 @@
 # Basic Definitions
-**Probability -** Study of uncertainty around anything.
+1. **Probability -** Study of uncertainty around anything.
 
-**Random Experiment -** An experiment whose set of all possible outcomes is known, but the outcome of any trial is unknown until the trial is conducted.
+2. **Random Experiment -** An experiment whose set of all possible outcomes is known, but the outcome of any trial is unknown until the trial is conducted.
 
-**Sample Space -** Set of all possible outcomes of a random experiment.
+3. **Sample Space -** Set of all possible outcomes of a random experiment.
 
-**Event -** A set of outcomes of the random experiment. A subset of the sample space.
+4. **Event -** A set of outcomes of the random experiment. A subset of the sample space.
 
-**Trial -** One repetition of a random experiment.
+5. **Trial -** One repetition of a random experiment.
 # Types of Events
-**Independent Events -** Set of events where occurrence of one event has no affect on occurrence of another.
+1. **Independent Events -** Set of events where occurrence of one event has no affect on occurrence of another.
 
-**Dependent Events -** Set of events where occurrence of one event has some effect on occurrence of another.
+2. **Dependent Events -** Set of events where occurrence of one event has some effect on occurrence of another.
 
-**Mutually Exclusive Events -** Set of events where occurrence of one event guarantees that other events in the sample space won't occur.
+3. **Mutually Exclusive Events -** Set of events where occurrence of one event guarantees that other events in the sample space won't occur.
 # Conditional Probability
-**Conditional Probability -** Probability of one event occurring given that another has occurred.
+1. **Conditional Probability -** Probability of one event occurring given that another has occurred.
 
 $$
 P(A|B) = \frac{P(A \cap B)}{P(B)}
 $$
 
-**Total Probability Theorem -** The probability of one event is the sum of intersections of that event and partitions of the sample space.
+2. **Total Probability Theorem -** The probability of one event is the sum of intersections of that event and partitions of the sample space.
 
 $$
 \begin{aligned}
@@ -30,7 +30,7 @@ P(B) &= \sum_{i=1}^nP(B|A_i)P(A_i)
 \end{aligned}
 $$
 
-**Bayes Theorem -** It tells us how knowing the $P(H|D)$ and $P(D|H)$ are related.
+3. **Bayes Theorem -** It tells us how knowing the $P(H|D)$ and $P(D|H)$ are related.
 
 $$
 \begin{aligned}
@@ -38,27 +38,27 @@ P(H|D) &= \frac{P(D|H) \cdot P(H)}{P(D)} \\[8pt]
 \text{Posterior} &= \frac{\text{Likelihood} \cdot \text{Prior}}{\text{Evidence}}
 \end{aligned}
 $$
-
-1. **Prior** $P(H)$ means probability of the hypothesis before seeing the data.
-2. **Likelihood** $P(D|H)$ means how likely is the data if the hypothesis is true.
-3. Evidence $P(D)$ means the probability of the data.
-4. **Posterior** - $P(B|A)$ means probability of the hypothesis after seeing the data.
+Here -
+- **Prior** $P(H)$ means probability of the hypothesis before seeing the data.
+- **Likelihood** $P(D|H)$ means how likely is the data if the hypothesis is true.
+- Evidence $P(D)$ means the probability of the data.
+- **Posterior** - $P(B|A)$ means probability of the hypothesis after seeing the data.
 # Random Variable
-**Random Variable -** A real number associated to every outcome of a random experiment.
+1. **Random Variable -** A real number associated to every outcome of a random experiment.
 
-**Range of a random variable** - The set of values a random variable can hold.
+2. **Range of a random variable** - The set of values a random variable can hold.
 
-**Discrete Random Variable -** Random variable whose range is a finite or countably infinite set.
+3. **Discrete Random Variable -** Random variable whose range is a finite or countably infinite set.
 
-**Continuous Random Variable -** Random variable whose range is an uncountably infinite set.
+4. **Continuous Random Variable -** Random variable whose range is an uncountably infinite set.
 # Probability Distributions
-**Probability Distribution -** Describes the probability of a random variable holding a value.
+1. **Probability Distribution -** Describes the probability of a random variable holding a value.
 
-**Probability Mass Function -** A function which describes how probability is distributed over the values of a continuous random variable.
+2. **Probability Mass Function -** A function which describes how probability is distributed over the values of a continuous random variable.
 
-**Cumulative Distribution -** A function which describes the probability of the random variable holding any value less than some $x$. It holds the accumulated probabilities till $x$.
+3. **Cumulative Distribution -** A function which describes the probability of the random variable holding any value less than some $x$. It holds the accumulated probabilities till $x$.
 
-**Independent and Identically Distributed -** Events are i.i.d. if occurrence of one doesn't affect the occurrence of another and the probabilities of both events is the same.
+4. **Independent and Identically Distributed -** Events are i.i.d. if occurrence of one doesn't affect the occurrence of another and the probabilities of both events is the same.
 
 General distributions -
 1. **Bernoulli Distribution -** The probability distribution where success has a probability of $p$ and failure has a probability of $1-p$.
@@ -132,7 +132,7 @@ $$
 \end{aligned}
 $$
 
-8. **Normal Distribution -** A probability distribution in which values are **symmetrically distributed about the mean**, with most observations clustering near the mean and fewer occurring as we move away from it.
+8. **Normal/Gaussian Distribution -** A probability distribution in which values are **symmetrically distributed about the mean**, with most observations clustering near the mean and fewer occurring as we move away from it.
 $$
 \begin{aligned}
 &\mathcal X \sim \mathcal N(\mu, \sigma^2) \\[8pt]
@@ -140,7 +140,7 @@ $$
 \end{aligned}
 $$
 # Expected Values and Variance
-**Expected Value** - The average of all outcomes of a random variable if the experiment is conducted a large number of times.
+1. **Expected Value** - The average of all outcomes of a random variable if the experiment is conducted a large number of times.
 
 $$
 \begin{aligned}
@@ -149,7 +149,7 @@ E[\mathcal X] &= \sum_{i=1}^n x_i\,P(x_i) &\qquad \text{For Discrete R.V} \\[8pt
 \end{aligned}
 $$
 
-The expected values for the popular distributions are -
+2. The expected values for the popular distributions are -
 
 | Distribution | Expected Value |
 | :----------: | :------------: |
@@ -161,15 +161,16 @@ The expected values for the popular distributions are -
 | Exponential  |  $1/\lambda$   |
 |   Gaussian   |     $\mu$      |
 
-**Mean -** The expected value of a random variable.
-
-**Variance -** The spread of the values of a random variable around the mean.
+3. 
+	- **Mean -** The expected value of a random variable.
+	- **Variance -** The spread of the values of a random variable around the mean.
 
 $$
 \begin{aligned}
 \operatorname{Var}(\mathcal X) &= E[\mathcal X^2]-E[\mathcal X]^2
 \end{aligned}
 $$
+
 The variance for the popular distributions are -
 
 | Distribution |     Expected Value      |
@@ -181,3 +182,94 @@ The variance for the popular distributions are -
 |   Uniform    |      $(b-a)^2/12$       |
 | Exponential  |      $1/\lambda^2$      |
 |   Gaussian   | $\sigma_{\mathcal X}^2$ |
+# Joint Distribution
+1. **Joint Distribution -** The joint distribution of multiple random variables is the probability associated to all possible permutation of values the random variables hold simultaneously.
+
+2. **Marginal Distribution -** The probability distribution of one random variable holding a fixed value over all possible values for the rest of the random variable is called the margin distribution for that random variable.
+
+Discrete Marginals -
+
+$$
+\begin{aligned}
+\sum_{j} p_{\mathcal X \mathcal Y}(x_i,y_j) &= p_{\mathcal X}(x_i) \\[8pt]
+\sum_{i} p_{\mathcal X \mathcal Y}(x_i,y_j) &= p_{\mathcal Y}(y_j) \\[8pt]
+\end{aligned}
+$$
+
+Continuous Marginals -
+
+$$
+\begin{aligned}
+\int_{y-\triangle y}^{y+\triangle y} f_{\mathcal X \mathcal Y}(x_i,y_j)\,dy &= f_{\mathcal X}(x_i) \\[8pt]
+\int_{x-\triangle x}^{x+\triangle x} f_{\mathcal X \mathcal Y}(x_i,y_j)\,dx &= f_{\mathcal Y}(y_j) \\[8pt]
+\end{aligned}
+$$
+
+3. **Expected Value -** $E[XY]=E[X]E[Y]$ only when $X,Y$ are independent.
+
+4. **Variance -** $\operatorname{Var}(XY)=\operatorname{Var}(X)+\operatorname{Var}(Y)-2\operatorname{Cov}(XY)$ only when $X,Y$ are independent.
+
+5. **Joint Cumulative Distribution** - The joint cumulative distribution function tells the probability of a set of random variables holding values less than or equal to some threshold.
+
+6. **Joint Moments -**
+$$
+\begin{aligned}
+E[\mathcal X^m\mathcal Y^n] &=  \sum_i\sum_j (x_i-c_1)^m (y_j-c_2)^n P_{\mathcal{XY}}(x_i,y_j)  &\qquad(\text{For Discrete})\\[8pt]
+E[\mathcal X^m\mathcal Y^n] &=  \int_{-\infty}^\infty \int_{-\infty}^\infty (x_i-c_1)^m (y_j-c_2)^n f_{\mathcal{XY}}(x_i,y_j) \,dy\,dx &\qquad(\text{For Continuous})\\
+\end{aligned}
+$$
+# Covariance
+1. **Covariance -** $\operatorname{Cov}(XY) = E[XY] - E[X]E[Y]$
+
+2. **Correlation -** 
+$$
+\begin{aligned}
+\rho_{\mathcal{XY}} &= \frac{\operatorname{Cov}(\mathcal{X,Y})}{\sigma_{\mathcal X}\sigma_{\mathcal Y}} \\[8pt]
+&= E\left[\frac{\mathcal X - E[\mathcal X]}{\sigma_{\mathcal X}}\right] \cdot E\left[\frac{\mathcal Y - E[\mathcal Y]}{\sigma_{\mathcal Y}}\right] \\[8pt]
+\end{aligned}
+$$
+
+
+
+If $\mathcal X$ and $\mathcal Y$ are independent, $\mathcal X$ and $\mathcal Y$ are uncorrelated. But if $\mathcal X$ and $\mathcal Y$ are uncorrelated, that doesn't mean $\mathcal X$ and $\mathcal Y$ are independent.
+
+But if $\mathcal X$ and $\mathcal Y$ are two Uncorrelated Gaussian Random Variables, both are always independent.
+# Joint Conditional Probability
+$$
+\begin{aligned}
+p_{\mathcal Y |\mathcal X}(y_j|x_i) &= \frac{p_{\mathcal{X,Y}}(x_i,y_j)}{p_{\mathcal X}(x_i)} \\[8pt]
+\end{aligned}
+$$
+
+Using this we can rewrite the Bayes Theorem w.r.t joint probability.
+
+$$
+\begin{aligned}
+p_{\mathcal Y |\mathcal X}(y_j|x_i) &= \frac{p_{\mathcal{X|Y}}(x_i|y_j) \cdot p_{\mathcal Y}(y_j)}{\sum_{j}p_{\mathcal{X|Y}}(x_i|y_j) \cdot p_{\mathcal Y}(y_j)} &\qquad(\text{For Discrete}) \\[8pt]
+
+f_{\mathcal Y |\mathcal X}(y_j|x_i) &= \frac{f_{\mathcal{X|Y}}(x_i|y_j) \cdot f_{\mathcal Y}(y_j)}{\int_{-\infty}^\infty f_{\mathcal{X|Y}}(x_i|y_j) \cdot f_{\mathcal Y}(y_j)\,\, dy} &\qquad(\text{For Continuous}) \\[8pt]
+\end{aligned}
+$$
+# Theorems
+1. **Markov Inequality -** For any **non-negative random variable** $X$ with a finite $E[X]$ and $k \gt 0$,
+
+$$
+P(X \ge k) \le \frac{E[X]}{k}
+$$
+
+Markov Inequality gives an exaggerated estimate of the probabilities, especially for tails. At times the upper bound provided by the Markov Inequality can be greater than 1 too.
+
+2. **Chebyshev's Inequality -** For **any real valued random variable** $X$ with mean $\mu$ and variance $\sigma_X^2$, we say that 
+$$
+P(|X - \mu| \ge k) \le \frac{\sigma_X^2}{k^2}
+$$
+
+3. We can apply Chebyshev's inequality for Normal Distributions and try to find the probability of some value lying beyond some $n\sigma_X$ distance away from the mean $\mu$. For such a case,
+
+$$
+\begin{aligned}
+P(|X - \mu| \ge n\sigma_X) &\le \frac{\sigma_X^2}{n^2\sigma_X^2} \\[8pt]
+&\le \frac{1}{n^2}
+\end{aligned}
+$$
+4. **Central Limit Theorem -** The sample mean and the sample variance converge to the population mean and variance, respectively, as the sample size increases.
