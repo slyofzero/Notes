@@ -14,6 +14,21 @@
 >		- [[Random Variables#Uniform Random Variable|Uniform Random Variable]]
 >		- [[Random Variables#Exponential Random Variable|Exponential Random Variable]]
 >		- [[Random Variables#Gaussian/Normal Distribution|Gaussian/Normal Distribution]]
+>- [[Random Variables#Cumulative Distribution|Cumulative Distribution]]
+>- [[Random Variables#Expected Value of a Random Variable|Expected Value of a Random Variable]]
+>	- [[Random Variables#Raw Moments|Raw Moments]]
+>- [[Random Variables#Variance|Variance]]
+>- [[Random Variables#Joint Distribution|Joint Distribution]]
+>	- [[Random Variables#Marginal Distribution|Marginal Distribution]]
+>		- [[Random Variables#Discrete Case |Discrete Case ]]
+>		- [[Random Variables#Continuous Case|Continuous Case]]
+>	- [[Random Variables#Joint Cumulative Distribution Function|Joint Cumulative Distribution Function]]
+>	- [[Random Variables#Joint Moments|Joint Moments]]
+>		- [[Random Variables#Expected Value|Expected Value]]
+>		- [[Random Variables#Variance|Variance]]
+>		- [[Random Variables#Joint Moments|Joint Moments]]
+>- [[Random Variables#Covariance|Covariance]]
+>- [[Random Variables#Correlation|Correlation]]
 
 A random variable is a function which associates every outcome of a random experiment to some real number. This real number is used to denote a "reward" for every outcome.
 
@@ -135,7 +150,7 @@ A Poisson random variable counts the **number of events occurring in a fixed int
 $$
 \begin{aligned}
 &\mathcal X \sim \operatorname{Poisson(\lambda)} \\[8pt]
-&P(\mathcal X = k) = e^{-\lambda}\frac{\lambda^r}{r!}, \qquad r=0,1,2,\dots
+&P(\mathcal X = k) = e^{-\lambda}\frac{\lambda^k}{k!}, \qquad k=0,1,2,\dots
 \end{aligned}
 $$
 
@@ -149,7 +164,7 @@ $$
 P\left(x-\frac{\triangle x}{2} \le x+\frac{\triangle x}{2} \right) = \int_{x-\frac{\triangle x}{2}}^{x+\frac{\triangle x}{2}} f_{\mathcal X}(x) dx
 $$
 ## Probability Density Function
-The probability density function is the probability distribution of a continuous random variable, where the probabilities are obtaining by integrating the function over the interval.
+A function which describes how probability is distributed over the values of a continuous random variable. The probabilities are obtaining by integrating the function over the interval.
 
 Here $f_{\mathcal X}(x)$ is called the **probability density function**. Properties of PDF -
 1. The area under the probability density curve for the entire interval $[a,b]$ is 1.
@@ -204,7 +219,7 @@ Here $\lambda$ is the rate of occurrence of events and is always $\gt$ 0.
 
 This is a continuous analog of the [[Random Variables#Geometric Random Variable|Geometric Random Variable]].
 ### Gaussian/Normal Distribution
-A Normal Distribution is a continuous distribution where -
+A probability distribution in which values are **symmetrically distributed about the mean**, with most observations clustering near the mean and fewer occurring as we move away from it.
 
 $$
 \begin{aligned}
@@ -269,6 +284,8 @@ Properties of $E[\mathcal X]$ -
 3. $E[\mathcal X + \mathcal Y] = E[\mathcal X] + E[\mathcal Y]$
 4. $E[a]=a$, if $a$ is a scalar.
 5. $E[a \mathcal X + b] = aE[\mathcal X] + b$
+
+The expectation of a random variable is a linear operator.
 
 <h4 class="special">E[X] is the best predictor of outcome of an experiment.</h4>
 
@@ -338,3 +355,146 @@ The variance for the popular distributions are -
 | Exponential  |      $1/\lambda^2$      |
 |   Gaussian   | $\sigma_{\mathcal X}^2$ |
 These can be obtained by applying the above formulas and simplifying the equations.
+# Joint Distribution
+The joint distribution of multiple random variables is the probability associated to all possible permutation of values the random variables hold simultaneously.
+
+$$
+P(\mathcal X = x, \mathcal Y = y) = P(\mathcal X \cap \mathcal Y)
+$$
+
+This distribution is also denoted as $p_{\mathcal X \mathcal Y}$.
+
+Properties -
+1. $0 \le p_{\mathcal X \mathcal Y}(x,y) \le 1$.
+2. $\sum_{i,j} p_{\mathcal X \mathcal Y}(x_i,y_j) = 1$.
+## Marginal Distribution
+The probability distribution of one random variable holding a fixed value over all possible values for the rest of the random variable is called the margin distribution for that random variable.
+### Discrete Case 
+For discrete random variables we sum the probabilities like -
+$$
+\begin{aligned}
+\sum_{j} p_{\mathcal X \mathcal Y}(x_i,y_j) &= p_{\mathcal X}(x_i) \\[8pt]
+\sum_{i} p_{\mathcal X \mathcal Y}(x_i,y_j) &= p_{\mathcal Y}(y_j) \\[8pt]
+\end{aligned}
+$$
+
+If $P(\{\mathcal X = x_i\} \cap \{\mathcal Y = y_j\}) = p_{\mathcal X} (x_i)  \cdot p_{\mathcal Y}(y_j)$ at every point $(x_i,y_j)$, we say that $\mathcal X$ and $\mathcal Y$ are independent random variables.
+### Continuous Case
+For continuous random variables we integrate the probabilities like -
+$$
+\begin{aligned}
+\int_{y-\triangle y}^{y+\triangle y} f_{\mathcal X \mathcal Y}(x_i,y_j)\,dy &= f_{\mathcal X}(x_i) \\[8pt]
+\int_{x-\triangle x}^{x+\triangle x} f_{\mathcal X \mathcal Y}(x_i,y_j)\,dx &= f_{\mathcal Y}(y_j) \\[8pt]
+\end{aligned}
+$$
+
+If $f_{\mathcal X \mathcal Y}(x,y)=f_{\mathcal X}(x) \cdot f_{\mathcal Y}(y)$ at every point $(x_i,y_j)$, we say that $\mathcal X$ and $\mathcal Y$ are independent random variables.
+## Joint Cumulative Distribution Function
+The joint cumulative distribution function tells the probability of a set of random variables holding values less than or equal to some threshold.
+
+$$
+F_{\mathcal{XY}} = P(\mathcal X \le x, \mathcal Y \le y)
+$$
+
+Properties -
+1. $0 \le F_{\mathcal{XY}(x,y)} \le 1$.
+2. The marginal CDF is written as $F_{\mathcal X}(x)$, where 
+$$
+\begin{aligned}
+F_{\mathcal X}(x) &= F_{\mathcal {XY}}(x, \infty) \\[8pt]
+F_{\mathcal Y}(y) &= F_{\mathcal {XY}}(\infty, y) \\[8pt]
+\end{aligned}
+$$
+
+3. $F_{\mathcal {XY}}(\infty, \infty) = 1$.
+4. 
+$$
+\begin{aligned}
+F_{\mathcal {XY}}(x, -\infty) &= 0 \\[8pt]
+F_{\mathcal {XY}}(-\infty, y) &= 0 \\[8pt]
+\end{aligned}
+$$
+5. If $x \le x_1$ and $y \le y_1$,
+$$
+F_{\mathcal {XY}}(x,y) \le F_{\mathcal {XY}}(x_1,y_1) \\[8pt]
+$$
+## Joint Moments
+Suppose $\mathcal  {X,Y}$ are two random variables, then
+### Expected Value
+If $\mathcal Z = \mathcal X + \mathcal Y$, then
+
+$$
+E[\mathcal X + \mathcal Y] = E[\mathcal X]+ E[\mathcal Y]
+$$
+
+This means that $E[a\mathcal X + b\mathcal Y] = aE[\mathcal X] + bE[\mathcal Y]$.
+
+If $\mathcal Z = \mathcal{XY}$, then we can't simplify $E[\mathcal Z] = E[\mathcal {XY}]$ unless $P_{\mathcal{XY}}(x_i,y_j) = P_{\mathcal X}(x_i) \cdot P_{\mathcal Y}(y_j)$. But if this were to be true then $\mathcal  {X,Y}$ are independent. 
+
+So, if $\mathcal  {X,Y}$ are independent, then 
+
+$$
+E[\mathcal{XY}] = E[\mathcal X]E[\mathcal Y]
+$$
+### Variance
+If $\mathcal Z = \mathcal X + \mathcal Y$, then
+
+$$
+\operatorname{Var}[\mathcal X + \mathcal Y] = \operatorname{Var}[\mathcal X] + \operatorname{Var}[\mathcal Y] + 2\underbrace{(E[\mathcal {XY}] - E[\mathcal X]E[\mathcal Y])}_\text{Covariance}
+$$
+If $\mathcal  {X,Y}$ are independent then $E[\mathcal{XY}] = E[\mathcal X]E[\mathcal Y]$, which would cause this Covariance term to be 0. So if $\mathcal  {X,Y}$ are independent,
+
+$$
+\begin{aligned}
+\operatorname{Var}[\mathcal X + \mathcal Y] &= \operatorname{Var}[\mathcal X] + \operatorname{Var}[\mathcal Y] \\[8pt]
+\sigma_{\mathcal Z}^2 &= \sigma_{\mathcal X}^2 + \sigma_{\mathcal Y}^2 \qquad(\text{Pythagoras' Theorem in Stats})
+\end{aligned}
+$$
+### Joint Moments
+The joint moments of $\mathcal X$ and $\mathcal Y$ are defined as -
+
+$$
+E[\mathcal X^m\mathcal Y^n] =  \sum_i\sum_j (x_i-c_1)^m (y_j-c_2)^n P_{\mathcal{XY}}(x_i,y_j)
+$$
+
+If we take $(c_1,c_2)=(0,0)$ and calculate the moments about the origin,
+1. If we set $m=1,n=0$ we get $E[\mathcal X]$.
+2. Similarly, if we set $m=0,n=1$ we get $E[\mathcal Y]$.
+3. If we set $m=1,n=1$ we get $E[\mathcal {XY}]$.
+
+If we take $(c_1,c_2)=(E[\mathcal X],E[\mathcal Y])$ and calculate the central moments,
+1. If $m=1,n=0$ we get 0. This makes sense as we are centering $\mathcal X$ and then trying to find its mean.
+2. If $m=0,n=1$ we get 0 again due to a similar logic but for $\mathcal Y$.
+3. If $m=1,n=1$ we get the Covariance of $\mathcal{X,Y}$.
+# Covariance
+Covariance of two random variables is defined as,
+
+$$
+\operatorname{Cov}(\mathcal{X,Y}) = E[\mathcal {XY}] - E[\mathcal X]E[\mathcal Y]
+$$
+
+If $\mathcal  {X,Y}$ are independent, then $E[\mathcal{XY}] = E[\mathcal X]E[\mathcal Y]$ and thus the covariance is 0. 
+
+Whenever $\operatorname{Cov}(\mathcal{X,Y})=0$, we say that $\mathcal  {X,Y}$ are uncorrelated.
+- Independent random variables are uncorrelated.
+- But not all uncorrelated random variables are independent.
+# Correlation
+The covariance between two random variables can help understand how one variable's values affects the other's, but the problem with it is that its unbounded and depends on the units of measurement.
+
+***Example -*** If $\mathcal X$ means weight (kg) and $\mathcal Y$ means height (cm), then $\mathcal{XY}$ is in the units kgcm.
+
+To resolve this, we divide the covariance by the product of the standard deviations of the two random variables.
+
+$$
+\begin{aligned}
+\rho_{\mathcal{XY}} &= \frac{\operatorname{Cov}(\mathcal{X,Y})}{\sigma_{\mathcal X}\sigma_{\mathcal Y}} \\[8pt]
+&= E\left[\frac{\mathcal X - E[\mathcal X]}{\sigma_{\mathcal X}}\right] \cdot E\left[\frac{\mathcal Y - E[\mathcal Y]}{\sigma_{\mathcal Y}}\right] \\[8pt]
+\end{aligned}
+$$
+
+Here $\rho_{\mathcal{XY}}$ denotes the correlation coefficient between $\mathcal X$ and $\mathcal Y$.
+
+1. $-1 \le \rho_{\mathcal{XY}} \le 1$.
+2. $\rho_{\mathcal{XY}} = -1$ means as $\mathcal X$ increases $\mathcal Y$ decreases, and vice-versa.
+3. $\rho_{\mathcal{XY}} = +1$ means as $\mathcal X$ increases $\mathcal Y$ increases, and vice-versa.
+4. $\rho_{\mathcal{XY}} = 0$ means change in $\mathcal X$ doesn't mean any change in $\mathcal Y$. In such scenario we say $\mathcal X$ and $\mathcal Y$ are orthogonal to each other.
