@@ -65,7 +65,7 @@ $$
 
 The set $\{x\,|\,1\le x \lt n,\text{ and }gcd(x,n)=1\}$ (set of all co-prime numbers w.r.t and less than n) is a group with respect to multiplication modulo operation.
 
-As all numbers less than a prime number $n$ are co-prime w.r.t it $n$, $\{x|1\le x \lt n\}$ is a group w.r.t multiplication modulo.
+As all numbers less than a prime number $n$ are co-prime w.r.t $n$, $\{x|1\le x \lt n\}$ is a group w.r.t multiplication modulo.
 # Order of an element
 For any element $a$ in a group $(G,*)$ the order of $a$ is the **least positive integer** value of $n$ such that $a^n = e$. Here $n$ is not exponentiation but instead performing the $*$ operation $n-1$ times on $a$ like - 
 

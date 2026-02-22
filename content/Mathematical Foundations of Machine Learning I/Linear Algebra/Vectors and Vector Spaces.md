@@ -11,6 +11,7 @@
 >	- [[Vectors and Vector Spaces#Basis|Basis]]
 >		- [[Vectors and Vector Spaces#Uniqueness of Representation Theorem|Uniqueness of Representation Theorem]]
 >	- [[Vectors and Vector Spaces#Dimension|Dimension]]
+>- [[Vectors and Vector Spaces#Hyperplanes|Hyperplanes]]
 # Vector
 What is a vector?
 - **The Physics definition -** A vector is a quantity with both magnitude and direction.
@@ -32,12 +33,14 @@ such that -
 3. **Identity:** $a + 0 = 0 + a = a$
 4. **Inverse:** $a + (-a) = 0$    
 5. **Commutativity:** $a+b=b+a$
+
 **Multiplicative structure $(\mathbb F\setminus\{0\}, \cdot)$ is an abelian group:**  
 6. **Closure:** $a\cdot b \in \mathbb F\setminus\{0\}$
 7. **Associativity:** $(a\cdot b)\cdot c = a\cdot(b\cdot c)$
 8. **Identity:** $a\cdot1=a$
 9. **Inverse:** $a\cdot a^{-1} = 1$
 10. **Commutativity:** $a\cdot b=b\cdot a$
+
 **Link between them:**  
 11. **Distributivity:** $a\cdot(b+c)=a\cdot b+a\cdot c$
 # Vector Space
@@ -55,11 +58,13 @@ $V$ **is not a field** but "over a field $\mathbb F$". This means that the scala
 3. **Identity:** $v+0=v$
 4. **Inverse:** $v+(-v)=0$
 5. **Commutativity:** $v+w=w+v$
+
 **Scalar Multiplication:**
 6. **Closure:** $av \in V$
 7. **Associativity:** $a\cdot(b\cdot v)=(a\cdot b )\cdot v$ 
 8. **Identity:** $1.v = v$
 9. **Inverse:** Because Associativity works, with $b=a^{-1}$ we can satisfy inversion
+
 **Link between them:** 
 10. **Distributivity:** $a\cdot(u+v)=au+av$ and $v\cdot(a+b)=av+bv$
 ## Subspaces
@@ -81,10 +86,10 @@ When,
 ## Affine Combination
 When sum of all coefficients/scalars in a linear combination add up to 1, we call such a linear combination an **affine combination**.
 
-If, in addition, all coefficients are non-negative, we call this combination as a **Convex Combination/Weighted Average**.
+If, in addition, all coefficients are non-negative, we call this combination a **Convex Combination/Weighted Average**.
 # Linear Dependence
 If some linear combination of vectors results in $\mathbf 0$ such that not all coefficients were 0, we say the vectors are **linearly dependent**.
-- If any set of vectors contains the zero vector, then this set is a linearly dependent set.
+- If any set of vectors contains the zero vector, then this set is always a linearly dependent set.
 
 If the only way to get the zero vector by performing a linear combination on the vectors is by setting all coefficients as 0, we say the vectors are **linearly independent**.
 - A linearly independent set cannot contain the zero vector.
@@ -129,3 +134,25 @@ Thus we can say that any vector in a vector space has a **unique representation*
 ## Dimension
 The number of elements/vectors in the basis of a vector space is called the dimension of the vector space.
 - The basis for a vector space need not be unique, but the dimension of a vector space is always unique.
+# Hyperplanes
+A **linear hyperplane** in $\mathbb{R}^n$ is:
+$$
+H =\{x \in \mathbb R^n \,\, | \,\, a^Tx = 0\}, a \ne 0
+$$
+Properties -
+1. It is a linear subspace that always passed through the origin.
+2. For any vector $a$ there would exit $n-1$ basis for the subspace orthogonal to it. This is the $n-1$ **degrees of freedom**.
+3. Here $H$ is the orthogonal complement of $a$. $H = a^\perp = \{x \,\,|\,\, x \perp a\}$.
+4. Geometrically, this is a flat subspace passing through the origin.
+
+An **affine hyperplane** in $\mathbb{R}^n$ is:
+$$
+H =\{x \in \mathbb R^n \,\, | \,\, a^Tx = b\}, a \ne 0
+$$
+Properties -
+1. Not a subspace of $\mathbb R^n$ unless $b=0$.
+2. Still has $n-1$ degrees of freedom + some constant vector.
+3. Here $H$ is a translation of a linear hyperplane by some $x_0$.
+4. Geometrically, this is a flat $n-1$ dimension surface shifted away from the origin.
+
+An affine subspace is a shifted version of a linear subspace.

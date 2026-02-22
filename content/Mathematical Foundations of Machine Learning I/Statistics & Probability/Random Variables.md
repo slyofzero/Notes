@@ -160,6 +160,8 @@ Here $\lambda$ is the average arrival rate and is $\gt 0$.
 # Continuous Random Variable
 $\mathcal X$ is a Continuous Random Variable if its range is an interval. Any interval $[a,b]$ is an uncountably infinite set. Thus $P(\mathcal X = x_0)=0$ because of the reasoning given [[Probability#^6f2985|here]].
 
+$P(\mathcal X = x_0)$ is a **zero-probability event**, but an [[Probability#^571abe|impossible event]].
+
 This is why we talk about probability around some $\triangle x$ neighbourhood of $x_0$ and not at $x_0$. The probability around some $\triangle x$ neighbourhood of $x_0$ is **literally just the area under the curve** from $x-\frac{\triangle x}{2}$ to $x+\frac{\triangle x}{2}$.
 
 $$

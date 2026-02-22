@@ -72,7 +72,7 @@ Some definitions -
 4. **Sample mean -** The mean of each individual sample.
 
 ---
-$\underline{\text{Definition}}-$ If random samples of $n$ observations are drawn from a population with mean $\mu$ and standard deviation $\sigma$, then for a fairly large $n$ the sample distribution of the sample mean $\bar{x}$ is **approximately normally distributed** with a mean $\mu$ and standard deviation $\frac{\sigma}{\sqrt n}$. As $n$ tends to infinity, this standard deviation becomes really small and the distribution of this sample mean gets increasingly concentrated around $\mu$.
+$\underline{\text{Definition}}-$ If random samples of $n$ observations are drawn from a population with mean $\mu$ and standard deviation $\sigma$, then for a fairly large $n$ the sample distribution of the sample mean $\bar{x}$ is **approximately normally distributed** with a mean $\mu$ and standard deviation $\frac{\sigma}{\sqrt n}$. As $n$ tends to infinity, this standard deviation becomes really small and the distribution of this sample mean gets increasingly concentrated around $\mu$. ^4a304a
 
 $\qquad \text{OR}$
 

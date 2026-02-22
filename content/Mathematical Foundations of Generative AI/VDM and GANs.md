@@ -50,9 +50,9 @@ Principles of Generative Models -
 <h4 class="special">Example</h4>
 
 Assume some random variable $z$ with some arbitrary but known distribution $Z$ (because the distribution is known, sampling is possible). Suppose there exists some function $g_\theta(z): Z \rightarrow X$.
-- $\tilde{x}=g_\theta(z)$ would have an entirely different distribution that that of $z$ and would depend upon the function $g_\theta$.
+- $\tilde{x}=g_\theta(z)$ would have an entirely different distribution than that of $z$ and would depend upon the function $g_\theta$.
 - Suppose $g_\theta(z)$ is a Deep Neural Network and the density of $\tilde{x} = g_\theta(z)$ is denoted as $\mathbb{P}_\theta$. We can define a divergence metric $D(\mathbb{P}_X \, || \, \mathbb{P}_\theta)$ between $\mathbb{P}_\theta$ and $\mathbb{P}_X$ such that $D(\mathbb{P}_X \, || \, \mathbb{P}_\theta) \ge 0$ and $D(\mathbb{P}_X \, || \, \mathbb{P}_\theta)=0$ iff $\mathbb{P}_X = \mathbb{P}_\theta$.
-- Solving the optimization equation $\theta^*= \arg\min_{\theta} \ \,  D(\mathbb{P}_X \, || \, \mathbb{P}_\theta)$, would allow us to implicitly estimate $\mathbb{P}_X$. This would allow us to sample from  $\mathbb{P}_X$ using $g_{\theta*}(z)$ because a random sample chosen from $z$ and then passed through $g_{\theta*}(z)$ would be very close to $\mathbb{P}_X$.
+- Solving the optimization equation $\theta^*= \arg\min_{\theta}  D(\mathbb{P}_X \, || \, \mathbb{P}_\theta)$, would allow us to implicitly estimate $\mathbb{P}_X$. This would allow us to sample from  $\mathbb{P}_X$ using $g_{\theta*}(z)$ because a random sample chosen from $z$ and then passed through $g_{\theta*}(z)$ would be very similar to a sample from $\mathbb{P}_X$.
 
 This method is called a **pushforward method** as we push a probability mass $Z$ into the data space $X$ using a function $g_\theta$.
 
@@ -63,13 +63,13 @@ This method is called a **pushforward method** as we push a probability mass $Z$
 3. How to choose $g_\theta$ and in turn $\mathbb{P}_\theta$?
 4. How to solve the optimization problem of minimizing the divergence metric?
 # Variational Divergence Minimization
-Define a diverge between two distributions
+Define a divergence metrics between two distributions -
 ## f-divergence
-Given two probability distribution functions with corresponding probability density functions denoted by $P_X$ and $P_\theta$, the f-divergence between them is -
+Given two probability distribution functions with corresponding probability density functions denoted by $P_X$ and $P_\theta$, the $f$-divergence between them is -
 
 $$
 \begin{aligned}
-&D_f(P_X || P_\theta) = \int_X P_\theta(x)f\left(\frac{P_X(x)}{P_\theta(x)}\right)dx \\[8pt]
+&D_f(P_X || P_\theta) = \int_X P_\theta(x)\,f\left(\frac{P_X(x)}{P_\theta(x)}\right)dx \\[8pt]
 &f(u): \mathbb{R^+} \rightarrow \mathbb{R} \text{ is a convex, left semi-continous and } f(1) = 0 \,(\text{any function}) \\[8pt]
 &x: \text{space on which } P_X \text{ and } P_\theta \text{ are supported}
 \end{aligned}
@@ -87,7 +87,7 @@ Properties of $f$-divergence -
 1. $D_f \ge 0$ for any choice of $f$.
 2. $D_f(P_X\,||\, P_\theta) = 0$ iff $P_X = P_\theta$.
 
-Examples of $f$-divergence -
+<h4 class="special">Examples of f-divergence -</h4>
 1. $f(u) = u\,log\,u$ leads to the **KL (Kullback-Leilber) Divergence** - ^20cce2
 
 $$
@@ -116,7 +116,7 @@ $$
 \int_Xh(x)P_x(x)dx=\mathbb{E}_{P_X}(h(x))
 $$
 
-$(2)$ By the Law of Large Numbers, we know that as the number of samples grows, the sample mean converges to the true expected value of a function $h$.
+$(2)$ By the Law of Large Numbers, we know that as the number of samples grows, the [[Probabilistic Theorems#^4a304a|sample mean]] converges to the true expected value of a function $h$.
 
 $$
 \lim_{n\rightarrow \infty} \frac{1}{n}\sum_{i=1}^nh(x_i) \approx \mathbb{E}[h(x)]
@@ -151,17 +151,19 @@ D_f(P_X || P_\theta) &= \int_X P_\theta(x)f\left(\underbrace{\frac{P_X(x)}{P_\th
 \end{alignedat}
 $$
 
-To represent the $f$-divergence in terms of expectation, we need to somehow take the supremum out of the integral. Since the **Fenchel conjugate** expresses $f(u)$ as a pointwise supremum, and since $u=\frac{P_X(x)}{P_\theta(x)}$​ depends on $x$, the optimizer of the inner problem is generally a function of $x$. Thus we can take the supremum out and rewrite the equation as -
+To represent the $f$-divergence in terms of expectation, we need to somehow take the supremum out of the integral. Since the **Fenchel conjugate** expresses $f(u)$ as a pointwise supremum, and since $u=\frac{P_X(x)}{P_\theta(x)}$​ depends on $x$, the optimizer of the inner problem is generally a function of $x$.  Due to this, we can't just take the supremum out of the integral as it is. ^38062b
+
+Here the solution of the inner optimization problem is some function of $t$. So, if we express $t = T(x)$ we can take the supremum out and rewrite the equation as -
 
 $$
 \begin{alignedat}{2}
-&= \sup_{T(x) \in \text{T}}\int_X P_\theta(x) \left\{T(x)*\frac{P_X(x)}{P_\theta(x)} - f^*(T(x))\right\}dx &\\[8pt]
+&= \sup_{T(x) \in \mathbb{T}}\int_X P_\theta(x) \left\{T(x)*\frac{P_X(x)}{P_\theta(x)} - f^*(T(x))\right\}dx &\\[8pt]
 \end{alignedat}
 $$
 
-where $\mathbb{T}: X \rightarrow \text{dom f*}$ is the space of functions containing solutions for the inner optimization problem. 
+where $\mathbb{T}: X \rightarrow \operatorname{dom} f*$ is the space of functions containing solutions for the inner optimization problem. 
 
-The space of functions $\mathbb{T}$ we are optimizing over may or may not containing $T^*(x)$ that is the solution to the inner optimization problem. This can occur either because $\mathbb{T}$ is a restricted function class (e.g., neural networks), or because the supremum defining the conjugate is not attained within $\mathbb{T}$.
+The space of functions $\mathbb{T}$ we are optimizing over may or may not contain $T^*(x)$ that is the solution to the inner optimization problem. This can occur either because $\mathbb{T}$ is a restricted function class (e.g., neural networks), or because the supremum defining the conjugate is not attained within $\mathbb{T}$.
 
 Because we are restricting $\mathbb{T}$ and $\mathbb{T} \subseteq \, \{\text{all measurable functions}\}$, by using the fact for any arbitrary function $F$ that $\sup_{t \in A} F(x) \le \sup_{t \in B} F(x)$ if $A \subseteq B$ we can say,
 
@@ -172,6 +174,7 @@ D_f &\ge \sup_{T(x) \in \text{T}}\int_X P_\theta(x) \left\{T(x)*\frac{P_X(x)}{P_
 D_f &\ge \boxed{\sup_{T(x) \in \text{T}} \Bigg[\underset{P_X}{\mathbb{E}}\, [T(x)] - \underset{P_\theta}{\mathbb{E}} \, [f^*(T(x))\big]\Bigg]}
 \end{aligned}
 $$
+
 For the sake of understanding, we can replace $\sup$ in the above equation with $\max$.
 
 $$
@@ -198,6 +201,7 @@ With this the objective becomes - ^7f2437
 $$
 \theta^*, w^* = \arg\min_\theta \max_{w} \Big[\underset{P_X}{\mathbb{E}}\, [T_w(x)] - \underset{P_\theta}{\mathbb{E}} \, [f^*(T_w(x))\big]\Big]
 $$
+
 Neural networks enter the framework when we need to **perform the saddle-point optimization** of the variational lower bound of the $f$-divergence, since both the generator distribution and the variational function are infinite-dimensional objects.
 - The model distribution $P_\theta$ must be learnt to reduce the value of the $f$-divergence metric. Neural networks provide a flexible and differentiable parameterization for learning such complex data-generating distributions using the samples.
 - The function class $\mathbb{T}$, being infinite dimensional, is difficult to characterize explicitly. As neural networks are **universal function approximators**, we represent $\mathbb{T}$ using neural networks $T_w(x)$ where $w$ are the parameters of the neural network.
@@ -234,12 +238,12 @@ For GANs the $f$-divergence that is chosen is as follows -
 $$
 \begin{alignedat}{2}
 f(u) &= u\,log\,u-(u+1)\,log\,(u+1) \qquad&\text{(Similar to }f \text{ used in JS-divergence)} \\[8pt]
-f^*(t) &= -log\,(1-exp(t)), &\operatorname{dom}f^* = \mathbb{R}^- \\[8pt]
+f^*(t) &= -log\,(1-e^t), &\operatorname{dom}f^* = \mathbb{R}^- \\[8pt]
 \sigma_f(v) &= -log(1+e^{-v}) &\text{(log-sigmoid)}
 \end{alignedat}
 $$
 
-The log-sigmoid as $\sigma_f$ ensures that the output of the critic always lies in $\operatorname{dom}f^* = \mathbb{R}^-$. Using the above information, we can write a GAN specific loss function using the equation of a loss function we got earlier.
+The log-sigmoid as $\sigma_f$ ensures that the output of the critic always lies in $\operatorname{dom}f^* = \mathbb{R}^-$. Using the above information, we can write a GAN specific loss function using the equation of the loss function we got earlier.
 
 $$
 \begin{aligned}
@@ -316,6 +320,7 @@ $$
 &= \arg\min_{\theta} \Bigg[\frac{1}{B_2}\sum_{i=1}^{B_2}log\,(1-D_w(\hat{x}_i) \Bigg] \qquad\because \text{Second term stays as } \hat{x}_i=g_\theta(z_j) \in P_\theta \\[8pt]
 \end{aligned}
 $$
+
 Steps -
 1. Resample $B_2$.
 2. Keeping $w$ constant, pass the random noise vectors $z_i \in B_2$ through the generator to generate **fake samples** $\hat{x}_i=g_\theta(z_i)$. Pass this through the discriminator to get $D_w(\hat{x}_i)$. Using these calculate the term of the loss function - 
@@ -324,8 +329,13 @@ $$
 \frac{1}{B_2}\sum_{i=1}^{B_2}log\,(1-D_w(\hat{x}_i))
 $$
 
-3. Calculate the gradient $\underset{\theta}{\nabla} J_{GAN}(\theta, w)$ and backpropagate the gradients back through the discriminator network and then through the generator network. The discriminators parameters are not updated as $w$ is set to constant.
-4. Update $\theta$ using **gradient descent**.
+3. Minimizing the above term is mathematical valid but in practice can lead to vanishing gradients. So instead we can maximize the following term -
+$$
+-\frac{1}{B_2}\sum_{i=1}^{B_2}log\,D_w(\hat{x}_i)
+$$
+
+4. Calculate the gradient $\underset{\theta}{\nabla} J_{GAN}(\theta, w)$ and backpropagate the gradients back through the discriminator network and then through the generator network. The discriminators parameters are not updated as $w$ is set to constant.
+5. Update $\theta$ using **gradient descent**.
 
 $$
 \theta^{t+1} = \theta^t - \alpha_2\,\underset{\theta}{\nabla} J_{GAN}(\theta, w)
@@ -367,9 +377,16 @@ Thus the overall objective becomes -
 $$
 \theta^*, w^* = \arg\min_\theta\max_w \,\,\Big[\underset{P_X}{\mathbb{E}}[log\,D_w(x)] + \underset{P_\theta}{\mathbb{E}}[log\,(1-D_w(\hat{x}))]\Big]
 $$
-# Deep Convolution GAN (DC Gan)
-(intentionally left incomplete for now)
+# Deep Convolution GAN (DC GANs)
+Typically in a GAN, the dimension of the noise variable is much less than the dimension of the data. In DC GANs we can use the upconvolutional or transpose convolutional layers to convert this noise data to a higher dimensional data. 
 
+**Additionally:**
+- DCGANs remove **fully connected layers** and use **fully convolutional architectures** in both the Generator and Discriminator.
+- The **Generator** upsamples noise using **transpose convolutions**, while the **Discriminator** downsamples images using **strided convolutions** (instead of pooling).
+- **Batch Normalization** is used in most layers to stabilize training and reduce mode collapse.
+- **Activation choices are fixed**: ReLU (Generator), LeakyReLU (Discriminator), Tanh at Generator output, Sigmoid at Discriminator output.
+- **Careful weight initialization** (often normal with small variance) is important for stable training.
+- These architectural constraints help DCGANs learn **spatial hierarchies** in images and improve training stability compared to vanilla GANs.
 # Conditional GAN (cGAN)
 ![[Pasted image 20260116201623.png]]
 
