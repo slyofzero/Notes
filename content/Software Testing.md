@@ -58,19 +58,56 @@ There are two broader methods of testing -
 1. **Node coverage -** When a test path covers all nodes in a graph.
 2. **Edge coverage -** When a test path covers all edges in a graph. This subsumes node coverage.
 3. **Edge Pair coverage -** When a test path covers all edge pairs in a graph. This subsumes edge coverage.
-4. **Complete Path Coverage -** When a test path covers all possible paths from the entry to the exist in a graph. Not feasible as graphs can have loops, in which case there would exist infinite paths. This subsumes edge pair coverage.
+4. **Prime Path Coverage -** When a test path covers all [[#^633cde|prime paths]] in a graph. The test requirements for prime path coverage are all the prime paths themselves.
+5. **Complete Path Coverage -** When a test path covers all possible paths from the entry to the exist in a graph. Not feasible as graphs can have loops, in which case there would exist infinite paths. This subsumes edge pair coverage.
 ## Types of Paths
 1. **Simple Path -** A path from one node to another is a simple path if no node appears more than once except the first and last node. No internal loops.
-2. **Prime Path -** A simple path such that it's not a sub-path of another simple path. They are thus the maximal simple paths.
+2. **Prime Path -** A simple path such that it's not a sub-path of another simple path. They are thus the maximal simple paths. ^633cde
 ## Types of Tours
-1. Tours with side-trips
-2. Tours with detours
+1. Tours with side-trips - A test path $p$ tours a sub-path $q$ with side-trips iff every edge in $q$ is also in $p$ in the same order. 
+   If a tour comes back to the same node it diverted from, we say the tour includes a side-trip.
+
+![[Pasted image 20260225093645.png|450]]
+
+2. Tours with detours - A test path $p$ tours a sub-path $q$ with detours iff every node in $q$ is also in $p$ in the same order. 
+   If a tour detours from some node $n$ and returns back to the prime path at a successor of $n$, we say the tour has a detour.
+
+![[Pasted image 20260225093700.png|450]]
 # Data flow Coverage
 1. **Variable def** - A definition is a location where a value of a variable is initialized.
 2. **Variable use** - A use is a location where the variable is accessed.
 3. **du-pair** - A du-pair is a pair of locations $(I_i, I_j)$ which mean that the variable was defined at $I_i$ and used at $I_j$.
-4. **du-path -** A du-path with respect to a variable $v$ is a def-clear simple path from def of $v$ to use of $v$.
-5. **du-path set -** A du-path set $\operatorname{du}(n_i, v)$ is a set of all du-paths w.r.t variable $v$ that start from node $n_i$.
-6. **du-pair set -** A du-pair set $\operatorname{du}(n_i, n_j ,v)$ is a set of all du-paths w.r.t variable $v$ that start from node $n_i$ and end at node $n_j$. $\operatorname{du}(n_i,v) = \bigcup_{n_j}\operatorname{du}(n_i,n_j,v)$
+4. **def-clear -** A path from $I_i$ to $I_j$ is said to be def-clear w.r.t variable $v$, if $v$ is not given another value on any of the nodes or edges in the path. ($v$ is not redefined in the path except at $I_i$)
+5. **du-path -** A du-path with respect to a variable $v$ is a def-clear simple path from def of $v$ to use of $v$.
+6. **du-path set -** A du-path set $\operatorname{du}(n_i, v)$ is a set of all du-paths w.r.t variable $v$ that start from node $n_i$.
+7. **du-pair set -** A du-pair set $\operatorname{du}(n_i, n_j ,v)$ is a set of all du-paths w.r.t variable $v$ that start from node $n_i$ and end at node $n_j$. $\operatorname{du}(n_i,v) = \bigcup_{n_j}\operatorname{du}(n_i,n_j,v)$
 
 ![[Pasted image 20260222112558.png]]
+# Test Integration
+Coupling variables are variables that are defined in one unit and used in the other.
+There are different kinds of couplings based on the interfaces:
+- **Parameter coupling:** Parameters are passed in calls.
+- **Shared data coupling:** Two units access the same data through global or shared variables.
+- **External device coupling:** Two units access an external object like a file.
+- **Message-passing interfaces:** Two units communicate by sending and/or receiving messages over buffers/channels.
+
+A coupling du-path is from a last-def to a first-use.
+Data flow coverage criteria can now be extended to coupling variables:
+- **All-coupling-def coverage:** A path is to be executed from every last-def to at least one first-use.
+- **All-coupling-use coverage:** A path is to be executed from every last-def to every first-use.
+- **All-coupling-du-paths coverage:** Every simple path from every last-def to every first-use needs to be executed.
+
+Traditional terminologies - 
+- **A linearly independent path** of execution in the CFG of a program is a path that does not contain other paths within it. (very similar to prime paths)
+- **Basic Block -** A series of nodes with no branching can be collapsed into one node called the basic block.
+- **Cyclomatic Complexity/Number** measures how complex a software is, in terms of its structure (specifically branching). It represents the number of **linearly independent paths** in the graph.
+  
+  If the number is $\lt 10$ then it's not considered complex.
+  
+  It is calculated as $M = E - N + 2P$, where
+	-  $E =$ no. of edges
+	- $N =$ no. of nodes
+	- $P =$ no. of connected components
+
+- A **chain** is a path in which Initial and terminal vertices are distinct. All the interior vertices have both in-degree and out-degree as $1$.
+- A **maximal chain** is a chain that is not a part of any other chain.

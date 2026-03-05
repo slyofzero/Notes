@@ -210,7 +210,6 @@ The condition `i=2` is not a comparison but an assignment. Thus the loop's condi
  ^q4
  <h6 class="question">Q4) Find the TC of the below code -</h6>
 
-
 ![[Pasted image 20251227142309.png | 300]]
 
 <strong><u>Sol</u></strong>$^n$ - 

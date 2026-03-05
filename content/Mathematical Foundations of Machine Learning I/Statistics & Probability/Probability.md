@@ -153,7 +153,11 @@ This can be also written as -
 $$
 \text{Posterior} = \frac{\text{Likelihood} \cdot \text{Prior}}{\text{Evidence}}
 $$
-
+ 
+- **Prior -** Our belief about a hypothesis before *seeing the evidence*.
+- **Evidence/Marginal likelihood -** Ignoring any hypothesis, how commonly does this observation occur in the general. 
+- **Likelihood -** The probability of observing the evidence, given that the hypothesis is *true*.
+- **Posterior -** Our updated belief *after incorporating the evidence*.
 # Measure Theory
 ## Size
 A number we attribute to an object that obeys a specific property: If we break an object into smaller parts, the sizes of the smaller parts should add up to the size of the whole object.

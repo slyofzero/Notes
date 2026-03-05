@@ -75,6 +75,8 @@ $$
 \end{aligned}
 $$
 
+We write $P_X || P_\theta$ to denote that we are calculating the divergence of $P_X$ from $P_\theta$, or in other words "how well does $P_\theta$ approximate $P_X$".
+
 - *Convex function -* A function which has one unique minimum value (can have multiple minima).
 - *Strictly Convex function -* A function which has only one global minima.
 - *Left Semi-Continuous function -* A function in which the value at a point is equal to the limit when approached from the left.
@@ -88,6 +90,7 @@ Properties of $f$-divergence -
 2. $D_f(P_X\,||\, P_\theta) = 0$ iff $P_X = P_\theta$.
 
 <h4 class="special">Examples of f-divergence -</h4>
+
 1. $f(u) = u\,log\,u$ leads to the **KL (Kullback-Leilber) Divergence** - ^20cce2
 
 $$
@@ -125,11 +128,21 @@ $$
 So one way to solve an integral like the [[VDM and GANs#f-divergence|f-Divergence]] is by using the above two mentioned laws and equating it to the expected value of function $h(x)=f\left(\frac{P_X(x)}{P_\theta(x)}\right)$. It would be a mathematically valid representation but is not directly computable from the data since the true data distribution $P_X$ is unknown.
 
 ### Conjugate of a convex function
-The conjugate of a convex function $f(u)$ is written as 
+The conjugate of a convex function $f(u)$ (Fenchel Conjugate) is written as -
 
 $$
-f^*(t) = \sup_{u \in \text{dom(f)}} \left\{ut - f(u)\right\}
+\begin{aligned}
+f^*(t) &= \sup_{u \in \text{dom(f)}} \left\{ut - f(u)\right\} \\[8pt]
+&\qquad\text{OR in general,} \\[8pt]
+f^*(t) &= \sup_{u \in \text{dom(f)}} \left\{<u,t> - f(u)\right\} \\[8pt]
+\end{aligned}
 $$
+
+- Here $u$ belongs to the domain of $f$, but $t$ isn't from the range of $f$.
+- $t$ is some arbitrary vector in $\mathbb R^n$ that is used to probe $f$.
+- $t$ is used to make a linear function $<t,x>$ where $t$ defines the slope of the linear function.
+- The conjugate checks by how much does this linear function outperforms $f$.
+
 At every point $t$, one constructs multiple lower bounds on that particular $u$ and chooses the tightest of those lower bounds (supremum/max) as value of the conjugate.
 
 Properties of a conjugate of a convex function -
@@ -163,9 +176,11 @@ $$
 
 where $\mathbb{T}: X \rightarrow \operatorname{dom} f*$ is the space of functions containing solutions for the inner optimization problem. 
 
-The space of functions $\mathbb{T}$ we are optimizing over may or may not contain $T^*(x)$ that is the solution to the inner optimization problem. This can occur either because $\mathbb{T}$ is a restricted function class (e.g., neural networks), or because the supremum defining the conjugate is not attained within $\mathbb{T}$.
+%% The space of functions $\mathbb{T}$ we are optimizing over may or may not contain $T^*(x)$ that is the solution to the inner optimization problem. This can occur either because $\mathbb{T}$ is a restricted function class (e.g., neural networks), or because the supremum defining the conjugate is not attained within $\mathbb{T}$.  %%
 
-Because we are restricting $\mathbb{T}$ and $\mathbb{T} \subseteq \, \{\text{all measurable functions}\}$, by using the fact for any arbitrary function $F$ that $\sup_{t \in A} F(x) \le \sup_{t \in B} F(x)$ if $A \subseteq B$ we can say,
+For the solution $t^*$ of the inner optimization problem $<t,u> - f(u)$ is maximal. Because we are allowed to pick any arbitrary $t$ as this point, this optimal can be achieved. But upon restricting $t=T(x)$ by considering a function $T$ that belongs to a class of function $\mathbb T$, if $t^*$ lies outside the range of $T$ then $<t,u> - f(u)$ need not be maximal anymore. Thus in such a case -
+
+%% Because we are restricting $\mathbb{T}$ and $\mathbb{T} \subseteq \, \{\text{all measurable functions}\}$, by using the fact for any arbitrary function $F$ that $\sup_{t \in A} F(x) \le \sup_{t \in B} F(x)$ if $A \subseteq B$ we can say, %%
 
 $$
 \begin{aligned}

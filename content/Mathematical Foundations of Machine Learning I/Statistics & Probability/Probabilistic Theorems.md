@@ -63,6 +63,7 @@ P(|X - \mu| \ge n\sigma_X) &\le \frac{\sigma_X^2}{n^2\sigma_X^2} \\[8pt]
 $$
 
 <h4 class="special">Note -</h4>
+
 Both Markov and Chebyshev's Inequality are independent of the random variable's distribution. All they require are the mean and standard deviation of the distribution.
 # Central Limit Theorem
 Some definitions -

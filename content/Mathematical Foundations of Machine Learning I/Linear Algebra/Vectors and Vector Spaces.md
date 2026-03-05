@@ -12,6 +12,10 @@
 >		- [[Vectors and Vector Spaces#Uniqueness of Representation Theorem|Uniqueness of Representation Theorem]]
 >	- [[Vectors and Vector Spaces#Dimension|Dimension]]
 >- [[Vectors and Vector Spaces#Hyperplanes|Hyperplanes]]
+>	- [[Vectors and Vector Spaces#Linear Hyperplane|Linear Hyperplane]]
+>		- [[Vectors and Vector Spaces#Linear functions|Linear functions]]
+>	- [[Vectors and Vector Spaces#Affine Hyperplane|Affine Hyperplane]]
+>		- [[Vectors and Vector Spaces#Affine functions|Affine functions]]
 # Vector
 What is a vector?
 - **The Physics definition -** A vector is a quantity with both magnitude and direction.
@@ -86,7 +90,7 @@ When,
 ## Affine Combination
 When sum of all coefficients/scalars in a linear combination add up to 1, we call such a linear combination an **affine combination**.
 
-If, in addition, all coefficients are non-negative, we call this combination a **Convex Combination/Weighted Average**.
+If, in addition, all coefficients are non-negative, we call this combination a [[Optimization#Convex Combinations|Convex Combination/Weighted Average]].
 # Linear Dependence
 If some linear combination of vectors results in $\mathbf 0$ such that not all coefficients were 0, we say the vectors are **linearly dependent**.
 - If any set of vectors contains the zero vector, then this set is always a linearly dependent set.
@@ -135,6 +139,7 @@ Thus we can say that any vector in a vector space has a **unique representation*
 The number of elements/vectors in the basis of a vector space is called the dimension of the vector space.
 - The basis for a vector space need not be unique, but the dimension of a vector space is always unique.
 # Hyperplanes
+## Linear Hyperplane
 A **linear hyperplane** in $\mathbb{R}^n$ is:
 $$
 H =\{x \in \mathbb R^n \,\, | \,\, a^Tx = 0\}, a \ne 0
@@ -144,7 +149,9 @@ Properties -
 2. For any vector $a$ there would exit $n-1$ basis for the subspace orthogonal to it. This is the $n-1$ **degrees of freedom**.
 3. Here $H$ is the orthogonal complement of $a$. $H = a^\perp = \{x \,\,|\,\, x \perp a\}$.
 4. Geometrically, this is a flat subspace passing through the origin.
-
+### Linear functions
+Linear functions map a linear subspace to a linear subspace and have $f(0)=0$.
+## Affine Hyperplane
 An **affine hyperplane** in $\mathbb{R}^n$ is:
 $$
 H =\{x \in \mathbb R^n \,\, | \,\, a^Tx = b\}, a \ne 0
@@ -156,3 +163,5 @@ Properties -
 4. Geometrically, this is a flat $n-1$ dimension surface shifted away from the origin.
 
 An affine subspace is a shifted version of a linear subspace.
+### Affine functions
+An affine functions maps a linear subspace to an affine set and have $f(0)=b$. An affine set is of the form $f(S) = AS + b$.

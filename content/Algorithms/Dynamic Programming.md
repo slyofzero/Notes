@@ -1,3 +1,17 @@
+>[!SUMMARY] Table of Contents
+>- [[Dynamic Programming#Single Source Shortest Path (SSSP)|Single Source Shortest Path (SSSP)]]
+>	- [[Dynamic Programming#Djikstra's Single Source Shortest Path|Djikstra's Single Source Shortest Path]]
+>		- [[Dynamic Programming#Matrix Based approach|Matrix Based approach]]
+>		- [[Dynamic Programming#Spanning Tree Approach|Spanning Tree Approach]]
+>	- [[Dynamic Programming#Bellman-Ford algorithm|Bellman-Ford algorithm]]
+>- [[Dynamic Programming#All Pairs Shortest Path (ASSP)|All Pairs Shortest Path (ASSP)]]
+>	- [[Dynamic Programming#Floyd-Warshall's Algorithm|Floyd-Warshall's Algorithm]]
+>- [[Dynamic Programming#0/1 Knapsack (Binary Knapsack)|0/1 Knapsack (Binary Knapsack)]]
+>	- [[Dynamic Programming#Tabulation Method|Tabulation Method]]
+>- [[Dynamic Programming#Sum of Subsets (SOS)|Sum of Subsets (SOS)]]
+>- [[Dynamic Programming#Longest Common Subsequence (LCS)|Longest Common Subsequence (LCS)]]
+>- [[Dynamic Programming#Matrix Chain Multiplication (MCM)|Matrix Chain Multiplication (MCM)]]
+
 Dynamic Programming is an algorithm design method used for solving problems whose solutions are viewed as a result of making a set/sequence of decisions.
 - One way of making these decisions is to make them one at a time in a step-wise (sequential) manner and never make any erroneous decision.
 - When applying Greedy Methods, for many problems it is not possible to make step-wise decisions **based on local information** available at every step in such a manner that the sequence of decisions in optimal.
