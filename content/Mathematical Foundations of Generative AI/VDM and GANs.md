@@ -100,6 +100,11 @@ $$
 K.L Divergence is asymmetric, meaning $\underbrace{D(P_X\,||\,P_\theta)}_\text{Forward K.L.} \ne \underbrace{D(P_\theta\,||\,P_X)}_\text{Reverse K.L.}$.
 
 2. $f(u) = \frac{1}{2}\left(u\,log\,u-(u+1)\,log\left(\frac{u+1}{2}\right)\right)$ leads to the **JS (Jensen-Shannon) Divergence**.
+
+$$
+  JS(P_X || P_\theta) = \frac{1}{2} KL(P_X || M) + \frac{1}{2} KL(P_\theta || M) \qquad \text{where,}\,\,M = \frac{P_X + P_\theta}{2}
+$$
+
 3. $f(u)=\frac{1}{2}|u-1|$ leads to the **Total Variation Distance** or TV Distance.
 
 ## Algorithm for f-divergence minimization
@@ -332,7 +337,7 @@ $$
 
 &\approx \arg\min_{\theta} \Bigg[\cancel{\frac{1}{B_1}\sum_{i=1}^{B_1}log\,D_w(x_i)}^{\text{Independent of }\theta} + \frac{1}{B_2}\sum_{i=1}^{B_2}log\,(1-D_w(\hat{x}_i)) \Bigg] \\[8pt]
 
-&= \arg\min_{\theta} \Bigg[\frac{1}{B_2}\sum_{i=1}^{B_2}log\,(1-D_w(\hat{x}_i) \Bigg] \qquad\because \text{Second term stays as } \hat{x}_i=g_\theta(z_j) \in P_\theta \\[8pt]
+&= \arg\min_{\theta} \Bigg[\frac{1}{B_2}\sum_{i=1}^{B_2}log\,(1-D_w(\hat{x}_i)) \Bigg] \qquad\because \text{Second term stays as } \hat{x}_i=g_\theta(z_j) \in P_\theta \\[8pt]
 \end{aligned}
 $$
 
@@ -438,7 +443,7 @@ Given two distributions $P_X$ and $P_{\hat{X}}$,
 
 $$
 \begin{aligned}
-W(P_X || P_{\hat{X}}) &= \min_{\lambda \in \Pi(X,\hat{X})} \Big[\underset{\lambda(x,\hat{x})}{\mathbb{E}}||x-\hat{x}||_2\Big] \\[8pt]
+W(P_X || P_{\hat{X}}) &= \min_{\lambda \in \Pi(X,\hat{X})} \Big[\underset{\lambda(x,\hat{x})}{\mathbb{E}}||X-\hat{X}||_2\Big] \\[8pt]
 \lambda &: \text{Joint distribution b/w }P_X,P_{\hat{X}} \\[8pt]
 \Pi(X,\hat{X}) &: \text{All Joint distributions such that -} \\[8pt]
 &\int_X \Pi(X,\hat{X})\,dx = P_{\hat{X}} \\[8pt]
@@ -500,13 +505,13 @@ W(P_x || P_\theta) &= \max_{||T_w(x)||_L  \lt 1} \Big[\underset{P_X}{\mathbb{E}}
 \end{aligned}
 $$
 
-Any function $f$ being 1-Lipschitz means that the function cannot change faster than the distance -
+Any function $f$ being 1-Lipschitz means that the function cannot change faster than the distance (the derivative is always less than or equal to 1) -
 
 $$
-\frac{||f(x_1)-f(x_2)||}{||x_1-x_2||} \lt 1
+\frac{||f(x_1)-f(x_2)||}{||x_1-x_2||} \le 1
 $$
 
-The $T_w$ in this case is a neural network and can be made 1-Lipschitz by normalizing the weights of $T_w$ such that $||w||_2=1$ after each gradient step.
+The $T_w$ in this case is a neural network and can be made 1-Lipschitz by normalizing the weights of $T_w$ such that $||w||_2=1$ after each gradient step. 
 
 $\theta^*$ has to be such that the Wasserstein's distance is to be minimized. The Kantrovic-Rubenstein's Duality enables us to express the Wasserstein's distance in terms of expectations of $P_X$ and $P_\theta$.
 
@@ -514,7 +519,7 @@ $$
 \theta^*, w^*= \arg\min_\theta\max_{||T_w(x)||_L  \lt 1} \Big[\underset{P_X}{\mathbb{E}}\, [T_w(x)] - \underset{P_\theta}{\mathbb{E}} \, [T_w(\hat{x})]\Big]
 $$
 
-The above objective is very similar to GANs. That's why this method of minimizing the Wasserstein's metric is called the **WGAN**. Training a WGAN is more stable than training a Naive-GAN.
+The above objective is very similar to GANs. That's why this method of minimizing the Wasserstein's metric is called the **WGAN**. Training a WGAN is more stable than training a Naive-GAN as the gradients will not saturate if the supports of the probability distributions misalign.
 ## Bi-Directional GAN (Bi-GAN)
 ### Inversion of GANs
 We train a GAN specifically to allow us to sample $x$ from the dataset distribution $P_X$ by picking a random sample $z$ from an arbitrary distribution $Z$ and passing it through the generator $g_\theta$. But how can we get back $z$ if we know $x$?
@@ -531,7 +536,7 @@ The objective function is -
 
 $$
 \begin{aligned}
-L_{BiGAN}(\theta,w,\phi) &= \underset{x\sim P_X}{\mathbb{E}}\Big[\underset{\hat{z}\sim P_\phi}{\mathbb{E}}[log\,D_w(x,E_\phi(x))]\Big] + \underset{z\sim Z}{\mathbb{E}}\Big[\underset{\hat{x}\sim P_\theta}{\mathbb{E}}[log\,\{1 - D_w(x,E_\phi(x))\}]\Big] \\[8pt]
+L_{BiGAN}(\theta,w,\phi) &= \underset{x\sim P_X}{\mathbb{E}}\Big[\underset{\hat{z}\sim P_\phi}{\mathbb{E}}[log\,D_w(x,E_\phi(x))]\Big] + \underset{z\sim Z}{\mathbb{E}}\Big[\underset{\hat{x}\sim P_\theta}{\mathbb{E}}[log\,\{1 - D_w(g_\theta(z),z)\}]\Big] \\[8pt]
 \theta^*,w^*,\phi^* &= \arg\min_{\theta,\phi}\max_{w} L_{BiGAN}(\theta,w,\phi) \\[8pt]
 \text{where, } &z\sim Z, \,\,\,\,\hat{x} \sim P_\theta, \,\,\,\,\hat{z} \sim P_\phi
 \end{aligned}
@@ -546,6 +551,14 @@ P_{\hat{Z}X} &= \int_X P_X(x) \int_{\hat{Z}} P_\phi(\hat{z}|x)\,d\hat{z}\,dx \\[
 P_{Z\hat{X}} &= \int_Z P_Z(x) \int_{\hat{X}} P_\phi(\hat{x}|z)\,d\hat{x}\,dz \\[8pt]
 \end{aligned}
 $$
+
+### Latent Regression
+$$
+\begin{aligned}
+L(\theta, w, \phi) = \underset{x\sim P_X}{\mathbb{E}}\operatorname{log}D_w(x) + \underset{\hat{x}\sim P_\theta}{\mathbb{E}}\operatorname{log}(1-D_w(x)) + \lambda\underset{\hat{x}\sim P_\theta}{\mathbb{E}}||z-E_\phi(\hat x)||^2_2
+\end{aligned}
+$$
+where $\lambda$ is a hyperparameter. Here the discriminator remains the same as the naive regressor. It has been found that 
 ## Domain Adversarial Networks
 Suppose we have a source dataset and target dataset such that both belong to a different distribution.
 
@@ -556,14 +569,34 @@ D_t &= \{(\hat{x}_j)\}_{j=1}^m &\sim P_t\\[8pt]
 \end{alignedat}
 $$
 
-Any classifier/regressor trained solely on $D_s$ would fail to predict for the target items in $D_t$. We can use **Domain Adversarial Networks** here to train a classifier that is **domain agnostic** (able to classify independent on which domain element belong to).
+When the probability distribution of your training and testing dataset differ, we call this as **domain shift**.
+
+Any classifier/regressor trained solely on $D_s$ would fail to predict for the target items in $D_t$. 
+
+---
+<h4 class="special">Example</h4>
+Imagine you're training a model to identify images of dogs. The training dataset for your model has sketches, paintings, and cartoon representations of dogs while you test dataset has actual photos of dogs. In such a case the distributions for the training and testing dataset differ. The method to solving domain shift is called as **Unsupervised Domain Adaptation**.
+
+In the above example -
+- The broader class of "animal representations" is a **semantic class.**
+- The sketches, paintings, cartoons, and photos are called as **domains**.
+
+The network can be trained either on all four domains or one of the domains can be unknown. In the case where a domain is left out, our hope is that all domains share the same underlying semantic structure just with different marginal distributions. This is called as the **shared support assumption**. Under this assumption, an optimal encoder trained on the rest three domains should be able to extract meaningful features from the unseen domain. This setting is called **domain generalization**.
+
+---
+
+So our objective with such a setup would be that our model is able to learn the features/classifier in such a manner that it's able to perform well on both $P_s$ and $P_t$.
+
+We can use **Domain Adversarial Networks** here to train a classifier that is **domain agnostic** (able to classify independent on which domain element belong to).
 
 In Domain Adversarial Networks we have -
 1. An Encoder $\phi:X \rightarrow F$ to extract features from inputs regardless of which domain the inputs belong to (both $D_s$ and $D_t$).
 2. A Discriminator $T_w:F \rightarrow [0,1]$ to distinguish between elements of $P_s$ and elements of $P_t$ (Features of both source and target data).
-3. A Classifier/Regressor $h_\psi: F_s \rightarrow y_s \sim P_s(y|x)$ which uses the features of the source inputs to make a prediction regarding them.
+3. A Classifier/Regressor $h_\psi: F_s \rightarrow y_s \sim P_s(y|x)$ which uses the features of the source inputs to make a prediction regarding their target. This works as a metric for the usefulness of the features.
 
-Here the Discriminator makes the Encoder better at constructing features from the inputs (both source and target) in such a way that the features appear domain agnostic. But just having domain agnostic features isn't all, they need to be useful for predicting the target class. For this we include a Classifier/Regressor as well in the network so that the features learnt are both domain agnostic and useful.
+A DANN cannot generate samples, it's only job is to align the features of the different distributions.
+
+The Discriminator makes the Encoder better at constructing features from the inputs (both source and target) in such a way that the features appear domain agnostic. But just having domain agnostic features isn't all, they need to be useful for predicting the target class. For this we include a Classifier/Regressor as well in the network so that the features learnt are both domain agnostic and useful.
 
 $$
 \begin{aligned}
@@ -571,8 +604,12 @@ $$
 \psi^* &= \arg\min_\psi \operatorname{BCE}(y,h_\psi(F_s)) \qquad(\text{BCE=Binary Cross-Entropy})
 \end{aligned}
 $$
+
+The encoder network has gradients flowing from both the discriminator as well as the classifier.
+- $\phi$ would ensure that $P_{F_s}$ = $P_{F_t}$.
+- $h_\phi$ would ensure that the features are meaningful.
 ## Evaluation of a GAN
-Suppose we have some true and generated samples and we wish to evaluate whether the GAN is successful in generating samples from $P_X$. There are various methods for it, but we'd be look at an adversarial method of evaluation called **Frechet Inception Distance**. FID uses [[VDM and GANs#Wasserstein's Metric (Optimal Transport)|Wasserstein's Metric]]  along with Inception Network trained on Imagenet to do this evaluation.
+Suppose we have some true and generated samples and we wish to evaluate whether the GAN is successful in generating samples from $P_X$. There are various methods for it, but we'd be look at an adversarial method of evaluation called **Fréchet Inception Distance**. FID uses [[VDM and GANs#Wasserstein's Metric (Optimal Transport)|Wasserstein's Metric]]  along with **Inception Network trained on Imagenet** to do this evaluation.
 
 Let -
 

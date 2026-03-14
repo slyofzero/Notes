@@ -34,4 +34,30 @@ It is a finite automata where each state has **exactly one transition** for **ev
 2. For a language there can be multiple possible NFAs, but only one possible DFA.
 3. Grammars are inherently non-deterministic as a production rule can lead to multiple outcomes.
 4. A recognizer is a computational device or algorithm that decides whether a given input string belongs to a language.
+# Regular Expression
+The precedence of regex operators are: 
+$$
+() \gg *,+ \gg \cdot \gg |
+$$
 
+- Parentheses or grouping have highest precedence.
+- This is followed by the unary operators of Kleene star and positive star that have the same precedence.
+- This is followed by the binary operator of concatenation.
+- Finally, the binary operator of the union has the lowest precedence.
+## Arden's Theorem
+If $P$ and $Q$ are two Regular Expressions over $\Sigma$ and if $P$ does not contain $\epsilon$, then the equation for $R$
+
+$$
+\begin{aligned}
+R &= Q + RP \\[8pt]
+&= Q + (Q + RP)P \\[8pt]
+&= Q + QP + RP^2 \\[8pt]
+&= Q + QP + (Q + RP)P^2 \\[8pt]
+&= Q + QP + QP^2 + RP^2 \\[8pt]
+&= Q + QP + QP^2 + \dots \\[8pt]
+&= Q(\epsilon + P + P^2 + \dots) \\[8pt]
+&= QP^* \\[8pt]
+\end{aligned}
+$$
+
+Similarly if $R = Q + PR$ then $R = P^*Q$ is the solution.

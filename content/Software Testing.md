@@ -35,6 +35,13 @@ Software testing is the process of examining the artifacts and behavior of a sof
 - **Error -** An incorrect internal state during execution. This happens inside the memory.
 
 A test case involves an input to the software and an output. If the actual output matches the expected output, we say that the test case passed.
+
+Testing goals based on process maturity -
+1. Level 0: There is no difference between testing and de-bugging.
+2. Level 1: The purpose of testing is to show correctness.
+3. Level 2: The purpose of testing is to show that software doesn’t work.
+4. Level 3: The purpose of testing is not to prove anything specific, but to reduce the risk of using the software.
+5. Level 4: Testing is a mental discipline that helps all IT professionals develop higher quality software.
 ## Types of testing
 1. **Unit Testing -** Testing of a singular component.
 2. **Integration Testing** - Various components are put together and tested.
@@ -64,13 +71,11 @@ There are two broader methods of testing -
 1. **Simple Path -** A path from one node to another is a simple path if no node appears more than once except the first and last node. No internal loops.
 2. **Prime Path -** A simple path such that it's not a sub-path of another simple path. They are thus the maximal simple paths. ^633cde
 ## Types of Tours
-1. Tours with side-trips - A test path $p$ tours a sub-path $q$ with side-trips iff every edge in $q$ is also in $p$ in the same order. 
-   If a tour comes back to the same node it diverted from, we say the tour includes a side-trip.
+1. **Tours with side-trips** - A test path $p$ tours a sub-path $q$ with side-trips iff every edge in $q$ is also in $p$ in the same order.  If a tour comes back to the same node it diverted from, we say the tour includes a side-trip.
 
 ![[Pasted image 20260225093645.png|450]]
 
-2. Tours with detours - A test path $p$ tours a sub-path $q$ with detours iff every node in $q$ is also in $p$ in the same order. 
-   If a tour detours from some node $n$ and returns back to the prime path at a successor of $n$, we say the tour has a detour.
+2. **Tours with detours** - A test path $p$ tours a sub-path $q$ with detours iff every node in $q$ is also in $p$ in the same order.  If a tour detours from some node $n$ and returns back to the prime path at a successor of $n$, we say the tour has a detour.
 
 ![[Pasted image 20260225093700.png|450]]
 # Data flow Coverage
@@ -84,6 +89,18 @@ There are two broader methods of testing -
 
 ![[Pasted image 20260222112558.png]]
 # Test Integration
+## Scaffolding
+When testing incomplete portions of software, we need extra software components, sometimes called scaffolding.
+Two common types of scaffolding:
+1. **Test stub** is a skeletal or special purpose implementation of a software module, used to develop or test a component that calls the stub or otherwise depends on it.
+2. **Test driver** is a software component or test tool that replaces a component that takes care of the control and/or the calling of a software component.
+## Five approaches to integration testing 
+1. **Incremental -**
+	1. Top-down - Create top level modules while using stubs.
+	2. Bottom-up - Create bottom level modules while using test drivers to call them.
+2. **Sandwich** - Mix of top-down and bottom-up
+3. **Big Bang** - all individually tested modules are put together to construct the entire system which is tested as a whole. 
+## Coupling data flow
 Coupling variables are variables that are defined in one unit and used in the other.
 There are different kinds of couplings based on the interfaces:
 - **Parameter coupling:** Parameters are passed in calls.
@@ -96,7 +113,7 @@ Data flow coverage criteria can now be extended to coupling variables:
 - **All-coupling-def coverage:** A path is to be executed from every last-def to at least one first-use.
 - **All-coupling-use coverage:** A path is to be executed from every last-def to every first-use.
 - **All-coupling-du-paths coverage:** Every simple path from every last-def to every first-use needs to be executed.
-
+## Classical Coverage Criteria
 Traditional terminologies - 
 - **A linearly independent path** of execution in the CFG of a program is a path that does not contain other paths within it. (very similar to prime paths)
 - **Basic Block -** A series of nodes with no branching can be collapsed into one node called the basic block.
