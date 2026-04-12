@@ -90,7 +90,7 @@ When,
 ## Affine Combination
 When sum of all coefficients/scalars in a linear combination add up to 1, we call such a linear combination an **affine combination**.
 
-If, in addition, all coefficients are non-negative, we call this combination a [[Optimization#Convex Combinations|Convex Combination/Weighted Average]].
+If, in addition, all coefficients are non-negative, we call this combination a [[Optimization#Convex Combinations|Convex Combination/Weighted Average]]. ^63b436
 # Linear Dependence
 If some linear combination of vectors results in $\mathbf 0$ such that not all coefficients were 0, we say the vectors are **linearly dependent**.
 - If any set of vectors contains the zero vector, then this set is always a linearly dependent set.

@@ -1,3 +1,20 @@
+>[!SUMMARY] Table of Contents
+>- [[Software Testing#Software Development Lifecycle|Software Development Lifecycle]]
+>	- [[Software Testing#SDLC Cycle|SDLC Cycle]]
+>	- [[Software Testing#SDLC Models|SDLC Models]]
+>- [[Software Testing#Software Testing Terminologies|Software Testing Terminologies]]
+>	- [[Software Testing#Types of testing|Types of testing]]
+>- [[Software Testing#Graphs Structural Coverage|Graphs Structural Coverage]]
+>	- [[Software Testing#Types of Path coverages|Types of Path coverages]]
+>	- [[Software Testing#Types of Paths|Types of Paths]]
+>	- [[Software Testing#Types of Tours|Types of Tours]]
+>- [[Software Testing#Data flow Coverage|Data flow Coverage]]
+>- [[Software Testing#Test Integration|Test Integration]]
+>	- [[Software Testing#Scaffolding|Scaffolding]]
+>	- [[Software Testing#Five approaches to integration testing |Five approaches to integration testing ]]
+>	- [[Software Testing#Coupling data flow|Coupling data flow]]
+>	- [[Software Testing#Classical Coverage Criteria|Classical Coverage Criteria]]
+>- [[Software Testing#Logic Coverage|Logic Coverage]]
 # Software Development Lifecycle
 **SDLC** (Software Development Lifecycle) is a term used by the software industry to define a process for designing, developing, testing, and maintaining a high quality software. Also known as **Software Development Process**.
 
@@ -128,3 +145,58 @@ Traditional terminologies -
 
 - A **chain** is a path in which Initial and terminal vertices are distinct. All the interior vertices have both in-degree and out-degree as $1$.
 - A **maximal chain** is a chain that is not a part of any other chain.
+# Logic Coverage
+Let $P$ be a set of predicates and $C$ be a set of clauses in the predicates in $P$.
+- $(x > y) ∨ C ∨ f (z)$ is a predicate.
+- $(x > y), C,$ and $f(z)$ in the above predicate are clauses.
+
+Types of coverages -
+1. **Predicate coverage (PC):** Each predicate needs to evaluate to true or false. For a set of predicates associated with branches, predicate coverage is the same as edge coverage.
+2. **Clause Coverage (CC):**  Each clause in the set of predicates needs to evaluate to true and false. Doesn't subsume predicate coverage.
+3. **Combinatorial Coverage (CoC):** Covering all possible combinations of truth values for all clauses in a predicate. Not feasible as for $n$ clauses there would be $2^n$ combinations.
+
+Clauses -
+1. At any given time we are interested in one clause, we call this a **major clause**.
+2. Rest all clauses are **minor clauses**.
+3. A clause is **"active"** when it alone determines the outcome of the whole predicate.
+## Active Clause Coverage (ACC)
+ACC works this way -
+1. TR has requirements for each clause to be a major clause.
+2. For the rest minor clauses, make them assume a value such that they don't determine the value of the predicate.
+3. Make the major clause assume both **True and False** and see if it influences the value of the predicate.
+
+MCDC (Modified Condition Decision Coverage) is another testing criteria similar to ACC. 
+
+Types of ACC -
+1. GACC (General ACC) - 
+	- The minor clause values don't need to be the same for each value of the major clause.
+	- Doesn't subsume predicate coverage.
+2. CACC (Correlated ACC) - 
+	- We deliberately pick such values of the minor clause(s) that cause $p$ to be true for one value of the major clause and false for another. 
+	- Because of how we are picking our clauses, this by definition **subsumes predicate coverage**.
+	- Subsumes GACC.
+3. RACC (Restricted ACC) - 
+	- Values chosen for minor clauses should be the same for both values of the major clause.
+	- Doesn't subsume predicate coverage.
+	- Subsumes GACC.
+
+XOR is the **test for activity** — if `p(a=true) XOR p(a=false) = true`, the clause is active. You still need to figure out minor clause values by reasoning about the predicate structure.
+## Inactive Clause Coverage (ICC)
+Complementary criterion to active clause criteria, ensures that the major clause does not affect the predicate.
+- Choose minor clauses in such a way that the major clause doesn't determine $p$.
+- TR has four requirements for $c_i$
+	1. $c_i$ evaluates to true with $p$ true.
+	2. $c_i$ evaluates to false with $p$ true.
+	3. $c_i$ evaluates to true with $p$ false.
+	4. $c_i$ evaluates to false with $p$ false.
+
+Types of ICC -
+1. GICC (General ICC) -
+	- The values chosen for the minor clauses may vary among the four cases.
+2. RICC (Restricted ICC) -
+	- The values chosen for the minor clauses must be the same in (1), (2) and in (3), (4).
+
+CICC is not a thing because it's impossible due to the definitions.
+
+![[Pasted image 20260402190612.png|450]]
+

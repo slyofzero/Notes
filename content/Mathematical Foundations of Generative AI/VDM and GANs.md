@@ -1,4 +1,4 @@
->[!SUMMARY] Table of Contents
+[]()>[!SUMMARY] Table of Contents
 >- [[VDM and GANs#Deep Generative Models|Deep Generative Models]]
 >- [[VDM and GANs#Variational Divergence Minimization|Variational Divergence Minimization]]
 >	- [[VDM and GANs#f-divergence|f-divergence]]
@@ -398,7 +398,7 @@ $$
 \theta^*, w^* = \arg\min_\theta\max_w \,\,\Big[\underset{P_X}{\mathbb{E}}[log\,D_w(x)] + \underset{P_\theta}{\mathbb{E}}[log\,(1-D_w(\hat{x}))]\Big]
 $$
 # Deep Convolution GAN (DC GANs)
-Typically in a GAN, the dimension of the noise variable is much less than the dimension of the data. In DC GANs we can use the upconvolutional or transpose convolutional layers to convert this noise data to a higher dimensional data. 
+Typically in a GAN, the dimension of the noise variable is much less than the dimension of the data. In DC GANs we can use the upconvolutional or transpose convolutional layers to convert this noise data to a higher dimensional data.
 
 **Additionally:**
 - DCGANs remove **fully connected layers** and use **fully convolutional architectures** in both the Generator and Discriminator.
@@ -417,7 +417,7 @@ To make conditional GANs that sample from a conditional distribution, we pass th
 The objective function changes to -
 
 $$
-J(\theta, w) = \underset{(x,y) \sim P_{X|Y}}{\mathbb{E}}[log\,D_w(x)] + \underset{(\hat{x},y) \sim P_{\hat{X}|Y}}{\mathbb{E}}[log\,(1-D_w(\hat{x}))]
+J(\theta, w) = \underset{(x,y) \sim P_{X|Y}}{\mathbb{E}}[log\,D_w(x,y)] + \underset{(\hat{x},y) \sim P_{\hat{X}|Y}}{\mathbb{E}}[log\,(1-D_w(\hat{x},y))]
 $$
 # Inference with GANs/VDM
 ![[Pasted image 20260116210510.png]]

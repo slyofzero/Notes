@@ -1,3 +1,13 @@
+>[!SUMMARY] Table of Contents
+>- [[Othogonality#Dot Product|Dot Product]]
+>	- [[Othogonality#Cauchy-Schwarz Inequality|Cauchy-Schwarz Inequality]]
+>- [[Othogonality#Orthogonal Vectors|Orthogonal Vectors]]
+>- [[Othogonality#Orthonormal vectors|Orthonormal vectors]]
+>	- [[Othogonality#Fourier Expansion|Fourier Expansion]]
+>	- [[Othogonality#Parseval's Theorem|Parseval's Theorem]]
+>- [[Othogonality#Orthogonal Projections|Orthogonal Projections]]
+>- [[Othogonality#Gram-Schmidt Process|Gram-Schmidt Process]]
+>	- [[Othogonality#Orthogonal Matrix|Orthogonal Matrix]]
 # Dot Product
 $\underline{\text{Definition}}-$ The inner product or the dot product in a vector space $V$ over $\mathbb R$ is a map, that for any 2 vectors $u,v \in V$ there is a real number $<u,v>$ such that,
 1. $<u,\alpha v + \beta w> = \alpha <u,v> + \beta <u,w>$ (Linearity Property)

@@ -1,14 +1,19 @@
 
-|   Operation   | RLs | CFLs | CSL | REL |
-| :-----------: | :-: | :--: | :-: | :-: |
-|     Union     |  ✅  |  ✅   |     |     |
-| Intersection  |  ✅  |  ❌   |     |     |
-|  Complement   |  ✅  |  ❌   |     |     |
-| Concatenation |  ✅  |  ✅   |     |     |
-|  Kleene Star  |  ✅  |  ✅   |     |     |
-| Positive Star |  ✅  |  ✅   |     |     |
-|  Difference   |  ✅  |  ❌   |     |     |
-|   Reversal    |  ✅  |  ✅   |     |     |
+|         Operation         | RLs | CFLs | DCFL | CSL | Rec-Lang | REL |
+| :-----------------------: | :-: | :--: | :--: | :-: | :------: | :-: |
+|           Union           |  ✅  |  ✅   |  ❌   |  ✅  |    ✅     |  ✅  |
+|       Concatenation       |  ✅  |  ✅   |  ❌   |  ✅  |    ✅     |  ✅  |
+|       Intersection        |  ✅  |  ❌   |  ❌   |  ✅  |    ✅     |  ✅  |
+|        Complement         |  ✅  |  ❌   |  ✅   |  ✅  |    ✅     |  ❌  |
+|        Difference         |  ✅  |  ❌   |  ❌   |  ✅  |    ✅     |  ❌  |
+| Intersection with regular |  ✅  |  ✅   |  ✅   |  ✅  |    ✅     |  ✅  |
+|  Difference with regular  |  ✅  |  ✅   |  ✅   |  ✅  |    ✅     |  ✅  |
+|      Kleene Closure       |  ✅  |  ✅   |  ❌   |  ❌  |    ✅     |  ✅  |
+|     Positive Closure      |  ✅  |  ✅   |  ❌   |  ✅  |    ✅     |  ✅  |
+|       Substitution        |  ✅  |  ✅   |  ❌   |  ✅  |    ❌     |  ✅  |
+|       Homomorphism        |  ✅  |  ✅   |  ❌   |  ❌  |    ❌     |  ✅  |
+|   Inverse homomorphism    |  ✅  |  ✅   |  ✅   |  ✅  |    ✅     |  ✅  |
+|         Reversal          |  ✅  |  ✅   |  ❌   |  ✅  |    ✅     |  ✅  |
 ## Operator Precedence
 The precedence of regular operators. are
 $$
@@ -19,5 +24,3 @@ $$
 - This is followed by the binary operator of concatenation.
 - Then we have binary operators of intersection and difference with the same precedence.
 - Finally, the binary operator of the union has the lowest precedence.
-## Extras
-- Intersection of CFLs and RLs is closed.
