@@ -17,6 +17,15 @@ $$
 $$
 ^nC_r =\binom{n}{r} = \binom{n-1}{r} + \binom{n-1}{r-1}
 $$
+5. Derangement - It's a permutation where **no element appears in its original position**. This same formula is used in the [[Set Theory#Principle of Inclusion and Exclusion|Principle of Inclusion and Exclusion]] in set theory.
+
+$$
+\begin{aligned}
+D(n) &= n! \sum_{k=0}^n \frac{(-1)^k}{k!} \\[8pt]
+\text{Also, } &\sum_{k=0}^n \binom{n}{k} D(k) = n!
+\end{aligned}
+$$
+
 ---
 <h6 class="question">Q1) Find a formula for counting the number of diagonals in an n-gon</h6>
 
