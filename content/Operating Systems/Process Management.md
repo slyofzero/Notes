@@ -21,6 +21,8 @@
 >		- [[Process Management#Process Attributes|Process Attributes]]
 >			- [[Process Management#Context Switching|Context Switching]]
 >			- [[Process Management#Process States|Process States]]
+>			- [[Process Management#Scheduling Queues and Scheduler|Scheduling Queues and Scheduler]]
+>				- [[Process Management#Degree of Multi-Programming for Schedulers|Degree of Multi-Programming for Schedulers]]
 # Operating System
 An **operating system (OS)** is system software that manages computer hardware and software resources, acting as an intermediary between users and the computer.
 
@@ -96,6 +98,10 @@ The **mode bit** is used to keep track of this mode. It is a  single bit in the 
 - Exists in **RAM**
 - One program can spawn **multiple processes** (e.g., opening Chrome twice = 2 processes)
 
+Types of processes -
+1. CPU Bound - Process is intensive in terms of CPU operations
+2. IO Bound - Process is intensive in terms of IO operations
+
 A Process can be thought of as a data structure with four components to it -
 1. Definition
 2. Representation/Implementation
@@ -164,6 +170,7 @@ The states of a process are -
 
 When dealing with multiple processes in Multiprogramming or Multitasking OS we need to schedule the processes to run one after another.
 - The scheduler is a component of the OS that selects which process to run on the CPU.
+- The dispatcher is a component of the OS which performs context-switching (brings and kicks processes from the CPU).
 
 State transitions - 
 1. **New** - Only Ready.
@@ -172,3 +179,28 @@ State transitions -
 	- If the OS is preemptive, then due to preemption it can go to Ready as well.
 4. **Waiting** - Only upon receiving an I/O or event will it move back to Ready.
 5. **Terminated** - None
+#### Scheduling Queues and Scheduler
+Scheduling Queues keep processes in certain states -
+1. Job Queue - All processes which are in new state are kept here
+2. Ready Queue - All processes which are in ready state
+3. Device Queue - All processes which are kept in waiting state
+
+Schedulers -
+1. Long-Term Scheduler (Job Scheduler) - Brings a process from new state to ready state
+2. Short-Term Scheduler (CPU Scheduler) - Selects one of the ready processes to run on CPU ^0ee500
+3. Mid-Term Scheduler (Medium Term) - Responsible for freeing up space in your memory to allow for new processes, in cases where the memory is fully utilized.
+	- The PCB for this process stays in the memory with the OS, just the process itself is removed from the memory and sent to the secondary memory. This functionality is called **swapping out**.
+	- Once the main memory again has enough space, the swapped out process is brought back from the secondary memory to the main memory. This functionality is called **swapping in**.
+	- Only processes in Ready or Blocked state are swapped out.
+
+Updated process state transition diagram -
+
+![[Pasted image 20260421144616.png]]
+
+New states -
+- Suspended Ready - Processes in Ready state that are swapped out enter this state.
+- Suspended Block - Processes in Waiting/Blocked state that are swapped out enter this state.
+##### Degree of Multi-Programming for Schedulers
+1. **Long-Term Schedulers** - Because it brings processes to the memory, it increases the degree of multi-programming.
+2. **Short-Term Schedulers** - It doesn't bring or remove processes from the memory, thus it doesn't affect the degree of multi-programming.
+3. **Mid-Term Scheduler (Medium Term)** - Because it both removes and brings processes to the memory, it can increase and decrease the degree of multi-programming.

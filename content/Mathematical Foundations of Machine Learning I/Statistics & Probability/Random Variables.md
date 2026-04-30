@@ -222,6 +222,25 @@ $$
 Here $\lambda$ is the rate of occurrence of events and is always $\gt$ 0.
 
 This is a continuous analog of the [[Random Variables#Geometric Random Variable|Geometric Random Variable]].
+#### Memoryless Property
+If $\mathcal X$ is an exponential random variable and $a \ge b$, then -
+
+$$
+P(\mathcal X > a | \mathcal X > b) = P(\mathcal X > a - b)
+$$
+
+Proof - 
+
+$$
+\begin{alignedat}{3}
+P(\mathcal X > a | \mathcal X > b) &= \frac{P(\mathcal X > a, \mathcal X > b)}{P(\mathcal X > b)} \\[8pt]
+&= \frac{P(\mathcal X > a)}{P(\mathcal X > b)} \\[8pt]
+&= \frac{e^{-\lambda a}}{e^{-\lambda b}} \\[8pt]
+&= e^{-\lambda (a-b)} \\[8pt]
+&= P(\mathcal X > a-b) \\[8pt]
+\end{alignedat}
+$$
+
 ### Gaussian/Normal Distribution
 A probability distribution in which values are **symmetrically distributed about the mean**, with most observations clustering near the mean and fewer occurring as we move away from it.
 
@@ -280,6 +299,7 @@ The expected values for the popular distributions are -
 |   Uniform    |   $(b+a)/2$    |
 | Exponential  |  $1/\lambda$   |
 |   Gaussian   |     $\mu$      |
+
 These can be obtained by applying the above formulas and simplifying the equations.
 
 Properties of $E[\mathcal X]$ -
@@ -510,7 +530,7 @@ If $\mathcal X$ and $\mathcal Y$ are independent -
 - $\rho_{\mathcal{XY}} = 0$
 - But if $\rho_{\mathcal{XY}} = 0$, that doesn't mean that $\mathcal X$ and $\mathcal Y$ are independent.
 
-But do there exist  a pair of random variables such that if they are uncorrelated, they are independent? YES!
+But do there exist a pair of random variables such that if they are uncorrelated, they are independent? YES!
 - Uncorrelated Gaussian Random Variables are necessarily independent.
 # Joint Conditional Probability
 

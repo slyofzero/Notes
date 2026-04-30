@@ -125,7 +125,7 @@ We know that $b = \sum_{i=1}^n \alpha_i v_i = \sum_{i=1}^n (b \cdot v_i) v_i$.
 $$
 \begin{aligned}
 &&b &= \sum_{i=1}^n (b \cdot v_i) v_i \\[8pt]
-&\Rightarrow &||b||^2 &= \Bigg<\sum_{i=1}^n (b \cdot v_i) v_i,\sum_{i=1}^n (b \cdot v_j) v_j\Bigg> \\[8pt]
+&\Rightarrow &||b||^2 &= \Bigg<\sum_{i=1}^n (b \cdot v_i) v_i,\sum_{j=1}^n (b \cdot v_j) v_j\Bigg> \\[8pt]
 &\Rightarrow&&= \sum_{i,j}(b \cdot v_i)(b \cdot v_j)<v_i,vj> \\[8pt]
 &\Rightarrow&&= \sum_{i,j}|b \cdot v_i|^2 \\[8pt]
 \end{aligned}
@@ -212,8 +212,8 @@ v_1 & v_2 &\dots &v_d
 \\
 \left[
 \begin{matrix}
-1 &\frac{u_2^Tv_1}{v_1^Tv_1}v_1 &\dots &\frac{u_d^Tv_1}{v_1^Tv_1}v_1 \\
-0 &1 &\dots &\frac{u_{d-1}^Tv_1}{v_1^Tv_1}v_1 \\
+1 &\frac{u_2^Tv_1}{v_1^Tv_1} &\dots &\frac{u_d^Tv_1}{v_1^Tv_1} \\
+0 &1 &\dots &\frac{u_{d-1}^Tv_2}{v_2^Tv_2} \\
 &&\vdots \\
 0 &0 &\dots &1 \\
 \end{matrix}
@@ -230,17 +230,17 @@ q_1 & q_2 &\dots &q_d
 \\
 \left[
 \begin{matrix}
-||v_1|| &\frac{u_2^Tv_1}{v_1^Tv_1}v_1 &\dots &\frac{u_d^Tv_1}{v_1^Tv_1}v_1 \\
-0 &||v_2|| &\dots &\frac{u_{d-1}^Tv_1}{v_1^Tv_1}v_1 \\
+||v_1|| &\frac{u_2^Tv_1}{v_1^Tv_1} &\dots &\frac{u_d^Tv_1}{v_1^Tv_1} \\
+0 &||v_2|| &\dots &\frac{u_{d-1}^Tv_2}{v_2^Tv_2} \\
 &&\vdots \\
 0 &0 &\dots &||v_d|| \\
 \end{matrix}
 \right]
 $$
 
-To summarize, we start of with a matrix $A$ such that its column space spanned all of $W$. Such a matrix $A$ can be decomposed into product of two matrices $Q$ and $R$, where $Q$ is an orthogonal matrix.
-## Orthogonal Matrix
-A matrix is an **orthogonal matrix** if -
+To summarize, we start of with a matrix $A$ such that its column space spanned all of $W$. Such a matrix $A$ can be decomposed into product of two matrices $Q$ and $R$, where $Q$ is an **orthogonal matrix**.
+# Orthogonal Matrix
+A matrix is an **orthogonal matrix** if for all column vectors $u_i$ -
 $$
 u_i \cdot u_j = \begin{cases}
 0, \text{if } i\ne j \\[8pt]
@@ -253,3 +253,25 @@ This means that -
 - All columns vectors of the matrix are orthogonal to each other.
 
 For orthogonal matrices $Q^TQ = I$, which means that $Q^{-1} = Q^T$.
+# Orthogonal Complement
+Let $W$ be a subspace of $\mathbb R^n$. The orthogonal complement of $W$, denoted $W^\perp$ is the set of all vectors in $\mathbb R^n$ that are orthogonal to every vector in $W$.
+
+$$
+W^\perp = \{v \in \mathbb R^n : v \cdot w = 0, \,\,\forall w \in W\}
+$$
+
+- If $\operatorname{dim}(W) = d$, $\operatorname{dim}(W^\perp)=n-d$.
+- Let $B_W$ be the orthonormal basis of $W$ and $B_{W_\perp}$ be the orthonormal basis of $W^\perp$. The orthonormal basis of $V$ will be $B_W \cup B_{W_\perp}$.
+
+Using this property of orthogonal complements, any vector in $V$ can be written as a unique composition of any two vectors in $W$ and $W^\perp$.
+
+$$
+x = x_W + x_{W_\perp}
+$$
+
+$\text{Proof to show that this decomposition is unique -}$
+- Assume that there are two decompositions of $x$, $x_W + x_{W_\perp}$ and $x_W' + x_{W_\perp}'$. 
+- Because both lead to $x$, we can say that $x_W + x_{W_\perp} = x_W' + x_{W_\perp}'$. Upon rearranging this we can say that $x_W - x_W' = x_{W_\perp}'- x_{W_\perp}$, where the LHS vectors belong to $W$ and the RHS vectors belong to $W_\perp$.
+- $W \cap W_\perp = \{0\}$ only, thus if $x_W - x_W' = x_{W_\perp}'- x_{W_\perp}$ then $x_W - x_W'$ and $x_{W_\perp}'- x_{W_\perp}$ both need to be 0. Meaning that $x_W' = x_W$ and $x_{W_\perp}' = x_{W_\perp}$.
+- Hence proved that the decomposition of a vector into a sum of two vectors from orthogonal subspaces is unique.
+
