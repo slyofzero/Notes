@@ -6,8 +6,10 @@
 >	- [[Othogonality#Fourier Expansion|Fourier Expansion]]
 >	- [[Othogonality#Parseval's Theorem|Parseval's Theorem]]
 >- [[Othogonality#Orthogonal Projections|Orthogonal Projections]]
+>- [[Othogonality#Projection over a subspace|Projection over a subspace]]
 >- [[Othogonality#Gram-Schmidt Process|Gram-Schmidt Process]]
->	- [[Othogonality#Orthogonal Matrix|Orthogonal Matrix]]
+>- [[Othogonality#Orthogonal Matrix|Orthogonal Matrix]]
+>- [[Othogonality#Orthogonal Complement|Orthogonal Complement]]
 # Dot Product
 $\underline{\text{Definition}}-$ The inner product or the dot product in a vector space $V$ over $\mathbb R$ is a map, that for any 2 vectors $u,v \in V$ there is a real number $<u,v>$ such that,
 1. $<u,\alpha v + \beta w> = \alpha <u,v> + \beta <u,w>$ (Linearity Property)
@@ -177,6 +179,93 @@ $$
 &&P^2&= P \\[8pt]
 \end{aligned}
 $$
+# Projection over a subspace
+Now instead of projecting $v$ onto a line $u$, what if we project it onto a subspace spanned by the vectors $u_1$ and $u_2$. Let the projection of $v$ onto this subspace be $u_p$. Then we can write,
+
+$$
+v = e + u_p, \,\text{where } u_p = au_1 + bu_2 
+$$
+
+Because $e$ is orthogonal to $u_p$, we can show that it is orthogonal to both $u_1$ and $u_2$ (Exercise to try out). So we can write,
+
+$$
+\begin{aligned}
+v^Tu_1 &= u_p^Tu_1 \\[8pt]
+&= au_1^Tu_1 + bu_2^Tu_1 \\[8pt]
+v^Tu_2 &= u_p^Tu_2 \\[8pt]
+&= au_1^Tu_2 + bu_2^Tu_2 \\[8pt]
+\end{aligned}
+$$
+
+In matrix form this can be written as,
+
+$$
+\begin{alignedat}{3}
+&&\left[\begin{matrix}
+v^T u_1 \\
+v^T u_2
+\end{matrix}\right] 
+
+&= 
+
+\left[\begin{matrix}
+u_1^Tu_1 & u_1^Tu_2 \\
+u_2^Tu_1 & u_2^Tu_2 
+\end{matrix}\right] 
+
+\left[\begin{matrix}
+a \\
+b
+\end{matrix}\right] 
+
+\\[8pt]
+
+&\Rightarrow &\left[\begin{matrix}
+a \\
+b
+\end{matrix}\right] 
+
+&= 
+
+\left[\begin{matrix}
+u_1^Tu_1 & u_1^Tu_2 \\
+u_2^Tu_1 & u_2^Tu_2 
+\end{matrix}\right] ^{-1} \left[\begin{matrix}
+v^T u_1 \\
+v^T u_2
+\end{matrix}\right] 
+\end{alignedat}
+$$
+
+If the basis for the subspace are orthonormal, this can be simplified to
+
+$$
+\left[\begin{matrix}
+a \\
+b
+\end{matrix}\right] 
+
+= 
+
+\left[\begin{matrix}
+v^T u_1 \\
+v^T u_2
+\end{matrix}\right] 
+$$
+
+Thus giving us the clean formula that,
+
+$$
+u_p = (v^Tu_1)u_1 + (v^Tu_2)u_2
+$$
+
+For some $n$ dimensional subspace with $n$ orthonormal basis vectors $u_1, u_2, \dots, u_n$ this can be generalized to
+
+$$
+u_p = \sum_{i=1}^n (v^Tu_i)u_i
+$$
+
+But now, how do we obtain these orthonormal basis for any given subspace? This is where the Gram-Schmidt Process comes in.
 # Gram-Schmidt Process
 Let $W$ be a $d$-dimensional subspace of a $k$-dimensional vector space $V$ where $d \le k$. Let the basis of $W$ be $B = \{u_1, u_2, \dots, u_n\}$ and we wish to create orthogonal basis $O=\{v_1, v_2, \dots, v_n\}$ using these.
 
@@ -239,6 +328,8 @@ q_1 & q_2 &\dots &q_d
 $$
 
 To summarize, we start of with a matrix $A$ such that its column space spanned all of $W$. Such a matrix $A$ can be decomposed into product of two matrices $Q$ and $R$, where $Q$ is an **orthogonal matrix**.
+
+**Note -** The vector $v_2$ lies in the orthogonal complement of $v_1$. The vector $v_3$ lies in the orthogonal complement of the space spanned by $v_1$ and $v_2$. 
 # Orthogonal Matrix
 A matrix is an **orthogonal matrix** if for all column vectors $u_i$ -
 $$

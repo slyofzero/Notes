@@ -23,3 +23,5 @@
 # Range of Correlation
 
 Use the [[Important Theorems and Inequalities#Probability|Cauchy-Schwarz Inequality for probability]].
+# Why is the -ve of the gradient, the direction for Gradient Descent?
+

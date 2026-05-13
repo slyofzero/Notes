@@ -19,7 +19,7 @@
 Probability is the study of certainty/uncertainty around any decision or action. Mathematically, the probability measure $P(\cdot)$ of an element is a function which maps elements of the sample space in the range $[0,1]$.
 # Random Experiment
 $\underline{\text{Definition}}-$ A random experiment is an experiment with a known set of outcomes, but the outcome of a trial is unknown before the trial is conducted.
-- The set of all possible outcomes of a random experiment is called the **sample space**.
+- The set of all possible outcomes of a random experiment is called the **sample space** ($\Omega$).
 - **An event** is a subset of the sample space that is of our interest.
 - A trial is a single repetition of a random experiment.
 

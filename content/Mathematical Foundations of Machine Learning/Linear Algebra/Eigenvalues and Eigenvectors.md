@@ -30,6 +30,8 @@ The polynomial equation obtained while doing $\operatorname{det}(A - \lambda I) 
 1. Real and distinct
 2. Real but repeated
 3. Complex
+## Similarity of Matrices
+Two matrices are similar if their eigenvalues are the same.
 ## Multiplicities of Eigenvalues
 1. **Algebraic Multiplicity (AM )-** The number of times an eigenvalue is repeated.
 2. **Geometric Multiplicity (GM) -** The number of linearly independent eigenvectors associated with a particular eigenvalue.
@@ -157,3 +159,12 @@ As $n \rightarrow \infty$,
 - If any eigenvalue $|\alpha_i| \lt 1$ then $\alpha_i^n=0$. 
 - If any $|\alpha_i| > 1$ then $\alpha_i^n$ tends to $\pm \infty$.
 - If any $|\alpha_i| = \pm1$ then $\alpha_i^n=\pm1$. 
+## Spectral Theorem
+The **Spectral Theorem** states that every real symmetric matrix can be orthogonally diagonalized.
+
+So if $A$ is a real symmetric matrix, then there always exists an orthogonal matrix $Q$ and a diagonal matrix $\Lambda$ such that,
+
+$$
+A = Q\Lambda Q^T
+$$
+# Singular Value Decomposition

@@ -200,3 +200,18 @@ CICC is not a thing because it's impossible due to the definitions.
 
 ![[Pasted image 20260402190612.png|450]]
 
+# Client-Side Testing
+## Bypass Testing
+The basic idea in bypass testing is to let a tester save and modify the HTML.
+
+Types -
+- **Value level bypass testing** tries to verify if a web application adequately evaluates invalid inputs.
+- **Parameter level bypass testing** tries to check for issues related to relationships among different parameters of an input.
+- **Control flow level bypass testing** tries to verify web applications by executing test cases that break the normal execution sequence.
+# Server-Side Testing
+If server-side source code is available, we an use graph models to test the server.
+- Component Interaction Model (CIM)
+- Application Transition Graph (ATG)
+
+An **atomic section** is a section of HTML with the property that if any part of the section is sent to a client, the entire section is.
+- A **content variable** is a program variable that provides data to an atomic section.

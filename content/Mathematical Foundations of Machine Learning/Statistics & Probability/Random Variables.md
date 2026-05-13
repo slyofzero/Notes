@@ -32,6 +32,7 @@
 >- [[Random Variables#Joint Conditional Probability|Joint Conditional Probability]]
 >	- [[Random Variables#Bayes Theorem|Bayes Theorem]]
 
+# Random Variable
 A random variable is a function which associates every outcome of a random experiment to some real number. This real number is used to denote a "reward" for every outcome.
 
 $\mathcal X$ is a random variable if,
@@ -364,8 +365,10 @@ $$
 $$
 
 2. $\operatorname{Var}(b)=0$, if $b$ is a constant.
-3. $\operatorname{Var}(\mathcal X) \ge 0$ as the variance is the expected value of a squared quantity.
+3. $\operatorname{Var}(\mathcal X) \ge 0$ as the variance is the expected value of a squared quantity. ^15af9d
 4. $\operatorname{Var}(a\mathcal X + b)=a^2\operatorname{Var}(\mathcal X)$.
+5. Exercise to show -
+$$\operatorname{Var}(\sum_{i=1}^n \mathcal X_i) = \sum_{i=1}^n\sum_{j=1}^n \operatorname{Cov}(\mathcal X_i, \mathcal X_j)$$.    ^f95b19
 
 The variance for the popular distributions are -
 
@@ -505,6 +508,10 @@ If $\mathcal  {X,Y}$ are independent, then $E[\mathcal{XY}] = E[\mathcal X]E[\ma
 Whenever $\operatorname{Cov}(\mathcal{X,Y})=0$, we say that $\mathcal  {X,Y}$ are uncorrelated.
 - Independent random variables are uncorrelated.
 - But not all uncorrelated random variables are independent.
+
+Properties -
+1. $\operatorname{Cov}(aX, bY) = 2ab \operatorname{Cov}(X,Y)$
+2. $\operatorname{Cov}(aX + c, bY + d) = \operatorname{Cov}(aX + bY)$
 # Correlation
 The covariance between two random variables can help understand how one variable's values affects the other's, but the problem with it is that its unbounded and depends on the units of measurement.
 
@@ -569,4 +576,105 @@ p_{\mathcal Y |\mathcal X}(y_j|x_i) &= \frac{p_{\mathcal{X|Y}}(x_i|y_j) \cdot p_
 f_{\mathcal Y |\mathcal X}(y_j|x_i) &= \frac{f_{\mathcal{X|Y}}(x_i|y_j) \cdot f_{\mathcal Y}(y_j)}{\int_{-\infty}^\infty f_{\mathcal{X|Y}}(x_i|y_j) \cdot f_{\mathcal Y}(y_j)\,\, dy} &\qquad(\text{For Continuous}) \\[8pt]
 \end{aligned}
 $$
+# Random Vector
+A random vector is a vector where each element is a random variable.
+- The expected value of a random vector is a vector of expected values.
+- We can write $E[a^T \vec X]$ as $a^TE[\vec X]$ where $\vec X$ is a random vector. (Try out yourself)
+# Covariance Matrix
+Earlier we have shown that the [[#^f95b19|variance of the sum of random variables]] is the pair-wise sum of the covariance of the random variables.
 
+If we were to take the case of $\mathcal X_1$ and $\mathcal X_2$, we can make a matrix $C_\mathcal{X}$ of the form - 
+
+$$
+C_{\mathcal X} = \left[ \begin{matrix}
+\operatorname{Var}(\mathcal X_1) & \operatorname{Cov}(\mathcal X_1, \mathcal X_2) \\[8pt]
+\operatorname{Cov}(\mathcal X_2, \mathcal X_1) & \operatorname{Var}(\mathcal X_2)
+\end{matrix}
+\right]
+$$
+
+Then we can write,
+
+$$
+\begin{aligned}
+\operatorname{Var}(\mathcal{X}_1 + \mathcal{X}_2) &= 
+
+\left[\begin{matrix}
+1 \\
+1
+\end{matrix}\right]
+
+\left[ \begin{matrix}
+\operatorname{Var}(\mathcal X_1) & \operatorname{Cov}(\mathcal X_1, \mathcal X_2) \\[8pt]
+\operatorname{Cov}(\mathcal X_2, \mathcal X_1) & \operatorname{Var}(\mathcal X_2)
+\end{matrix}
+\right]
+
+\left[\begin{matrix}
+1 & 1
+\end{matrix}\right] \\[8pt]
+
+&= \mathbb{1}^T C_\mathcal{X} \mathbb1
+\end{aligned}
+$$
+
+This matrix $C_{\mathcal X}$ is called the **Variance-Covariance matrix**. If we were calculating $\operatorname{Var}(a\mathcal{X}_1 + b\mathcal{X}_2)$, then ^1db2b3
+
+$$
+\begin{aligned}
+\operatorname{Var}(a\mathcal{X}_1 + b\mathcal{X}_2) &= 
+
+\left[\begin{matrix}
+a \\
+b
+\end{matrix}\right]
+
+\left[ \begin{matrix}
+\operatorname{Var}(\mathcal X_1) & \operatorname{Cov}(\mathcal X_1, \mathcal X_2) \\[8pt]
+\operatorname{Cov}(\mathcal X_2, \mathcal X_1) & \operatorname{Var}(\mathcal X_2)
+\end{matrix}
+\right]
+
+\left[\begin{matrix}
+a & b
+\end{matrix}\right] \\[8pt]
+
+&= a^T C_\mathcal{X} a
+\end{aligned}
+$$
+## Properties of Covariance Matrix
+1. It is symmetric, $C_{\mathcal X}^T = C_{\mathcal X}$.
+2. Because [[#^15af9d|variance is always non-negative]], 
+
+$$
+\operatorname{Var}(a\mathcal{X}_1 + b\mathcal{X}_2) = a^T C_\mathcal{X} a \ge 0
+$$
+This means that $C_{\mathcal X}$ is a **positive semi-definite matrix**. Thus all eigenvalues of the covariance matrix are non-negative.
+3. $C_{\mathcal X}$ for uncorrelated random variables is a diagonal matrix.
+4. Covariance of a random vector is a covariance matrix.
+
+$$
+\operatorname{Cov(\vec X)} = E\left[(X - E[X]) (X - E[X])^T\right]
+$$
+
+If our random vector is transformed using some matrix $A$, then
+
+$$
+\begin{aligned}
+\operatorname{Cov(A\vec X)} &= E\left[(AX - E[AX]) (AX - E[AX])^T\right] \\[8pt]
+&= E\left[A(X - E[X]) (A(X - E[X]))^T\right] \\[8pt]
+&= E\left[A(X - E[X]) (X - E[X])^T A^T\right] \\[8pt]
+&= A \,\,E\left[(X - E[X]) (X - E[X])^T\right]  A^T \\[8pt]
+&= A C_{\mathcal X}  A^T \\[8pt]
+\end{aligned}
+$$
+5. Because the covariance matrix is a real-symmetric matrix, it is always diagonalizable.
+
+$$
+\begin{alignedat}{3}
+&& C_{\mathcal X} V &= V \Lambda \\[8pt] 
+&\Rightarrow &\Lambda &= V^{-1}C_{\mathcal X} V  \\[8pt]
+\end{alignedat}
+$$
+
+The obtained matrix $\Lambda$ is a diagonal matrix which corresponds to the covariance matrix of uncorrelated random variables. Thus this is a method of decorrelating your random variables using **a modal matrix** $V$.
