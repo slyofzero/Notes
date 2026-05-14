@@ -25,7 +25,9 @@ $$
 \end{aligned}
 $$
 
-And thus the optimization problem can becomes a maximization of error instead.
+^cd6f99
+
+And thus the optimization problem can becomes a maximization of error instead. ^fff7db
 
 $$
 \begin{aligned}
@@ -39,7 +41,9 @@ $$
 \end{aligned}
 $$
 
-Where $\Sigma_x$ is the covariance matrix for the random vector $[x_1, x_2, \dots, x_n]$. If we recall the properties of the covariance matrix, we can see that the above form of the error function heavily resembles the [[Random Variables#^1db2b3|variance of a random vector]]. 
+Where $\Sigma_x$ is the covariance matrix for the random vector $[x_1, x_2, \dots, x_n]$. If we recall the properties of the covariance matrix, we can see that the above form of the error function heavily resembles the [[Random Variables#^1db2b3|variance of a random vector]].
+
+> Also notice how the formula we arrive at is similar to the [[Random Variables#^504a5c|covariance formula for a random vector]], with just the mean being 0. This means that **centering the data is essential for variance maximization.**
 
 Thus the best representative line $w$ will be the one that captures that maximum variance in the dataset.
 # Residual Analysis
@@ -74,7 +78,7 @@ $$
 because after $d$ rounds, we'd be left with $d$ orthonormal basis which would span all of $\mathbb R^d$.
 
 **Note -** If the datapoints lie in a low dimensional subspace of $\mathbb R^d$ then the residues would become 0 much earlier than $d$ rounds.
-# Early Stopping
+
 For any $w \in \mathbb R^d$, such that $||w||_2^2 = 1$
 
 $$
@@ -84,4 +88,40 @@ $$
 \end{alignedat}
 $$
 
-We want this representation term to be as large as possible, 
+We want this representation term to be as large as possible for a better fit.
+# Eigenvalues of the Covariance Matrix
+The [[#^fff7db|optimization problem]] discussed above can be solved using the **Hilbert's Min-Max Theorem**. This tells us that $w_1$ is the eigenvector of $\Sigma_x$ corresponding to the largest eigenvalue of $\Sigma_x$.
+
+If $w_1$ is an eigenvector of $\Sigma_x$, we can say that
+
+$$
+\begin{aligned}
+&&\Sigma_xw_1 &= \lambda_1w_1 \\[8pt]
+&\Rightarrow &w_1^T\Sigma_xw_1 &= w_1^T\lambda_1w_1 \\[8pt]
+&\Rightarrow &w_1^T\Sigma_xw_1 &= \lambda_1 \qquad &\because w^Tw = 1\\[8pt]
+&\Rightarrow &\lambda_1 &= w_1^T \frac{1}{n}\sum_{i=1}^n(x_ix_i^T) w_1 \\[8pt]
+&\Rightarrow &\lambda_1 &= \frac{1}{n}\sum_{i=1}^n(x_i^Tw_1)^2 \\[8pt]
+\end{aligned}
+$$
+
+This is exactly the [[#^cd6f99|optimization error]] term we used earlier to restructure the error as variance. Thus we can say that the largest eigenvalue of the covariance matrix is literally the variance of the data projected onto $w_1$. 
+
+Because the covariance matrix is symmetric, the eigenvectors for it will be orthogonal. Thus the eigenvector $w_2$ corresponding to the second highest eigenvalue $\lambda_2$ will naturally lie in the orthogonal complement of $w_1$ and $\lambda_2$ would correspond to the variance of the data projected onto $w_2$.
+
+Sequentially, all eigenvalues of the covariance matrix would in-turn correspond to the variance of the data projected onto the eigenvector corresponding to them.
+## Rule of thumb for dimensions
+The most common assumption is that any data point $x_i$ is made up of two components. The actual signal $s_i$ and the random noise $\epsilon_i$. Because this noise is random in nature, it doesn't have a particular pattern which it follows. It has not preferred direction, tends to be small in magnitude, and contributes a small and roughly equal amount of variance in every direction.
+
+Thus by looking at the eigenvalues of our covariance matrix, we can say that the smaller eigenvalues may correspond to this random noise and the eigenvectors corresponding to these eigenvalues are redundant for a proper reconstruction of the original data. So instead of trying to capture all the variance in our original data, we can only use some top $k$ eigenvalues and their corresponding eigenvectors to capture some $t$ threshold of variance, typically 0.95.
+
+We can identify our top $k$ directions by doing $-$
+
+$$
+\frac{\sum_{i=1}^k \lambda_i(\Sigma_x)}{\sum_{i=1}^d \lambda_i(\Sigma_x)} \ge 0.95
+$$
+
+Because all eigenvalues correspond to variance which is non-negative, this summation will be non-decreasing.
+
+![[Pasted image 20260514095301.png]]
+
+Let the green line represent $w_1$ and the blue line represent $w_2$. Notice how the variance of the data along $w_1$ is much more than the variance of the data on $w_2$.

@@ -1,4 +1,5 @@
 >[!SUMMARY] Table of Contents
+>- [[Random Variables#Random Variable|Random Variable]]
 >- [[Random Variables#Probability Distribution|Probability Distribution]]
 >- [[Random Variables#Discrete Random Variable|Discrete Random Variable]]
 >	- [[Random Variables#Probability Mass Function|Probability Mass Function]]
@@ -13,6 +14,7 @@
 >	- [[Random Variables#Important Continuous Random Variables|Important Continuous Random Variables]]
 >		- [[Random Variables#Uniform Random Variable|Uniform Random Variable]]
 >		- [[Random Variables#Exponential Random Variable|Exponential Random Variable]]
+>			- [[Random Variables#Memoryless Property|Memoryless Property]]
 >		- [[Random Variables#Gaussian/Normal Distribution|Gaussian/Normal Distribution]]
 >- [[Random Variables#Cumulative Distribution|Cumulative Distribution]]
 >- [[Random Variables#Expected Value of a Random Variable|Expected Value of a Random Variable]]
@@ -31,6 +33,9 @@
 >- [[Random Variables#Correlation|Correlation]]
 >- [[Random Variables#Joint Conditional Probability|Joint Conditional Probability]]
 >	- [[Random Variables#Bayes Theorem|Bayes Theorem]]
+>- [[Random Variables#Random Vector|Random Vector]]
+>- [[Random Variables#Covariance Matrix|Covariance Matrix]]
+>	- [[Random Variables#Properties of Covariance Matrix|Properties of Covariance Matrix]]
 
 # Random Variable
 A random variable is a function which associates every outcome of a random experiment to some real number. This real number is used to denote a "reward" for every outcome.
@@ -649,9 +654,10 @@ $$
 $$
 \operatorname{Var}(a\mathcal{X}_1 + b\mathcal{X}_2) = a^T C_\mathcal{X} a \ge 0
 $$
+
 This means that $C_{\mathcal X}$ is a **positive semi-definite matrix**. Thus all eigenvalues of the covariance matrix are non-negative.
 3. $C_{\mathcal X}$ for uncorrelated random variables is a diagonal matrix.
-4. Covariance of a random vector is a covariance matrix.
+4. Covariance of a random vector is a covariance matrix. ^504a5c
 
 $$
 \operatorname{Cov(\vec X)} = E\left[(X - E[X]) (X - E[X])^T\right]
