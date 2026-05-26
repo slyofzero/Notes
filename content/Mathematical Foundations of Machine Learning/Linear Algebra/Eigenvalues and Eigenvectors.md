@@ -34,7 +34,10 @@ The polynomial equation obtained while doing $\operatorname{det}(A - \lambda I) 
 Two matrices are similar if their eigenvalues are the same.
 ## Multiplicities of Eigenvalues
 1. **Algebraic Multiplicity (AM )-** The number of times an eigenvalue is repeated.
+	- $$\operatorname{det}(A) = \prod_{i=1}^k \lambda_i^{\operatorname{AM}(\lambda_i)}$$
 2. **Geometric Multiplicity (GM) -** The number of linearly independent eigenvectors associated with a particular eigenvalue.
+	- $\operatorname{dim}(N(A - \lambda I)) = \text{GM}$
+
 3. **Note -** GM $\le$ AM for each eigenvalue $\lambda$. If GM $\lt$ AM for any specific eigenvalue, we say that the corresponding eigenvalue is deficient. ^09bfa8
 ## Distinct eigenvalues
 If the eigenvalues of a transformation are distinct, the eigenvectors are linearly independent.

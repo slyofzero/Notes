@@ -78,7 +78,7 @@ Operating systems need to protect themselves and system resources from faulty or
 1. **User Mode** - Programs run with restricted privileges and cannot access the hardware directly.
 2. **Kernel Mode** - The OS kernel runs here with full access to all hardware and instructions.
 
-The **mode bit** is used to keep track of this mode. It is a  single bit in the CPU's status register (e.g., the [[Instructions and Addressing Modes|PSW — Program Status Word]]) which indicates the current mode.
+The **mode bit** is used to keep track of this mode. It is a single bit in the CPU's status register (e.g., the [[Instructions and Addressing Modes|PSW — Program Status Word]]) which indicates the current mode.
 - 1 means User Mode
 - 0 means Kernel Mode
 
@@ -154,7 +154,7 @@ Some attributes stored in the PCB are -
 9. State - Current status (new, ready, running, waiting, terminated)
 10. List of Files - Open files and file descriptors associated with the process
 #### Context Switching
-The values stored inside the PCB are referred too as the **context of that process**.
+The values stored inside the PCB are referred to as the **context of that process**.
 - The method of bringing the context of a process to the CPU and switching it with the existing context is called as **context switching**.
 #### Process States
 The current activity the process is performing.

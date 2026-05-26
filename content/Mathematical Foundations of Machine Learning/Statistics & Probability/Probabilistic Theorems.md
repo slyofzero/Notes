@@ -5,7 +5,7 @@
 # Markov Inequality
 Suppose we have a distribution of a random variable $X$ with a CDF $F_X$. We are interested in finding the probability of the random variable holding a value greater than some threshold $k$, i.e. $P(X \ge k)$.
 
-Let the distribution of $X$ be split into two groups. 
+Let the distribution of $X$ be split into two groups.
 - Group $X_1$ where $X \ge k$
 - Group $X_2$ where $X \lt k$
 
@@ -65,7 +65,7 @@ $$
 <h4 class="special">Note -</h4>
 
 Both Markov and Chebyshev's Inequality are independent of the random variable's distribution. All they require are the mean and standard deviation of the distribution.
-# Central Limit Theorem
+# Law of Large Numbers
 Some definitions -
 1. **Population -** The entire set of observations of our interest.
 2. **Sample -** A subset of the population.
