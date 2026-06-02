@@ -1,3 +1,26 @@
+>[!SUMMARY] Table of Contents
+>- [[CPU Scheduling#Scheduling Times|Scheduling Times]]
+>- [[CPU Scheduling#Scheduling Algorithms|Scheduling Algorithms]]
+>	- [[CPU Scheduling#First Come First Serve (FCFS)|First Come First Serve (FCFS)]]
+>		- [[CPU Scheduling#Convoy Effect|Convoy Effect]]
+>	- [[CPU Scheduling#Shortest Job First (SJF)|Shortest Job First (SJF)]]
+>	- [[CPU Scheduling#Shortest Remaining Time First (SRTF)|Shortest Remaining Time First (SRTF)]]
+>	- [[CPU Scheduling#Longest Job First (LJF) and Longest Remaining Time First (LRTF)|Longest Job First (LJF) and Longest Remaining Time First (LRTF)]]
+>	- [[CPU Scheduling#Highest Response Ratio Next|Highest Response Ratio Next]]
+>	- [[CPU Scheduling#Priority Based Algorithm|Priority Based Algorithm]]
+>		- [[CPU Scheduling#Aging|Aging]]
+>	- [[CPU Scheduling#Round Robin (RR)|Round Robin (RR)]]
+>	- [[CPU Scheduling#Multilevel Queue Scheduling (MLQ)|Multilevel Queue Scheduling (MLQ)]]
+>	- [[CPU Scheduling#Multilevel Feedback Queue Scheduling (MFLQ)|Multilevel Feedback Queue Scheduling (MFLQ)]]
+>- [[CPU Scheduling#CPU Utilization|CPU Utilization]]
+>	- [[CPU Scheduling#Without IO Operations|Without IO Operations]]
+>	- [[CPU Scheduling#With IO Operations|With IO Operations]]
+>- [[CPU Scheduling#Multithreading|Multithreading]]
+>	- [[CPU Scheduling#Types of threads|Types of threads]]
+>- [[CPU Scheduling#System Call|System Call]]
+>	- [[CPU Scheduling#Fork system call|Fork system call]]
+>	- [[CPU Scheduling#Wait |Wait ]]
+
 The function of the [[Process Management#^0ee500|Short-Term Scheduler]] is to select a process to dispatch to the CPU. In doing so, the scheduler needs to -
 - Minimize Wait time and Turn-around time
 - Maximize CPU utilization
@@ -193,3 +216,50 @@ In the case of IO operations, we'd know the probability with which a process ent
 $$
 \text{Utilization} = 1 - p^n
 $$
+# Multithreading
+**Process** - an independent program in execution with its own memory space.
+**Thread** - a lightweight unit of execution that lives _inside_ a process, sharing its memory.
+
+Creating a replica of a program, each time its needed, will flood the memory easily. Given that a single process is made up of multiple components, a few of those components can be shared between multiple processes while the rest can be independent to each unit of execution. This is the idea of **threading**.
+
+A process owns: code + data + heap + stack. Threads inside it each get their **own stack**, but share everything else.
+
+| Shared among Threads | Unique for each Thread |
+| :------------------- | :--------------------- |
+| Code Section         | Thread ID              |
+| Data Section         | Register Set           |
+| OS Resources         | Stack                  |
+| Open Files & Signals | Program Counter        |
+| Heap                 |                        |
+Advantages of multithreading -
+- Better responsiveness
+- Faster Context Switch
+- Resource Sharing
+- Economical
+- Communication
+- Utilization of Multiprocessor Architecture
+## Types of threads
+There are two types of threads - 
+- **User threads -** threads that are made and managed by the process itself without the involvement of the OS.
+- **Kernel threads -** threads that are managed by the OS directly.
+
+| User threads                                                                                      | Kernel threads                                                                    |
+| ------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| Created without kernel intervention                                                               | Kernel itself is multithreaded                                                    |
+| Very fast context switch                                                                          | Slow context switch                                                               |
+| If one thread is blocked, the OS blocks the entire process because it isn't aware of user threads | If one thread is blocked, only that thread is blocked and not the entire process. |
+| Generic and can run on any OS                                                                     | Specific to the OS                                                                |
+| Faster to create and manage                                                                       | Slower to create and manage                                                       |
+# System Call
+Programmatic way in which a computer program requests a service from the kernel.
+
+![[Pasted image 20260526215718.png]]
+## Fork system call
+It creates a new process (child) that is an exact copy of the calling process (parent). It's the primary way to create processes in Unix/Linux.
+
+With respect to calling `fork` in C -
+- The child process' execution starts from the call of `fork`.
+- The `fork` function returns the PID of the child process to the parent process and returns 0 to the child process it created.
+- If `fork` is called $n$ time, then $2^n-1$ child processes will be created.
+## Wait 
+Causes the parent process to block until one of its child processes terminates. Used to reap children and collect their exit status.
