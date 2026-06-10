@@ -4,7 +4,7 @@
 3. $\epsilon$ - A zero length string.
 4. Language - A set of strings given over the alphabet $\Sigma$.
 # Finite Automata / Finite State Machine
-A finite automata is a mathematical model of a machine with finite number of states and transitions and without any external memory which can accept regular languages. 
+A finite automata is a mathematical model of a machine with finite number of states and transitions and without any external memory which can accept regular languages.
 
 A finite automata is a quintuple $(Q, \Sigma, q_0, F, \delta)$, where -
 1. $Q$ : Finite set of all states
@@ -15,8 +15,8 @@ A finite automata is a quintuple $(Q, \Sigma, q_0, F, \delta)$, where -
 
 There are two broader categories of Finite Automata - 
 1. Finite Automata with output.
-	1. Mealy Machines
-	2. Moore Machines
+	1. Mealy Machines - Output depends upon both the current state and the input
+	2. Moore Machines - Output depends only upon the current state
 2. Finite Automata without output.
 	1. Deterministic Finite Automata
 	2. Non-Deterministic Finite Automata
@@ -34,6 +34,7 @@ It is a finite automata where each state has **exactly one transition** for **ev
 2. For a language there can be multiple possible NFAs, but only one possible DFA.
 3. Grammars are inherently non-deterministic as a production rule can lead to multiple outcomes.
 4. A recognizer is a computational device or algorithm that decides whether a given input string belongs to a language.
+5. $\delta$ : Transition Function $Q \times \Sigma \rightarrow 2^Q$
 # Regular Expression
 The precedence of regex operators are: 
 $$
