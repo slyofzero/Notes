@@ -1,3 +1,15 @@
+>[!SUMMARY] Table of Contents
+>- [[Process Synchronization#Communication b/w processes|Communication b/w processes]]
+>	- [[Process Synchronization#Race Condition|Race Condition]]
+>	- [[Process Synchronization#Critical Section|Critical Section]]
+>		- [[Process Synchronization#Requirements for solution of the critical section problem|Requirements for solution of the critical section problem]]
+>			- [[Process Synchronization#Mutual Exclusion|Mutual Exclusion]]
+>			- [[Process Synchronization#Progress|Progress]]
+>			- [[Process Synchronization#Bounded Waiting|Bounded Waiting]]
+>		- [[Process Synchronization#2-Process Solution|2-Process Solution]]
+>		- [[Process Synchronization#Peterson's Solution|Peterson's Solution]]
+>- [[Process Synchronization#Synchronization Hardware|Synchronization Hardware]]
+
 When working with communicating processes, there is a need for process synchronization to get the expected result out of them.
 # Communication b/w processes
 Processes are of two types -
@@ -78,33 +90,44 @@ turn = 0;
 ```
 ### Peterson's Solution
 ```c
-Boolean Flag[2] = {False, False}
+bool flag[2] = {false, false};
 int turn;
 
-# P1
-while (True) {
-	Flag[0] = True;
-	turn = 1;
-	while (Flag[1] && turn == 1);
-		CS;
-	Flag[0] = False;
-		RS;
+// Process P0 (i = 0, j = 1)
+while (true) {
+    flag[0] = true;
+    turn = 1;
+    while (flag[1] && turn == 1); // Busy wait
+    
+    // Critical Section (CS)
+    
+    flag[0] = false;
+    
+    // Remainder Section (RS)
 }
 
-# P2
-while (True) {
-	Flag[1] = True;
-	turn = 0;
-	while (Flag[0] && turn == 0);
-		CS;
-	Flag[1] = False;
-		RS;
+// Process P1 (i = 1, j = 0)
+while (true) {
+    flag[1] = true;
+    turn = 0;
+    while (flag[0] && turn == 0); // Busy wait
+    
+    // Critical Section (CS)
+    
+    flag[1] = false;
+    
+    // Remainder Section (RS)
 }
 ```
 
-In this solution, the variable `Flag` is used to keep track of which process is wishing to execute its CS while variable `turn` is used to keep track of priority of execution among the processes. Both may sound like they serve a similar purpose but 
-- `Flag` is set by the process itself.
-- `turn` for that process is set by the communicating process.
+In this solution, the array `flag` tracks which process **wishes to enter** its critical section, while `turn` resolves tie-breaks and indicates **whose turn it is**.
+- `flag[i]` is set to `true` by Process $i$ itself to express intention to enter CS.
+- `turn = j` is set by Process $i$ to gracefully yield priority to Process $j$ if both wish to enter simultaneously.
+
+**Property Analysis for Peterson's Solution:**
+1. **Mutual Exclusion:** Guaranteed. $P_0$ and $P_1$ can only enter CS if `turn == 0` and `turn == 1` respectively, but `turn` can hold only one scalar value at any instant.
+2. **Progress:** Guaranteed. If $P_1$ does not wish to enter (`flag[1] == false`), $P_0$ is never blocked.
+3. **Bounded Waiting:** Guaranteed. A process exiting CS sets its `flag` to `false`, allowing the waiting process to proceed. Thus, no process waits more than 1 entry of the other process.
 # Synchronization Hardware
 The solutions we discussed so far were software solution to process synchronization. These can be tricky and error-prone as the processes can be preempted between any two instructions. To solve this issue we need the instructions to be atomic, and that's what synchronization hardware provides.
 

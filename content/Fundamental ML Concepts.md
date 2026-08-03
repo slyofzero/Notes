@@ -73,8 +73,8 @@ A confusion matrix shows not just how many predictions are right, but also what 
 | **Is 0** |   TP   |   FP   |
 | **Is 1** |   FN   |   TN   |
 
-- False Positives - Type I error
-- False Negatives - Type II error
+- False Positives - Type I error ^7af2b8
+- False Negatives - Type II error ^58d13d
 ## Accuracy
 Ability of the model to correctly predict samples as the class they belong to.
 
@@ -88,12 +88,18 @@ The precision of the model corresponds to the ability of the model to predict a 
 $$
 \text{Precision} = \frac{TP}{TP + FP}
 $$
-## Recall
+## Recall (Sensitivity / True Positive Rate)
 The recall of the model corresponds to how many of the samples predicted as a class truly belong to that class.
 - If the model predicts that 9 samples belong to class 1 and out of this only 3 actually belong to class 1, then the recall of the model is 0.33.
 
 $$
 \text{Precision} = \frac{TP}{TP + FN}
+$$
+## Specificity / True Negative Rate
+Opposite of Recall, it measures how many of the negative samples were predicted as negative.
+
+$$
+\text{Specificity} = \frac{TN}{TN + FP}
 $$
 ## F score
 In cases like Spam detection the precision of the model is a more important metric as we are more interested in knowing how many correct predictions did the model make. In cases like Cancer-Detection the recall of the model is a more important metric as we don't want someone with cancer to be diagnosed as healthy and vice-versa.

@@ -15,8 +15,7 @@
 >- [[CPU Scheduling#CPU Utilization|CPU Utilization]]
 >	- [[CPU Scheduling#Without IO Operations|Without IO Operations]]
 >	- [[CPU Scheduling#With IO Operations|With IO Operations]]
->- [[CPU Scheduling#Multithreading|Multithreading]]
->	- [[CPU Scheduling#Types of threads|Types of threads]]
+>- [[Threads|Threads (Multithreading)]]
 >- [[CPU Scheduling#System Call|System Call]]
 >	- [[CPU Scheduling#Fork system call|Fork system call]]
 >	- [[CPU Scheduling#Wait |Wait ]]
@@ -47,7 +46,7 @@ $$
 6. Response Time (RT) - The amount of time from arrival till the first execution.
 
 $$
-\text{RT} = \text{Time at first exeuction of process} - \text{AT}
+\text{RT} = \text{Time at first execution of process} - \text{AT}
 $$
 
 	- For non-preemptive algorithms, $\text{RT} = \text{WT}$.
@@ -124,14 +123,14 @@ Disadvantages -
 Not only favors short jobs but also decreases the waiting time of longer jobs.
 
 **Scheduling Criteria -**
-- Response Ratio is $\frac{W + S}{S}$ where $W$ is the waiting time and $S$ is the service/burst time.
+- Response Ratio is $\frac{W + S}{S} = 1 + \frac{W}{S}$ where $W$ is the waiting time and $S$ is the service/burst time.
 - We pick the process with the highest response ratio.
-- If multiple processes have the same response ratio, then we use SJF as tie-breaker.
+- If multiple processes have the same response ratio, FCFS (Arrival Time) is used as the tie-breaker.
 
 **Type of Algorithm -** Non-preemptive
 
 Advantages -
-- No starvation.
+- No starvation (as waiting time $W$ increases, response ratio increases, preventing starvation of long jobs).
 - No Convoy Effect.
 
 Disadvantages -
@@ -157,8 +156,8 @@ In case of priority based algorithms, the priority can be made dynamic as well. 
 - Tie-breaker is again FCFS
 
 **Important things -**
-- Quantum/Time slice is the amount of time which a process runs for on the CPU.\
-- Even if there's one process left on the ready queue with BT > Q, we need to split it by Q width on the Gannt chart to show the context switch.
+- Quantum/Time slice is the amount of time which a process runs for on the CPU.
+- Even if there's one process left on the ready queue with BT > Q, we need to split it by Q width on the Gantt chart to show the context switch.
 	- In the below image you can see how P2 needs to be written twice at the end because its remaining BT was 4 which is > than Q = 3.
 
 ![[Pasted image 20260522185647.png]]
@@ -204,7 +203,7 @@ Extension of MLQ which allows processes to be switched between queues -
 - Processes can also be degraded to a lower priority queue.
 # CPU Utilization
 ## Without IO Operations
-In case where processes are running on the CPU and none of them enter a blocked state waiting for an IO operation, we can calculate the CPU utilization by using the Gannt Chart for the processes.
+In case where processes are running on the CPU and none of them enter a blocked state waiting for an IO operation, we can calculate the CPU utilization by using the Gantt Chart for the processes.
 
 $$
 \text{Utilization} = \frac{\text{Total time CPU was utilized}}{\text{Total execution time}}
@@ -213,43 +212,9 @@ $$
 ## With IO Operations
 In the case of IO operations, we'd know the probability with which a process enters the blocked state. Given $n$ processes where the probability of a process entering a blocked state is $p$, the probability of all $n$ processes entering the blocked state would be $p^n$. Thus the CPU utilization can be calculated by doing -
 
-$$
-\text{Utilization} = 1 - p^n
-$$
 # Multithreading
-**Process** - an independent program in execution with its own memory space.
-**Thread** - a lightweight unit of execution that lives _inside_ a process, sharing its memory.
+> See the dedicated **[[Threads]]** note for comprehensive coverage on thread memory layout, ULT vs. KLT, multithreading mapping models (Many-to-One, One-to-One, Many-to-Many), and GATE practice questions.
 
-Creating a replica of a program, each time its needed, will flood the memory easily. Given that a single process is made up of multiple components, a few of those components can be shared between multiple processes while the rest can be independent to each unit of execution. This is the idea of **threading**.
-
-A process owns: code + data + heap + stack. Threads inside it each get their **own stack**, but share everything else.
-
-| Shared among Threads | Unique for each Thread |
-| :------------------- | :--------------------- |
-| Code Section         | Thread ID              |
-| Data Section         | Register Set           |
-| OS Resources         | Stack                  |
-| Open Files & Signals | Program Counter        |
-| Heap                 |                        |
-Advantages of multithreading -
-- Better responsiveness
-- Faster Context Switch
-- Resource Sharing
-- Economical
-- Communication
-- Utilization of Multiprocessor Architecture
-## Types of threads
-There are two types of threads - 
-- **User threads -** threads that are made and managed by the process itself without the involvement of the OS.
-- **Kernel threads -** threads that are managed by the OS directly.
-
-| User threads                                                                                      | Kernel threads                                                                    |
-| ------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
-| Created without kernel intervention                                                               | Kernel itself is multithreaded                                                    |
-| Very fast context switch                                                                          | Slow context switch                                                               |
-| If one thread is blocked, the OS blocks the entire process because it isn't aware of user threads | If one thread is blocked, only that thread is blocked and not the entire process. |
-| Generic and can run on any OS                                                                     | Specific to the OS                                                                |
-| Faster to create and manage                                                                       | Slower to create and manage                                                       |
 # System Call
 Programmatic way in which a computer program requests a service from the kernel.
 

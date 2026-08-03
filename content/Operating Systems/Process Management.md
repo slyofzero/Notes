@@ -7,10 +7,12 @@
 >	- [[Process Management#Multiuser OS|Multiuser OS]]
 >	- [[Process Management#Multiprocessing OS|Multiprocessing OS]]
 >	- [[Process Management#Realtime OS|Realtime OS]]
->	- [[Process Management#Embedding System|Embedding System]]
+>	- [[Process Management#Embedded OS|Embedded OS]]
 >	- [[Process Management#Handheld OS|Handheld OS]]
 >- [[Process Management#System Call|System Call]]
 >- [[Process Management#Dual Mode of Operation|Dual Mode of Operation]]
+>- [[Process Management#Limited Direct Execution (LDE)|Limited Direct Execution (LDE)]]
+>	- [[Process Management#System Call Hardware & Trap Mechanism|System Call Hardware & Trap Mechanism]]
 >- [[Process Management#Parts of OS|Parts of OS]]
 >- [[Process Management#Program vs Processes|Program vs Processes]]
 >	- [[Process Management#Program|Program]]
@@ -45,7 +47,7 @@ The different types of OS are -
 ## Uni-Programming OS
 An OS which allows only one program to be present in the main memory at a time.
 ## Multi-Programming OS
-An OS which allows multiple programs to be present in the main memory at a time. The number of programs allowed in the memory memory at a time is called the **degree of multi-programming**.
+An OS which allows multiple programs to be present in the main memory at a time. The number of programs allowed in the main memory at a time is called the **degree of multi-programming**.
 
 Types of multi-programming OS -
 1. Non-preemptive - If a program runs on the CPU, then it can leave the CPU only when it wants. The OS can't kick the program out of the CPU.
@@ -65,8 +67,8 @@ Works on real time data and event. Each process has a deadline. How this process
 
 1. Soft - Processes don't need to adhere to the deadlines strictly.
 2. Hard - Processes need to adhere to the deadlines strictly.
-## Embedding System
-A miniature OS that is used on devices that are not your multi-purpose customers, eg - ACs, Fridges, Cars, Washing Machines, etc.
+## Embedded OS
+A miniature OS that is used on special-purpose devices (not general-purpose computers), e.g. - ACs, Fridges, Cars, Washing Machines, etc.
 ## Handheld OS
 OS used on hand-held devices like mobiles phones, tablets, hand-held consoles like Nintendo Switch, etc.
 # System Call
@@ -83,6 +85,25 @@ The **mode bit** is used to keep track of this mode. It is a single bit in the C
 - 0 means Kernel Mode
 
 ![[Pasted image 20260415142527.png]]
+
+# Limited Direct Execution (LDE)
+Modern operating systems virtualize the CPU using **Limited Direct Execution (LDE)**:
+- **Direct Execution**: The user program runs instructions directly on the physical CPU for maximum performance (no software interpretation overhead).
+- **Limited Control**: Hardware + OS enforce strict privilege boundaries so user processes cannot execute restricted instructions, access unauthorized memory, or hog the CPU indefinitely.
+
+## System Call Hardware & Trap Mechanism
+When a user process legitimately requires a privileged operation (e.g., reading disk or allocating device access):
+
+1. **Syscall Register Setup**: The process loads the designated **system call number** into a specific CPU register (e.g., `%eax` in x86).
+2. **Trap Instruction**: The process executes a trap instruction (e.g., `int $0x80` or `syscall`), triggering a software interrupt.
+3. **Privilege Mode Switch**: Hardware automatically switches the CPU mode bit from `1` (User Mode) to `0` (Kernel Mode).
+4. **Trap Table & Syscall Table Lookup**: 
+   - CPU jumps to the pre-configured **Trap Table / Interrupt Vector Table** entry point (configured by OS during boot).
+   - The OS trap handler reads `%eax`, indexes the **Syscall Table**, and dispatches control to the target kernel routine (e.g., `sys_read`).
+5. **Return-from-Trap**: After completing the service, the OS executes a `return-from-trap` instruction (e.g., `iret` or `sysret`), which restores the mode bit back to `1` (User Mode) and resumes process execution.
+
+> [!CAUTION]
+> If a process attempts to execute a restricted/privileged instruction directly in User Mode without using a system call, the CPU hardware raises a trap/exception, and the OS forcibly **kills the process**.
 # Parts of OS
 1. Kernel - The core of the OS. Runs in kernel mode and manages everything — CPU, memory, devices, and processes. All other parts depend on it.
 2. Shell - The interface for users to interact with the OS — either a **CLI** (bash, cmd) or a **GUI** (Windows, macOS desktop).
@@ -93,10 +114,18 @@ The **mode bit** is used to keep track of this mode. It is a single bit in the C
 - Exists in **secondary storage**
 - One copy exists on disk
 ## Process
-- A **program in execution** — an active, running instance
-- Has its own **memory space, CPU state, and resources**
-- Exists in **RAM**
-- One program can spawn **multiple processes** (e.g., opening Chrome twice = 2 processes)
+- A **program in execution** (a **"living program"**) — an active, running instance.
+- Consists of an **instruction stream** (sequence of instructions executing straight-line code, branches, loops) running within the context of a **process state**.
+- Has its own **address space, CPU register state, and OS resources**.
+- Exists in **RAM**.
+- One program can spawn **multiple processes** (e.g., opening Chrome twice = 2 processes).
+
+> [!NOTE] What is Process State?
+> **Process State** refers to **everything that the running code can affect or be affected by**:
+> 1. **CPU Registers**: Program Counter (PC), Stack Pointer (SP), General Purpose Registers (GPR), Floating Point Registers (FPRs), and Status/Flags (PSW).
+> 2. **Address Space**: The contents of memory allocated to Code, Data (`.data` / `.bss`), Heap, and Stack.
+>    - **`.bss` (Block Started by Symbol)**: Stores **uninitialized** global and static variables. To save disk space, `.bss` takes up **0 bytes in the executable file on disk**; the OS allocates zero-filled memory for it when loaded into RAM.
+> 3. **I/O & OS Metadata**: Open file descriptors, allocated devices, and per-process OS management data.
 
 Types of processes -
 1. CPU Bound - Process is intensive in terms of CPU operations
@@ -110,11 +139,13 @@ A Process can be thought of as a data structure with four components to it -
 ### Process Definition
 The program or the set of instructions for that process are its definition
 ### Process Representation
-Each process is stored in memory in four sections -
-1. Code (text) section - Contains the program instructions. 
-2. Data section - Stores all global, static variables.
-3. Heap - Allows for dynamic memory allocation during runtime.
-4. Stack - Keeps activation records of the program which stores all local variables, function parameters, return address, etc.
+Each process is stored in memory in four main sections -
+1. **Code (text) section** - Contains program instructions (typically read-only).
+2. **Data section** - Stores global and static variables:
+   - `.data` segment: Stores **initialized** global and static variables.
+   - `.bss` segment: Stores **uninitialized** global and static variables (zero-filled at startup).
+3. **Heap** - Dynamically allocated memory at runtime (via `malloc()` / `new`).
+4. **Stack** - Stores function activation records, local variables, function parameters, return addresses, **command-line arguments (`argc`, `argv`)**, and **environment variables**.
 
 ![[Pasted image 20260415151613.png]]
 
@@ -145,14 +176,15 @@ The **PCB** (**Process Control Block** also known as **process descriptor**) is 
 Some attributes stored in the PCB are -
 1. PID (Process ID) - Unique identifier for each process.
 2. PC (Program Counter) - Address of next instruction to execute.
-3. GPR (General Purpose Register) - CPU register values saved/restored during context switch.
-4. List of Devices - Devices allocated
-5. Type - Process category
-6. Size - Memory required by the process
-7. Memory Limits - Boundaries of address space
-8. Priority - Scheduling importance
-9. State - Current status (new, ready, running, waiting, terminated)
-10. List of Files - Open files and file descriptors associated with the process
+3. SP (Stack Pointer) - Address of current top of the stack.
+4. Registers (GPR, FPR, PSW) - General Purpose, Floating Point, and Status register values saved/restored during context switch.
+5. List of Devices - Devices allocated
+6. Type - Process category
+7. Size - Memory required by the process
+8. Memory Limits - Boundaries of address space
+9. Priority - Scheduling importance
+10. State - Current status (new, ready, running, waiting, terminated)
+11. List of Files - Open files and file descriptors associated with the process
 #### Context Switching
 The values stored inside the PCB are referred to as the **context of that process**.
 - The method of bringing the context of a process to the CPU and switching it with the existing context is called as **context switching**.

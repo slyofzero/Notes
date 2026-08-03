@@ -83,6 +83,32 @@ Includes:
 📂 Start here → [[Computer Organization and Architecture]]
 
 ---
+## 💻 Computer Systems Design
+Transistors, logic gates, and hardware digital design foundations.
+
+Includes:
+- [[Computer Systems Design/Fundamentals|Fundamentals]]
+- [[Computer Systems Design/Logic Gates|Logic Gates]]
+- [[Computer Systems Design/Boolean Algebra and Minimization|Boolean Algebra and Minimization]]
+- [[Computer Systems Design/Number Systems and Complements|Number Systems and Complements]]
+- [[Computer Systems Design/Combinational Circuits|Combinational Circuits]]
+- [[Computer Systems Design/Sequential Circuits|Sequential Circuits]]
+
+📂 Start here → [[Computer Systems Design]]
+
+---
+## 💻 Operating Systems
+How operating systems manage processes, threads, memory, and CPU resources.
+
+Includes:
+- [[Process Management]]
+- [[CPU Scheduling]]
+- [[Process Synchronization]]
+- [[Threads]]
+
+📂 Start here → [[Operating Systems]]
+
+---
 ## 🪟 Mathematical Foundations of Generative AI
 The theory that explains **why** generative models work.
 

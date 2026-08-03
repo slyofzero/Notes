@@ -3,7 +3,7 @@ SRC_DIR := ../../GATE\ Notes/
 DEST_DIR := ./content/
 
 # space-separated folder names (relative to SRC_DIR)
-EXCLUDE_DIRS := .obsidian Drawings Templates
+EXCLUDE_DIRS := .obsidian Drawings Templates .agent
 
 # -------- Targets --------
 .PHONY: copy_dirs clean
