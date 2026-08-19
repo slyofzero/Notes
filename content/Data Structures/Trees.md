@@ -24,6 +24,12 @@
 >		- [[Trees#RR Rotation|RR Rotation]]
 >		- [[Trees#LR Rotation|LR Rotation]]
 >		- [[Trees#RL Rotation|RL Rotation]]
+>- [[Trees#Red-Black Tree|Red-Black Tree]]
+>	- [[Trees#Properties of a Red-Black Tree|Properties of a Red-Black Tree]]
+>	- [[Trees#Black-Height|Black-Height]]
+>	- [[Trees#Insertion in a Red-Black Tree|Insertion in a Red-Black Tree]]
+>	- [[Trees#Deletion in a Red-Black Tree|Deletion in a Red-Black Tree]]
+>	- [[Trees#AVL Tree vs Red-Black Tree|AVL Tree vs Red-Black Tree]]
 
 A tree is a non-linear data structure in which elements are stored as nodes and connected in a hierarchical manner.
 
@@ -245,3 +251,121 @@ Done when insertion of a new node happens in the left subtree of the right child
     - C’s left subtree becomes A’s right subtree.
 
 ![[Pasted image 20260114100536.png]]
+# Red-Black Tree
+A Red-Black Tree (RBT) is a self-balancing [[Trees#Binary Search Tree|B.S.T]] where each node stores an extra bit representing its **colour** — either Red or Black. The colouring constraints ensure that the tree remains approximately balanced after every insertion and deletion, guaranteeing $O(\log\,n)$ time for search, insertion, and deletion.
+
+Notice how [[Trees#AVL Tree|AVL Trees]] enforce strict height-balancing, while Red-Black Trees enforce a *looser* invariant through colour rules — this makes RBTs cheaper to re-balance on insertions and deletions.
+## Properties of a Red-Black Tree
+A valid Red-Black Tree must satisfy **all five** of the following properties at all times -
+1. **Colour Property -** Every node is either **Red** or **Black**.
+2. **Root Property -** The root node is always **Black**.
+3. **Leaf Property -** All leaves are **NIL nodes** (external sentinel nodes) and are always **Black**.
+4. **Red Property -** If a node is Red, both its children must be Black. In other words, **no two consecutive Red nodes** can appear on any path from root to leaf.
+5. **Black-Height Property -** Every path from any node to its descendant NIL leaves contains the **same number of Black nodes**.
+
+$\bigstar$ Properties 4 and 5 together are what force the tree height to stay in $O(\log\,n)$. Property 4 prevents any path from being dominated by Red nodes, and Property 5 ensures all paths have a uniform Black-node count — so no single path can be more than **twice as long** as any other.
+## Black-Height
+The **Black-Height** of a node $x$, denoted $bh(x)$, is the number of Black nodes on any path from $x$ (not including $x$ itself) down to a NIL leaf.
+
+Since every such path must have the same count of Black nodes (Property 5), $bh(x)$ is well-defined.
+
+Key results -
+1. A Red-Black Tree with $n$ internal nodes has height at most -
+
+$$
+\boxed{h \leq 2\,\log_2(n+1)}
+$$
+
+2. The black-height $bh$ and the total height $h$ are related by -
+
+$$
+bh \geq \frac{h}{2}
+$$
+
+This follows directly from Property 4 — on any root-to-leaf path, at most half the nodes can be Red (since no two consecutive Red nodes are allowed), so at least half must be Black.
+
+3. A Red-Black Tree with black-height $bh$ has at least $2^{bh} - 1$ internal nodes. The minimum case occurs when every internal node is Black (i.e. a perfect binary tree of all-Black nodes).
+
+## Insertion in a Red-Black Tree
+Insertion follows two stages — standard B.S.T insertion followed by fix-up to restore the Red-Black properties.
+
+**Step 1 -** Insert the new node just like in a standard B.S.T. Colour the newly inserted node **Red**.
+
+**Step 2 -** Fix violations. The only property that can be violated after inserting a Red node is Property 4 (if the parent is also Red). The fix-up depends on the colour of the **uncle** (the sibling of the parent).
+
+Let the newly inserted node be $z$, its parent be $p$, grandparent be $g$, and uncle be $u$.
+
+### Case 1 — Uncle is Red (Recolouring)
+- Recolour the parent $p$ and uncle $u$ to **Black**.
+- Recolour the grandparent $g$ to **Red**.
+- Move $z$ up to $g$ and repeat the fix-up from $g$ (the grandparent may now violate Property 4 with *its* parent).
+
+$\bigstar$ This case only recolours — no rotations needed.
+
+### Case 2 — Uncle is Black (Rotations + Recolouring)
+This case mirrors the [[Trees#Balancing a B.S.T|AVL rotation cases]]. The exact rotation depends on the configuration of $z$, $p$, and $g$ -
+
+| Configuration | Rotation Required |
+| :---: | :---: |
+| $z$ is **left** child of $p$, $p$ is **left** child of $g$ | **LL** — Single right rotation on $g$ |
+| $z$ is **right** child of $p$, $p$ is **right** child of $g$ | **RR** — Single left rotation on $g$ |
+| $z$ is **right** child of $p$, $p$ is **left** child of $g$ | **LR** — Left rotation on $p$, then right rotation on $g$ |
+| $z$ is **left** child of $p$, $p$ is **right** child of $g$ | **RL** — Right rotation on $p$, then left rotation on $g$ |
+
+After the rotation(s), recolour appropriately so that the new subtree root is **Black** and its children are **Red**.
+
+![[Pasted image 20260819093013.png]]
+
+### Case 3 — $z$ is the Root
+After any recolouring propagation reaches the root, simply recolour the root to **Black** (Property 2). This is the only operation that increases the black-height of the entire tree by 1.
+
+## Deletion in a Red-Black Tree
+Deletion is more involved than insertion because removing a **Black** node can violate the Black-Height Property (Property 5).
+
+**Step 1 -** Perform standard B.S.T deletion. Let the node actually removed (or replaced) be $y$, and the node that takes its place be $x$.
+
+**Step 2 -** If $y$ was **Red**, no property is violated — done. If $y$ was **Black**, the path through $x$ now has one fewer Black node, creating a "double-black" problem at $x$. Fix-up cases depend on the colour of $x$'s **sibling** $s$ -
+
+| Case | Condition | Action |
+| :---: | :--- | :--- |
+| 1 | Sibling $s$ is **Red** | Recolour $s$ to Black and parent to Red, then rotate parent towards $x$. This converts to Case 2, 3, or 4. |
+| 2 | Sibling $s$ is **Black**, both of $s$'s children are **Black** | Recolour $s$ to Red and move the "double-black" up to the parent. Repeat fix-up from the parent. |
+| 3 | Sibling $s$ is **Black**, $s$'s child **closer** to $x$ is **Red**, **farther** child is **Black** | Recolour $s$'s closer child to Black and $s$ to Red, then rotate $s$ away from $x$. This converts to Case 4. |
+| 4 | Sibling $s$ is **Black**, $s$'s child **farther** from $x$ is **Red** | Recolour $s$ with parent's colour, parent to Black, farther child to Black, then rotate parent towards $x$. **Terminates.** |
+
+$\bigstar$ Case 4 is the **terminal case** — once you reach it, a single rotation and recolouring fixes the tree completely.
+
+![[Pasted image 20260819093040.png|518]]
+
+## Time Complexities
+
+| Operation | Time Complexity |
+| :---: | :---: |
+| Search | $O(\log\,n)$ |
+| Insertion | $O(\log\,n)$ |
+| Deletion | $O(\log\,n)$ |
+| Space | $O(n)$ |
+
+- Insertion requires **at most 2 rotations** (the rest is recolouring, which propagates up at most $O(\log\,n)$ levels).
+- Deletion requires **at most 3 rotations**.
+## AVL Tree vs Red-Black Tree
+
+| Criteria | [[Trees#AVL Tree\|AVL Tree]] | Red-Black Tree |
+| :--- | :---: | :---: |
+| Balancing | Strictly height-balanced ($\vert BF \vert \leq 1$) | Colour-based, loosely balanced |
+| Height bound | $\leq 1.44\,\log_2(n+2)$ | $\leq 2\,\log_2(n+1)$ |
+| Search | Slightly **faster** (shorter height) | Slightly **slower** |
+| Insertion | **Slower** (up to $O(\log\,n)$ rotations) | **Faster** (at most 2 rotations) |
+| Deletion | **Slower** (up to $O(\log\,n)$ rotations) | **Faster** (at most 3 rotations) |
+| Extra storage per node | Balance factor (integer) | 1 bit (colour) |
+| Best use case | Read-heavy workloads | Write-heavy workloads (used in `std::map`, Linux CFS scheduler, Java `TreeMap`) |
+
+---
+
+<h6 class="question">Q1) What is the maximum number of Red nodes in a Red-Black Tree of height $h$?</h6>
+
+<u>Sol</u>$^1$ - In a Red-Black Tree, no two consecutive Red nodes can exist on any path (Property 4). So on any root-to-leaf path of length $h$, at most $\lfloor h/2 \rfloor$ nodes can be Red (alternating Red-Black starting from the root's child, since the root is always Black).
+
+The maximum number of Red nodes across the entire tree occurs when the tree is a **complete binary tree** with alternating Black and Red levels (root is Black at level 0, all level-1 nodes are Red, all level-2 nodes are Black, and so on). In this configuration, every even-depth level is Black and every odd-depth level is Red.
+
+Thus the maximum number of Red nodes = total nodes at all odd-depth levels = $\boxed{\frac{n-1}{2}}$ for a tree with $n$ internal nodes (where $n = 2^{h+1} - 1$ in the best case).

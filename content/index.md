@@ -124,4 +124,25 @@ Includes:
 
 ---
 
+## 🤖 Machine Learning Practice (BSCS2008)
+End-to-end ML project lifecycle using scikit-learn.
+
+**Chapters:**
+1. [[Machine Learning Practice/01_Exploratory_Data_Analysis_EDA|Exploratory Data Analysis]]
+2. [[Machine Learning Practice/02_Data_Cleaning|Data Cleaning]]
+3. [[Machine Learning Practice/03_Data_Imputation|Data Imputation]]
+4. [[Machine Learning Practice/04_Feature_Engineering_Encoding|Feature Engineering & Encoding]]
+5. [[Machine Learning Practice/05_Feature_Scaling|Feature Scaling]]
+6. [[Machine Learning Practice/06_Train_Test_Split_Cross_Validation|Train-Test Split & CV]]
+7. [[Machine Learning Practice/07_Hyperparameter_Tuning|Hyperparameter Tuning]]
+8. [[Machine Learning Practice/08_Evaluation_Metrics_Regression|Evaluation Metrics (Regression)]]
+9. [[Machine Learning Practice/09_Evaluation_Metrics_Classification|Evaluation Metrics (Classification)]]
+10. [[Machine Learning Practice/10_scikit_learn_Models_Theory_Hyperparameters|scikit-learn Models]]
+11. [[Machine Learning Practice/11_scikit_learn_Pipeline_API|Pipeline API]]
+12. [[Machine Learning Practice/12_Inference_Deployment_Checklist|Inference & Deployment]]
+
+📂 *Legacy Notes & Appendix:* [[Machine Learning Practice/99_Appendix_Legacy_Notes|Appendix]]
+
+---
+
 > *“An algorithm is not just a procedure — it is a proof that a problem can be solved.”*

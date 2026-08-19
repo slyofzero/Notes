@@ -110,20 +110,61 @@ A **clock signal ($\text{CLK}$)** is a continuous, periodic square-wave voltage 
 
 ## 1.5 Triggering Classification: Latches vs. Flip-Flops (Core GATE Rule)
 
-Understanding the exact triggering mechanism used by memory elements is a high-frequency GATE distinction:
+Understanding how triggering mechanisms are visually represented in circuit schematics is essential for solving GATE block diagram questions:
 
 > [!IMPORTANT]
 > - **LATCHES use LEVEL TRIGGERING**: A latch is enabled and transparent for the entire **duration** (voltage level) that the clock or enable signal is held at logic $1$ (or logic $0$).
 > - **FLIP-FLOPS use EDGE TRIGGERING**: A flip-flop is non-transparent and samples inputs **only at the split-second transition edge** (rising $\uparrow$ or falling $\downarrow$) of the clock pulse.
 
+---
+
+### How Schematic Symbols Represent Triggering Modes
+
+In digital schematics, two distinct visual notation rules dictate how clock pins are drawn:
+
+1. **Presence of Dynamic Indicator ($\Delta$)**:
+   - **No Triangle**: Represents a **Level-Triggered Latch**.
+   - **Triangle ($\Delta$) inside the block**: Represents an **Edge-Triggered Flip-Flop** (the triangle is called the *Dynamic Indicator*).
+
+2. **Presence of Inversion Bubble ($\circ$)**:
+   - **No Bubble**: Active on **Positive / High** signal ($CLK=1$ or Rising Edge $\uparrow$).
+   - **Bubble ($\circ$) outside the block**: Active on **Negative / Low** signal ($CLK=0$ or Falling Edge $\downarrow$).
+
+---
+
+### The 4 Clock Input Symbol Configurations
+
+![[Pasted image 20260804225832.png|534]]
+
+```
+  1. Positive Level Latch      2. Negative Level Latch
+     +--------------+             +--------------+
+     |            Q |             |            Q |
+CLK -|              |       CLK -o|              |
+     |            Q'|             |            Q'|
+     +--------------+             +--------------+
+  (Active while CLK = 1)       (Active while CLK = 0)
+
+
+  3. Positive Edge Flip-Flop   4. Negative Edge Flip-Flop
+     +--------------+             +--------------+
+     |            Q |             |            Q |
+CLK ->|             |       CLK -o>|             |
+     |            Q'|             |            Q'|
+     +--------------+             +--------------+
+  (Samples on 0 -> 1 Edge)     (Samples on 1 -> 0 Edge)
+```
+
+---
+
 ### Summary Triggering & Symbol Matrix for GATE:
 
 | Memory Element Type | Triggering Mechanism | Active Sampling Condition | Clock Pin Schematic Symbol |
 | :--- | :---: | :---: | :---: |
-| **High-Level Latch** | **Level-Triggered** | $CLK = 1$ (High Voltage) | Plain pin labeled $EN$ or $CLK$ |
-| **Low-Level Latch** | **Level-Triggered** | $CLK = 0$ (Low Voltage) | Pin with inversion bubble ($\circ$) |
-| **Positive Edge-Triggered Flip-Flop** | **Edge-Triggered** | **Rising Edge ($\uparrow$)** ($0 \to 1$) | Pin with dynamic indicator triangle ($\Delta$) |
-| **Negative Edge-Triggered Flip-Flop** | **Edge-Triggered** | **Falling Edge ($\downarrow$)** ($1 \to 0$) | Pin with bubble + triangle ($\circ \Delta$) |
+| **Positive (High) Level Latch** | **Level-Triggered** | $CLK = 1$ (High Voltage) | Plain pin labeled $CLK$ (No $\Delta$, No $\circ$) |
+| **Negative (Low) Level Latch** | **Level-Triggered** | $CLK = 0$ (Low Voltage) | Bubble ($\circ$) on $CLK$ pin (No $\Delta$) |
+| **Positive Edge-Triggered Flip-Flop** | **Edge-Triggered** | **Rising Edge ($\uparrow$)** ($0 \to 1$) | Dynamic Triangle ($\Delta$) inside $CLK$ pin |
+| **Negative Edge-Triggered Flip-Flop** | **Edge-Triggered** | **Falling Edge ($\downarrow$)** ($1 \to 0$) | Bubble + Triangle ($\circ \Delta$) on $CLK$ pin |
 
 ---
 
@@ -186,7 +227,7 @@ An active-low SR Latch is constructed using two cross-coupled **NAND gates**. Th
 
 To control when the SR Latch responds to inputs, two steering NAND gates and an **Enable ($E$)** pin are added to an active-low NAND latch.
 
-![[Pasted image 20260802181813.png|450]]
+![[Pasted image 20260802181813.png|525]]
 
 ### Functioning:
 - When **$E = 0$**: Steering NAND gate outputs are forced to $1, 1$. The internal NAND latch sees $\bar{S}=1, \bar{R}=1 \implies$ **Hold State** (inputs $S$ and $R$ are ignored).
@@ -493,6 +534,11 @@ The **excitation table** specifies the required $J, K$ inputs to achieve a desir
 ## 6.4 The Race-Around Condition
 
 The **Race-Around Condition** is a critical flaw that occurs in **level-triggered** JK Flip-Flops (or latches).
+
+Conditions for race condition - 
+1. Level triggered JK Flip-Flops
+2. i/p is $J=1$ and $K=1$
+3. $t_{\text{high}} > t_{ff}$, clock pulse remains HIGH for a duration that is longer than the propagation delay
 
 ### Definition & Mechanism
 When $J=1$ and $K=1$, the flip-flop is in **Toggle mode**. If the clock pulse remains **HIGH** ($CLK=1$) for a duration $t_{\text{high}}$ that is **longer than the propagation delay** of the flip-flop ($t_{ff}$):

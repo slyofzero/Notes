@@ -1,4 +1,6 @@
 >[!SUMMARY] Table of Contents
+>- [[CPU Scheduling#Dispatcher vs Scheduler|Dispatcher vs Scheduler]]
+>- [[CPU Scheduling#Workload Model and Assumptions|Workload Model and Assumptions]]
 >- [[CPU Scheduling#Scheduling Times|Scheduling Times]]
 >- [[CPU Scheduling#Scheduling Algorithms|Scheduling Algorithms]]
 >	- [[CPU Scheduling#First Come First Serve (FCFS)|First Come First Serve (FCFS)]]
@@ -24,6 +26,43 @@ The function of the [[Process Management#^0ee500|Short-Term Scheduler]] is to se
 - Minimize Wait time and Turn-around time
 - Maximize CPU utilization
 - Be fair such that all processes are selected over time
+
+# Dispatcher vs Scheduler
+CPU Virtualization has two components:
+- **Dispatcher (Mechanism)**: The low-level machinery that actually performs the context switch. It saves/restores registers, switches kernel stacks, and jumps to the next process.
+- **Scheduler (Policy)**: The high-level algorithm/logic that decides WHICH ready process should get the CPU next.
+
+Notice how the scheduler makes the decision; the dispatcher executes it.
+
+# Workload Model and Assumptions
+Before diving into algorithms, let's define our scheduling vocabulary:
+- **Workload**: A set of job descriptions, each with an arrival time and run time.
+- **Job**: The execution of an entire process (or the current CPU burst of a process that alternates between CPU and I/O, moving between ready and blocked queues).
+- **Scheduler**: Logic that decides which ready job to run.
+- **Metric**: Measurement of the quality of a schedule.
+
+**Scheduling Objectives (The Fundamental Tension):**
+Performance-oriented:
+- Minimize turnaround time (don't want to wait long for a job to complete)
+- Minimize response time (schedule interactive jobs promptly so users see output quickly)
+- Maximize throughput (many jobs completed per unit time)
+- Maximize resource utilization (keep expensive devices busy)
+- Minimize overhead (reduce number of context switches)
+
+Fairness-oriented:
+- All jobs get the same amount of CPU over some time interval
+
+> [!NOTE]
+> There is a fundamental tension between performance and fairness.
+
+**Simplifying Workload Assumptions:**
+To study scheduling algorithms systematically, we start with 5 simplifying assumptions and progressively relax them:
+1. Each job runs for the same amount of time.
+2. All jobs arrive at the same time.
+3. Once started, each job runs to completion (non-preemptive).
+4. All jobs only use the CPU (no I/O).
+5. The run-time of each job is known.
+
 # Scheduling Times
 1. Arrival Time (AT) - Time at which process arrives.
 2. Burst/Service Time (BT) - Amount of time a process runs on the CPU.
@@ -59,8 +98,8 @@ $$
 $$
 # Scheduling Algorithms
 CPU Scheduling Algorithms are of two types -
-- Preemptive
-- Non-preemptive
+- **Preemptive**: The OS can interrupt and take the CPU away from a currently running process. This fundamentally requires hardware support (timer interrupts, dual mode operation, automatic register saving, and memory protection) — see [[Process Management#Hardware Support Required for Preemption and LDE|Hardware Support for Preemption]].
+- **Non-preemptive**: A process keeps the CPU until it voluntarily terminates or blocks on I/O/events.
 ## First Come First Serve (FCFS)
 **Scheduling Criteria -** 
 - Whichever process has a smaller arrival time gets scheduled first.
@@ -86,14 +125,17 @@ Only FCFS suffers from the **Convoy Effect**, meaning that if a process with a h
 **Type of Algorithm -** Non-preemptive
 
 Advantages -
-- Minimum average WT and TAT among **non-preemptive** scheduling algorithms.
+- Minimum average WT and TAT among **non-preemptive** scheduling algorithms. For the case where all jobs arrive simultaneously (Assumption 2), SJF is **provably optimal** for minimizing average turnaround time. The intuition is: moving a shorter job ahead of a longer job improves the short job's turnaround time MORE than it harms the long job's turnaround time.
 - Better throughput in continuous execution.
 
 Disadvantages -
 - No option of preemption.
 - No practical implementation because Burst Time is not known in advance.
 - Longer processes can suffer from starvation.
+- **Fails with staggered arrivals:** When relaxing Assumption 2 (jobs arrive at different times), SJF fails because a long job that arrived first will run to completion before short jobs that arrive slightly later — the "stuck behind a tractor again" problem.
 ## Shortest Remaining Time First (SRTF)
+Also known as **STCF (Shortest Time-to-Completion First)** — at any point in time, always run the job that will complete the quickest. This requires relaxing Assumption 3 (allowing preemption).
+
 **Scheduling Criteria -** 
 - Whichever process has a smaller burst time gets scheduled first.
 - If a new process arrives with a smaller burst time than the current process, the current process is preempted and the new process is executed. In the future, the old process only needs to run for BT-time it ran for.
@@ -170,7 +212,7 @@ Choosing the Quantum Value is tricky.
 
 Advantages -
 - All processes are executed one by one, thus no starvation.
-- Better interactiveness.
+- Better interactiveness. FIFO, SJF, and STCF can all have poor response time — because jobs must wait behind other jobs before getting their first CPU slice. RR solves this by alternating ready processes every fixed-length time slice, giving short jobs a chance to run and finish quickly even when run-times are unknown. If we don't know the run-time of each job, RR gives short jobs a chance to run and finish quickly — this observation becomes important for MLFQ.
 - Burst time is not required to be known in advance, thus practical.
 
 Disadvantages -
@@ -201,6 +243,8 @@ Disadvantages -
 Extension of MLQ which allows processes to be switched between queues -
 - Processes can be upgraded to a higher priority queue.
 - Processes can also be degraded to a lower priority queue.
+
+![[Pasted image 20260818100823.png|489]]
 # CPU Utilization
 ## Without IO Operations
 In case where processes are running on the CPU and none of them enter a blocked state waiting for an IO operation, we can calculate the CPU utilization by using the Gantt Chart for the processes.

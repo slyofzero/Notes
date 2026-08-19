@@ -13,6 +13,8 @@
 >- [[Process Management#Dual Mode of Operation|Dual Mode of Operation]]
 >- [[Process Management#Limited Direct Execution (LDE)|Limited Direct Execution (LDE)]]
 >	- [[Process Management#System Call Hardware & Trap Mechanism|System Call Hardware & Trap Mechanism]]
+>	- [[Process Management#Timer Interrupt Mechanism|Timer Interrupt Mechanism]]
+>	- [[Process Management#Hardware Support Required for Preemption and LDE|Hardware Support Required for Preemption and LDE]]
 >- [[Process Management#Parts of OS|Parts of OS]]
 >- [[Process Management#Program vs Processes|Program vs Processes]]
 >	- [[Process Management#Program|Program]]
@@ -104,6 +106,37 @@ When a user process legitimately requires a privileged operation (e.g., reading 
 
 > [!CAUTION]
 > If a process attempts to execute a restricted/privileged instruction directly in User Mode without using a system call, the CPU hardware raises a trap/exception, and the OS forcibly **kills the process**.
+
+## Timer Interrupt Mechanism
+To prevent a user process from running forever and hogging the CPU, the OS relies on a hardware timer.
+- Hardware generates periodic timer interrupts (e.g., every 10ms from the CPU or a separate chip).
+- User processes **CANNOT** mask or disable the timer interrupt (it's a privileged operation).
+- The dispatcher counts timer ticks between context switches. For example, if a process gets a 200ms time slice, that equals 20 ticks of a 10ms timer.
+- Common time slices range from a few milliseconds to tens of milliseconds. In modern research systems, it can be as low as ~5 microseconds.
+
+## Hardware Support Required for Preemption and LDE
+For the OS to preempt a running user process and regain control securely without process cooperation, **five essential hardware features** are required:
+
+1. **Dual-Mode Operation & Mode Bit**: 
+   - CPU must support at least two execution privileges: **User Mode** (`mode bit = 1`) and **Kernel Mode** (`mode bit = 0`).
+   - Critical instructions (modifying timer frequency, masking interrupts, modifying page tables) are **privileged** and can only execute in Kernel Mode.
+
+2. **Periodic Hardware Timer & Unmaskable Interrupts**: 
+   - A hardware timer (on-CPU or dedicated chip) generates an interrupt at regular intervals (e.g., every 10ms).
+   - The user program **cannot disable, mask, or reset** this timer in User Mode, ensuring the OS periodically and unconditionally regains control of the CPU.
+
+3. **Atomic Hardware State Saving (PC & Status Registers)**: 
+   - When an interrupt/trap occurs, the CPU hardware *automatically and atomically* pushes the Program Counter (`PC`), Stack Pointer (`SP`), and Program Status Word (`PSW` / flags) onto the process's **per-process kernel stack** before switching to Kernel Mode and jumping to the handler.
+   - This prevents race conditions where the process's exact instruction pointer would otherwise be lost.
+
+4. **Trap Table / Interrupt Vector Table (IVT)**: 
+   - The CPU provides hardware dispatch to a table of handler addresses configured by the OS at boot time.
+   - When an interrupt triggers, the CPU uses the interrupt vector to index the IVT directly.
+
+5. **Memory Protection (MMU / Base & Limit Registers / Page Tables)**: 
+   - Hardware enforces address boundaries for every memory access.
+   - Prevents a rogue user process from overwriting the OS kernel memory, modifying the IVT, or corrupting other processes' kernel stacks.
+
 # Parts of OS
 1. Kernel - The core of the OS. Runs in kernel mode and manages everything — CPU, memory, devices, and processes. All other parts depend on it.
 2. Shell - The interface for users to interact with the OS — either a **CLI** (bash, cmd) or a **GUI** (Windows, macOS desktop).
@@ -167,6 +200,38 @@ Actions performed by the OS to manage processes.
 
 **Purpose:**
 - Control execution and resource usage of processes
+
+There are two fundamental paradigms to create a new process:
+
+**1. Build from Scratch**
+- **Steps:** Load code and data into memory $\rightarrow$ Create an empty call stack $\rightarrow$ Create and initialize the PCB (making it look like it's re-entering from a context switch) $\rightarrow$ Put the process on the ready list.
+- **Advantage:** No wasted work.
+- **Disadvantage:** Complex setup. You must specify all options explicitly (permissions, I/O destinations, environment variables). For instance, the Windows `CreateProcess()` function takes 10 arguments.
+
+**2. Clone and Mutate (Unix Model)**
+- **`fork()`:** Clones the calling process. It stops the current process, copies its code, data, stack, and PCB, and adds the new PCB to the ready list.
+- **`exec(char *file)`:** Overlays or replaces the current code and data segments with those from the specified executable file.
+- **Advantage:** Flexible and highly simple for users.
+- **Disadvantage:** It is wasteful to copy everything and then immediately overwrite it. However, modern systems solve this using **Copy-on-Write (CoW)**.
+
+Let's consider a common shell implementation pattern using `fork` and `exec`:
+```c
+while (1) {
+    char *cmd = getcmd();
+    int retval = fork();
+    if (retval == 0) {
+        // Child process: setup environment, I/O, signals
+        exec(cmd);  // exec does not return if it succeeds
+        printf("ERROR: Could not execute %s\n", cmd);
+        exit(1);
+    } else {
+        // Parent process: wait for child to finish
+        int pid = retval;
+        wait(pid);
+    }
+}
+```
+
 ### Process Attributes
 The **PCB** (**Process Control Block** also known as **process descriptor**) is used to store the various attributes corresponding to any OS process. 
 - The OS keeps the PCB for every process with it for process management + context switching.
@@ -185,9 +250,50 @@ Some attributes stored in the PCB are -
 9. Priority - Scheduling importance
 10. State - Current status (new, ready, running, waiting, terminated)
 11. List of Files - Open files and file descriptors associated with the process
+
+Let's look at a concrete example of a PCB structure from the **xv6** operating system:
+```c
+struct proc {
+    char *mem;              // Start of process memory
+    uint sz;                // Size of process memory
+    char *kstack;           // Bottom of kernel stack for this process
+    enum proc_state state;  // Process state
+    int pid;                // Process ID
+    struct proc *parent;    // Parent process
+    int killed;             // If non-zero, have been killed
+    struct file *ofile[NOFILE]; // Open files
+    struct inode *cwd;      // Current directory
+    struct context context; // Switch here to run process
+    struct trapframe *tf;   // Trap frame for current interrupt
+};
+```
+And its corresponding context structure:
+```c
+struct context {
+    int eip;  // Instruction pointer
+    int esp;  // Stack pointer
+    int ebx;  // Base register
+    int ecx;  // Counter register
+    int edx;  // Data register
+    int esi;  // Source index register
+    int edi;  // Destination index register
+    int ebp;  // Stack base pointer
+};
+```
+The process states defined in xv6 are: `UNUSED, EMBRYO, SLEEPING, RUNNABLE, RUNNING, ZOMBIE`.
+
 #### Context Switching
 The values stored inside the PCB are referred to as the **context of that process**.
 - The method of bringing the context of a process to the CPU and switching it with the existing context is called as **context switching**.
+
+This **requires specific hardware support** because values such as the Program Counter and Instruction Pointer may change if we were to rely on a set of instructions for context switching, thus resulting in an invalid save.
+
+The context switch involves a **two-level** save and restore mechanism:
+- **Level 1 (Hardware-level):** When a timer interrupt occurs, the hardware automatically saves process registers (like PC and PSW) onto the process's **per-process kernel stack (k-stack)**. It then switches to Kernel Mode and jumps to the trap handler.
+- **Level 2 (OS software-level):** The OS trap handler calls a `switch()` function. This function saves the kernel registers from Process A into A's PCB, restores Process B's kernel registers from B's PCB, switches to B's kernel stack, and finally executes a `return-from-trap` instruction. The hardware then uses this to restore B's user registers from its k-stack and jump to B's instruction pointer.
+
+Notice how this relies on a key insight: Each process conceptually has its own **per-process kernel stack** and its own **per-process kernel thread**.
+
 #### Process States
 The current activity the process is performing.
 
@@ -215,7 +321,7 @@ State transitions -
 Scheduling Queues keep processes in certain states -
 1. Job Queue - All processes which are in new state are kept here
 2. Ready Queue - All processes which are in ready state
-3. Device Queue - All processes which are kept in waiting state
+3. Device Queue (or Event Queue) - All processes which are kept in waiting state. Importantly, there is **one logical queue per event type** (e.g., a disk I/O queue, a lock wait queue, a network queue). Each contains all processes waiting for that specific event to complete.
 
 Schedulers -
 1. Long-Term Scheduler (Job Scheduler) - Brings a process from new state to ready state
